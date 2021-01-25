@@ -116,7 +116,11 @@ env.bak/
 venv.bak/
 
 .vscode/
+
 youtube/
+ckeditor/
+migrations/
+JS/
 # Spyder project settings
 .spyderproject
 .spyproject
