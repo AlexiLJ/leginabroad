@@ -116,7 +116,7 @@ env.bak/
 venv.bak/
 
 .vscode/
-
+youtube/
 # Spyder project settings
 .spyderproject
 .spyproject
