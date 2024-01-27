@@ -1,6 +1,6 @@
 from django.db import models
-from django.utils import timezone
-from django.db.models import Q
+# from django.utils import timezone
+# from django.db.models import Q
 from django.urls import reverse
 from taggit.managers import TaggableManager
 from ckeditor_uploader.fields import RichTextUploadingField
