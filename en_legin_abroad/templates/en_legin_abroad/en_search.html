@@ -1,0 +1,46 @@
+{% extends "en_legin_abroad/en_base.html" %}
+{% load static %}
+
+<head>
+  
+</head>
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+  {% if query %}
+    <h1>Articles with "{{ query }}"</h1>
+    <h3>
+      {% with results.count as total_results %}
+        {% if total_results == 1 %}
+          Found {{ total_results }} match
+        {% else %}
+          
+          Found {{ total_results }} matches
+        {% endif %}
+      {% endwith %}
+    </h3>
+    {% for article in resultss %}
+      <div class="results">
+        <h4><a class="res" href="{{ article.get_absolute_url }}">{{ article.topic }}</a></h4>
+
+          {{ article.results.count }}
+
+        {{ article.body|safe|truncatewords:5 }}
+      </div>
+      {% empty %}
+        <p id="search_text">Sorry, no results has been found...</p>
+      {% endfor %}
+      <p><a id="search_text_link" href="{% url "en_legin_abroad:en_search" %}">Search more</a></p>
+    {% else %}
+    <h1>Articles search</h1>
+
+    <form class='form-inline ml-auto' method="GET" action="search">
+        <input class='form-control mr-2 col-sm-4 col-md-4 col-lg-8' name="query" value="{{request.GET.query}}" placeholder="search" aria-label="Search">
+        <!--<input class='form-control mr-2 col-sm-4 col-md-4 col-lg-8' name="q" value="{{request.GET.q}}" placeholder="пошук" aria-label="Пошук">-->
+        <button class="btn btn-success" type="submit">
+          Search
+        </button>
+    </form>
+  {% endif %}
+{% endblock %}

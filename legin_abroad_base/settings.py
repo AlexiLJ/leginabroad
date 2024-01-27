@@ -41,9 +41,34 @@ INSTALLED_APPS = [
     'imagekit',
     'storages', #aws
     'taggit',
+    'ckeditor',
     'ckeditor_uploader',
-    'legin_abroad.apps.LeginAbroadConfig'
+    'legin_abroad.apps.LeginAbroadConfig',
+    'en_legin_abroad.apps.EnLeginAbroadConfig'
 ]
+
+
+CKEDITOR_UPLOAD_PATH = "uploads"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_BROWSE_SHOW_DIRS = True
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'height': 1000,
+        'width': 1200,
+        'toolbar_Custom':[
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Flash', 'Table', 'HorizontalRule'],
+            ['TextColor', 'BGColor'],
+            ['Smiley', 'SpecialChar'], ['Source'], ['Youtube'],
+
+        ],
+        'extraPlugins':'youtube',
+    },
+
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -121,8 +146,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
+
+MEDIA_ROOT = BASE_DIR /'media'
+MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

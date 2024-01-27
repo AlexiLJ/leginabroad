@@ -1,0 +1,61 @@
+{% extends "en_legin_abroad/en_base.html" %}
+{% load static %}
+
+<script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/article_style.css' %}">
+ 
+  <title>{{ article.topic }}</title>
+
+</head>>
+{% block content %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-white ml">
+      <li class="breadcrumb-item"><a class="navbar-brand mr-auto" style='color: #6A9C20;' href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
+      <li class="breadcrumb-item"><a class="navbar-brand mr-auto" style='color: #6A9C20;' href="{% url 'en_legin_abroad:en_sections' %}">Topics</a></li>
+      <li class="breadcrumb-item"><a class="navbar-brand mr-auto" style='color: #6A9C20;' href="{{article.section.get_absolute_url}}">{{ article.section.name }}</a></li>
+    </ol>
+  </nav>
+  <div id="article">
+    <div class="part" style='top: 5px; bottom: 430px; position: relative;'>
+    {% if article.thumb %}
+      <a href="{{article.get_absolute_url}}"><img class='m-auto' style="position: center" src="{{ article.thumb.url }}"></a>
+    {% endif %}
+    <h1>{{ article.topic }}</h1>
+  
+      <strong>{{ article.date_added|date:'F, d, Y' }}</strong>
+  
+    <p class="article">{{ article.body|safe }}</p><br>
+    </div>
+    <div class="foot">
+      {% if article.tags %}
+        {% for tag in article.tags.all %}
+          <a class="tag d-inline-flex p-2" href="{% url "en_legin_abroad:en_article_by_tag" tag.slug %}">#{{ tag.name }}</a>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <h3>Similar articles:</h3>
+    {% for article in similar_articles %}
+      <p>
+        <a class="artic"  id="artic" href="{{ article.get_absolute_url }}">{{ article.topic|truncatewords:7 }}</a>
+      </p>
+    {% empty %}
+      None...
+    {% endfor %}
+
+    <hr width="800px" margin-left="auto">
+
+  <p>
+    <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+    <a href="http://www.reddit.com/submit?url=http://{{ request.build_absolute_uri }}/">  Reddit</a>
+    <!--<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}/">Facebook</a> -->
+  </p>
+  <hr/>
+  <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+  </div>
+{% endblock content %}
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>

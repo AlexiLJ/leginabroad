@@ -1,0 +1,44 @@
+{% extends "en_legin_abroad/en_base.html" %}
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+</head>
+<body>
+  {% block content %}
+
+      <nav>
+        <ol class="breadcrumb bg-white">
+          <li class="breadcrumb-item"><a class="navbar-brand mr-auto" href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
+          <li class="breadcrumb-item"><a class="navbar-brand mr-auto" href="{% url 'en_legin_abroad:en_sections' %}">Topics</a></li>
+          <li class="breadcrumb-item navbar-brand mr-auto" style="color: rgb(104, 211, 55);">{{section}}</li>
+        </ol>
+      </nav>
+      <div class="article_list">
+        {% for article in articles %}
+            <h1><a class='artic' href="{{ article.get_absolute_url }}">{{ article.topic }}</a></h1>
+            <a class="sect" href="{{ article.section.get_absolute_url }}">{{ article.section }}</a></br>
+            {% if article.thumb %}
+              <a href="{{ article.get_absolute_url }}"><img class='thumb' src="{{ article.thumb.url }}"></a></br>
+            {% endif %}
+            <p><a class="artic" href="{{ article.get_absolute_url }}">{{ article|safe }}</a></p>
+            {% load i18n %}
+            {% language 'uk' %}
+              <strong>{{ article.date_added|date:'F, d, Y' }}</strong><br>
+            {% endlanguage %}
+            <p class="tags">
+              {% for tag in article.tags.all %}
+                <a class="tag d-inline-flex p-2" href="{% url "en_legin_abroad:en_article_by_tag" tag.slug %}">#{{ tag.name }}</a>
+              {% endfor %}
+            </p>
+        {% empty %}
+          <li>
+            There is no entries for the current topic.
+          </li>
+        {% endfor %}
+      </div>
+    <div class="paginator">
+      {% include "en_legin_abroad/en_pagination.html" with page=articles %}
+    </div>
+  {% endblock content %}
+</body>
