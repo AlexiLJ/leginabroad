@@ -1,0 +1,46 @@
+{% extends "legin_abroad/base.html" %}
+{% load static %}
+
+<head>
+
+</head>
+<body>
+  {% block content %}
+    <div class="article_list">
+      <div class="mx-5">
+        {% if tag %}
+          <h2>Статті з теґом "{{ tag.name }}":</h2>
+        {% endif %}
+      </div>
+
+      {% for article in articles %}
+
+          <h1><a class="artic"  id='artic' href="{{article.get_absolute_url}}">{{ article.topic }}</a></h1>
+          <a class="sect" id = 'article_section_ref' href="{{article.section.get_absolute_url}}">{{ article.section  }}</a></br>
+          {% if article.thumb %}
+              <a href="{{ article.get_absolute_url }}"><img class='thumb' src="{{ article.thumb.url }}"></a>
+          {% endif %}
+          <p style="article"><a class="artic" href="{{ article.get_absolute_url }}">{{ article|safe|truncatewords:50 }}</a></p>
+          {% load i18n %}
+          {% language 'uk' %}
+            <strong>{{ article.date_added|date:'F, d, Y' }}</strong><br>
+          {% endlanguage %}
+          {% if article.tags %}
+            <div class="tags">
+            {% for tag in article.tags.all %}
+              <a class="tag d-inline-flex p-2" href="{% url "legin_abroad:article_by_tag" tag.slug %}">#{{ tag.name }}</a>
+            {% endfor %}
+            </div>
+          {% endif %}
+          {% empty %}
+          <li>
+            There is no entries for the current topic.
+          </li>
+
+      {% endfor %}
+    </div>
+    <div class="paginator">
+        {% include "legin_abroad/_pagination.html" with page=articles %}
+    </div>
+  {% endblock content %}
+</body>
