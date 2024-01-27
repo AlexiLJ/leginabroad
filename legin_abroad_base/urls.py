@@ -14,9 +14,28 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path, include
+from django.contrib.sitemaps.views import sitemap
+from legin_abroad.sitemaps import ArticleSitemap, StaticViewSitemap, SectionSitemap #, TagSitemap
+from legin_abroad import views as la_views
+from django.views.static import serve
 
+sitemaps = {
+	'static': StaticViewSitemap,
+	'article': ArticleSitemap,
+	'section': SectionSitemap,
+}
 urlpatterns = [
-    path('admin/', admin.site.urls),
-]
+    path('admin_LA/', admin.site.urls),
+    # path('en/', include('en_legin_abroad.urls')),
+    path('', include('legin_abroad.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
