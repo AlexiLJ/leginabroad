@@ -1,0 +1,29 @@
+{% extends "legin_abroad/base.html" %}
+{% load static %}
+
+<head>
+
+</head>
+<body>
+  {% block content %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a id = 'breadcrumb' href="{% url 'legin_abroad:index' %}">Home</a></li>
+      </ol>
+    </nav>
+    <div class="section-grid-container">
+  
+        {% for section in sections %}
+          <div class='section-div'>
+            <h2><a id='sections' href="{{section.get_absolute_url}}">{{ section.name }}</a></h2>
+            {% if section.thumb %}
+              <a href="{{section.get_absolute_url}}"><img class='m-auto ses' style="position: center" src="{{ section.thumb.url }}"></a>
+            {% endif %}
+            {% if section.description %}
+              <p><a class="sections" href="{{ section.get_absolute_url }}">{{ section.description|safe|truncatewords:150 }}</a></p>
+            {% endif %}
+          </div>
+        {% endfor %}
+    </div>
+  {% endblock content %}
+</body>
