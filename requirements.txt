@@ -1,3 +1,6 @@
 Django
 boto3
 django-bootstrap4
+django-ckeditor
+pillow
+django-imagekit
