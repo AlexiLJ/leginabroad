@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
 from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor.fields import RichTextField
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 # Create your models here.
@@ -54,7 +55,7 @@ class Article(models.Model):
                                       'youtube',
                                       '/static/youtube/youtube/',
                                       'plugin.js',
-                                  )],
+                                  )]
                                   )
     date_added = models.DateTimeField()
 

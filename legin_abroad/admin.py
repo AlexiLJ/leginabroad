@@ -1,5 +1,8 @@
 from django.contrib import admin
 from ckeditor.widgets import CKEditorWidget
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
+
 from django import forms
 from legin_abroad.models import Section, Article
 
