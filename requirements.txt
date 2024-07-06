@@ -6,3 +6,6 @@ django-ckeditor
 django-imagekit
 django-taggit
 django-storages
+psycopg2
+psycopg2-binary
+gunicorn

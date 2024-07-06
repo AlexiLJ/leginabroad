@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^x@68%2%61pm%_of(*er7013py@8agkgt57+phekv3h*z0d6fp'
+SECRET_KEY = os.environ("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -139,8 +139,12 @@ WSGI_APPLICATION = 'legin_abroad_base.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRESQL_NAME'),
+        'USER': os.environ.get('POSTGRESQL_USER'),
+        'PASSWORD': os.environ.get('POSTGRESQL_PASSWORD'),
+        'HOST': os.environ.get('HOST_NAME'),
+        'PORT': os.environ.get('PORT')
     }
 }
 
@@ -194,14 +198,18 @@ BOOTSTRAP4 = {
 'include_jquery': True
 }
 # TODO get this in order after migrations and before deployment
-'''
+
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_SIGNATURE_NAME = os.environ.get("AWS_S3_SIGNATURE_NAME"),
+AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
-'''
+
+# AWS_DEFAULT_ACL =  None
+AWS_S3_VERIFY = True
