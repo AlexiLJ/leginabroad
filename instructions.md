@@ -19,3 +19,4 @@ end restarted ssh service sudo /etc/init.d/ssh restart
 https://forums.raspberrypi.com/viewtopic.php?t=256770
 
 ## Note! check /etc/ssh/sshd_config when establishing SSH: uncomment ports and restart!!!
+## Note! Roter kill wifi connection after some time!
