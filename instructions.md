@@ -16,5 +16,6 @@ sudo apt install libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev/
 uncommented Port 22 and added Port 80 and 55555 at /etc/ssh/sshd_config 
 made copies of an old config cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old
 end restarted ssh service sudo /etc/init.d/ssh restart
+https://forums.raspberrypi.com/viewtopic.php?t=256770
 
 ## Note! check /etc/ssh/sshd_config when establishing SSH: uncomment ports and restart!!!
