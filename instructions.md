@@ -1,4 +1,5 @@
 
+
 sudo apt-get install &&  sudo apt-get upgrade -y
 
 sudo apt install git -y
@@ -16,3 +17,4 @@ uncommented Port 22 and added Port 80 and 55555 at /etc/ssh/sshd_config
 made copies of an old confing cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old
 end restarted ssh service sudo /etc/init.d/ssh restart
 
+## Note! check /etc/ssh/sshd_config when establish SSH uncomment ports and restat!!!
