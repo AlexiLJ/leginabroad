@@ -20,3 +20,8 @@ https://forums.raspberrypi.com/viewtopic.php?t=256770
 
 ## Note! check /etc/ssh/sshd_config when establishing SSH: uncomment ports and restart!!!
 ## Note! Roter kill wifi connection after some time!
+
+## Copying from windows to linux scp "C:\Users\User\.blabla" oleks@oleks:/home/oleks
+
+
+#https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu
