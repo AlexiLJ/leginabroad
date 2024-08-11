@@ -20,3 +20,4 @@ https://forums.raspberrypi.com/viewtopic.php?t=256770
 
 ## Note! check /etc/ssh/sshd_config when establishing SSH: uncomment ports and restart!!!
 ## Note! Roter kill wifi connection after some time!
+## ufw settings https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu
