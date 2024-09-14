@@ -7,3 +7,5 @@ django-imagekit
 django-taggit
 django-storages
 gunicorn
+psycopg
+
