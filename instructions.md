@@ -23,3 +23,4 @@ https://forums.raspberrypi.com/viewtopic.php?t=256770
 ## ufw settings https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu
 
 ## if any issue with db user rights: GRANT postgres TO <user>;
+python manage.py migrate --run-syncdb
