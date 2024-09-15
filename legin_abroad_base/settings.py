@@ -167,7 +167,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-DISABLE_COLLECTSTATIC = 1
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -204,6 +203,7 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_SIGNATURE_NAME = os.environ.get("AWS_S3_SIGNATURE_NAME"),
 AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
+AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
