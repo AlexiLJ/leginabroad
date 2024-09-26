@@ -142,11 +142,11 @@ WSGI_APPLICATION = 'legin_abroad_base.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRESQL_NAME'),
-        'USER': os.environ.get('POSTGRESQL_USER'),
-        'PASSWORD': os.environ.get('POSTGRESQL_PASSWORD'),
-        'HOST': os.environ.get('HOST_NAME'),
-        'PORT': os.environ.get('PORT')
+        'NAME': var_getter('POSTGRESQL_NAME'),
+        'USER': var_getter('POSTGRESQL_USER'),
+        'PASSWORD': var_getter('POSTGRESQL_PASSWORD'),
+        'HOST': var_getter('HOST_NAME'),
+        'PORT': var_getter('PORT')
     }
 }
 
@@ -200,11 +200,11 @@ BOOTSTRAP4 = {
 }
 # TODO get this in order after migrations and before deployment
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_SIGNATURE_NAME = os.environ.get("AWS_S3_SIGNATURE_NAME"),
-AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
+AWS_ACCESS_KEY_ID = var_getter('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = var_getter('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = var_getter('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_SIGNATURE_NAME = var_getter("AWS_S3_SIGNATURE_NAME"),
+AWS_S3_REGION_NAME = var_getter("AWS_S3_REGION_NAME")
 AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
 
 AWS_S3_FILE_OVERWRITE = False
