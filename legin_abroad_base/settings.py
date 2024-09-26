@@ -207,7 +207,7 @@ AWS_STORAGE_BUCKET_NAME = var_getter('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_SIGNATURE_NAME = var_getter("AWS_S3_SIGNATURE_NAME"),
 AWS_S3_REGION_NAME = var_getter("AWS_S3_REGION_NAME")
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.eu-central-1.amazonaws.com'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/uploads/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
 
 AWS_S3_FILE_OVERWRITE = False
