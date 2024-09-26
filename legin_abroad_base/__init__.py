@@ -1,1 +1,1 @@
-from .settings_prod import *
+from .settings import *
