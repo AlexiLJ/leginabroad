@@ -6,6 +6,7 @@ django-ckeditor
 django-imagekit
 django-taggit
 django-storages
+whitenoise
 gunicorn
-psycopg
+psycopg[binary]
 
