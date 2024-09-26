@@ -24,3 +24,9 @@ https://forums.raspberrypi.com/viewtopic.php?t=256770
 
 ## if any issue with db user rights: GRANT postgres TO <user>;
 python manage.py migrate --run-syncdb
+
+
+[nginx-stat-failed-13--permission-denied](https://stackoverflow.com/questions/25774999/nginx-stat-failed-13-permission-denied)
+sudo -u www-data stat /username/test/static
+gpasswd -a www-data root
+chmod g+x /root && chmod g+x /root/leginabroad && chmod g+x /root/leginabroad/static
