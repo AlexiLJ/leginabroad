@@ -211,7 +211,7 @@ AWS_S3_CUSTOM_DOMAIN = 'https://%s.s3.%s.amazonaws.com' %(AWS_STORAGE_BUCKET_NAM
 
 AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
 # MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = '%s/uploads' %AWS_S3_ENDPOINT_URL
+MEDIA_URL = '%s/uploads' %AWS_S3_CUSTOM_DOMAIN
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
