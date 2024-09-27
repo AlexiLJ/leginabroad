@@ -185,8 +185,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-'
-
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
@@ -209,7 +207,7 @@ AWS_SECRET_ACCESS_KEY = var_getter('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = var_getter('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_SIGNATURE_NAME = var_getter("AWS_S3_SIGNATURE_NAME")
 AWS_S3_REGION_NAME = var_getter("AWS_S3_REGION_NAME")
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' %(AWS_STORAGE_BUCKET_NAME, AWS_S3_REGION_NAME)
 
 AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
 # MEDIA_ROOT = BASE_DIR / 'media'
