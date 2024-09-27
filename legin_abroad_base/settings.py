@@ -185,9 +185,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-MEDIA_URL = 'media/'
-
-MEDIA_ROOT = BASE_DIR / 'media'
+'
 
 
 STATIC_URL = 'static/'
@@ -213,8 +211,9 @@ AWS_S3_SIGNATURE_NAME = var_getter("AWS_S3_SIGNATURE_NAME")
 AWS_S3_REGION_NAME = var_getter("AWS_S3_REGION_NAME")
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
+# MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '%s/uploads' %AWS_S3_CUSTOM_DOMAIN
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
