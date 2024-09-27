@@ -1,5 +1,3 @@
-
-
 sudo apt-get install &&  sudo apt-get upgrade -y
 
 sudo apt install git -y
@@ -30,3 +28,5 @@ python manage.py migrate --run-syncdb
 sudo -u www-data stat /username/test/static
 gpasswd -a www-data root
 chmod g+x /root && chmod g+x /root/leginabroad && chmod g+x /root/leginabroad/static
+
+sudo journalctl -u gunicorn --since "5min ago"
