@@ -229,11 +229,7 @@ STORAGES = {
     #     "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
     # },
         "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-        "OPTIONS": {
-            "location": "/static",
-            "base_url": "/static/",
-        },
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
     },
 
