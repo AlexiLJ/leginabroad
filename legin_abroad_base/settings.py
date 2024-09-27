@@ -215,23 +215,23 @@ MEDIA_URL = '%s/uploads' %AWS_S3_CUSTOM_DOMAIN
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
 
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STORAGES = {
-
-    # Media file (image) management
-    "default": {
-        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-    },
-
-    # CSS and JS file management
-    # "staticfiles": {
-    #     "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-    # },
-        "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-    },
+# STORAGES = {
+#
+#     # Media file (image) management
+#     "default": {
+#         "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+#     },
+#
+#     # CSS and JS file management
+#     # "staticfiles": {
+#     #     "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+#     # },
+#         "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+#     },
 
 
 AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
