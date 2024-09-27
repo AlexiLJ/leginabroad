@@ -230,6 +230,10 @@ STORAGES = {
     # },
         "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "OPTIONS": {
+            "location": "/static",
+            "base_url": "/static/",
+        },
     },
     },
 
