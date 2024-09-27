@@ -185,7 +185,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
@@ -226,9 +225,9 @@ STORAGES = {
     },
 
     # CSS and JS file management
-    "staticfiles": {
-        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-    },
+    # "staticfiles": {
+    #     "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    # },
 }
 
 AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
