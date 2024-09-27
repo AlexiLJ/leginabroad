@@ -228,7 +228,11 @@ STORAGES = {
     # "staticfiles": {
     #     "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
     # },
-}
+        "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+    },
+
 
 AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
 
