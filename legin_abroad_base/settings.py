@@ -212,13 +212,15 @@ AWS_S3_SIGNATURE_NAME = var_getter("AWS_S3_SIGNATURE_NAME")
 AWS_S3_REGION_NAME = var_getter("AWS_S3_REGION_NAME")
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
 
 # AWS_DEFAULT_ACL =  None
