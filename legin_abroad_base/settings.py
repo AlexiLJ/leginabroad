@@ -185,8 +185,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
+
 
 # STATICFILES_DIRS = [BASE_DIR / 'static']
 # MEDIA_URL = '/media/'
@@ -206,16 +205,20 @@ AWS_SECRET_ACCESS_KEY = var_getter('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = var_getter('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_SIGNATURE_NAME = var_getter("AWS_S3_SIGNATURE_NAME")
 AWS_S3_REGION_NAME = var_getter("AWS_S3_REGION_NAME")
-AWS_S3_CUSTOM_DOMAIN = 'https://%s.s3.amazonaws.com' %AWS_STORAGE_BUCKET_NAME
-
-AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
+AWS_S3_CUSTOM_DOMAIN = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 # MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = '%s/uploads' %AWS_S3_CUSTOM_DOMAIN
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
+AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
+# AWS_DEFAULT_ACL =  None
+AWS_S3_VERIFY = True
 
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
+MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/uploads/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STORAGES = {
 #
@@ -234,7 +237,4 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #     },
 
 
-AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
 
-# AWS_DEFAULT_ACL =  None
-AWS_S3_VERIFY = True
