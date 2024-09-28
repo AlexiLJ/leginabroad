@@ -216,7 +216,7 @@ AWS_S3_VERIFY = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
-MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/uploads/'
+MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
