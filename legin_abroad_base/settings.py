@@ -205,8 +205,10 @@ AWS_SECRET_ACCESS_KEY = var_getter('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = var_getter('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_SIGNATURE_NAME = var_getter("AWS_S3_SIGNATURE_NAME")
 AWS_S3_REGION_NAME = var_getter("AWS_S3_REGION_NAME")
-AWS_S3_CUSTOM_DOMAIN = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
-
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
@@ -214,12 +216,16 @@ AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from
 # AWS_DEFAULT_ACL =  None
 AWS_S3_VERIFY = True
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
-
-MEDIA_ROOT = BASE_DIR / 'uploads'
-MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+STATIC_ROOT = 'static/'
+
+# Media URL pointing to S3
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+MEDIA_ROOT = 'media/'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STORAGES = {
