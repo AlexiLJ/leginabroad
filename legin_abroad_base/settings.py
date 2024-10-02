@@ -212,7 +212,7 @@ AWS_S3_OBJECT_PARAMETERS = {
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
-# AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
+AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
 # AWS_DEFAULT_ACL =  None
 AWS_S3_VERIFY = True
 
