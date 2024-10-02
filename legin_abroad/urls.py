@@ -6,13 +6,12 @@ from . import views
 
 app_name = 'legin_abroad'
 urlpatterns = [
-
 	path('', views.index, name='index'),	
 	path('search', views.SearchView.as_view(), name='search'),
 	path('sections/search', views.SearchView.as_view(), name='search'),
 	path('<slug:sslug>/search', views.SearchView.as_view(), name='search'),
 	path('tag/<slug:tag_slug>/search', views.tag_search, name='search'),
-	path('sections/<slug:sslug>', views.section, name='section'),#Sections url
+	path('sections/<slug:sslug>', views.section, name='section'),  #Sections url
 	path('sections', views.SectionsListView.as_view(), name='sections'),
 	path('about', views.about, name='about'),
 	path('tag/<slug:tag_slug>/', views.index, name='article_by_tag'),
