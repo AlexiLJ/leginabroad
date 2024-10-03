@@ -50,6 +50,7 @@ class Article(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE, null=False, blank=False)
     topic = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=False)
+    image_load = models.ImageField(upload_to='uploads/')
     body = RichTextUploadingField(blank=True, null=True,
                                   external_plugin_resources=[(
                                       'youtube',
@@ -81,10 +82,10 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse('legin_abroad:article', kwargs={'sslug': self.section.sslug, 'slug': self.slug})
 
-class ArticleImage(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
-
-    image = models.ImageField(upload_to='uploads/')
+# class ArticleImage(models.Model):
+#     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+#
+#     image = models.ImageField(upload_to='uploads/')
 
 
 
