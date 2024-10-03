@@ -81,5 +81,10 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse('legin_abroad:article', kwargs={'sslug': self.section.sslug, 'slug': self.slug})
 
+class ArticleImage(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+
+    image = models.ImageField(upload_to='uploads/')
+
 
 
