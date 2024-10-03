@@ -50,7 +50,7 @@ class Article(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE, null=False, blank=False)
     topic = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=False)
-    image_load = models.ImageField(upload_to='uploads/')
+    image_load = models.ImageField(upload_to='uploads/', null=True, blank=True)
     body = RichTextUploadingField(blank=True, null=True,
                                   external_plugin_resources=[(
                                       'youtube',
