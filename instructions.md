@@ -30,3 +30,8 @@ gpasswd -a www-data root
 chmod g+x /root && chmod g+x /root/leginabroad && chmod g+x /root/leginabroad/static
 
 sudo journalctl -u gunicorn --since "5min ago"
+
+python manage.py makemigrations --empty yourappname
+
+python manage.py migrate yourappname
+It turns out adding an extra empty migration forces django to recheck the table and in the process, it noticed the new migrations. There's probably some caching taking place somewhere.

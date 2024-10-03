@@ -58,7 +58,7 @@ class EnArticle(models.Model):
                                   )],
                                   )
     date_added = models.DateTimeField()
-    image_load = models.ImageField(upload_to='uploads/')
+    # image_load = models.ImageField(upload_to='uploads/')
 
     thumb = ProcessedImageField(upload_to='thumbs_/%Y/%m/',
                                 processors=[ResizeToFill(800, 458)],
