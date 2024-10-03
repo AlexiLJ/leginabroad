@@ -223,7 +223,7 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 # Media URL pointing to S3
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/uploads/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 MEDIA_ROOT = 'uploads/'
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
