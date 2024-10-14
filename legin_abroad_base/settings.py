@@ -216,16 +216,15 @@ AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from
 # AWS_DEFAULT_ACL =  None
 # AWS_S3_VERIFY = True
 
-
-
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 # Media URL pointing to S3
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 # PUBLIC_MEDIA_LOCATION = 'media'
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_ROOT = BASE_DIR / 'media'
 # STORAGES = {
 #
 #     # Media file (image) management
