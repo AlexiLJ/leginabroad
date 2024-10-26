@@ -200,6 +200,16 @@ BOOTSTRAP4 = {
 }
 # TODO get this in order after migrations and before deployment
 
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
+
+# Media URL pointing to S3
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
+
+
 AWS_ACCESS_KEY_ID = var_getter('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = var_getter('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = var_getter('AWS_STORAGE_BUCKET_NAME')
@@ -216,15 +226,8 @@ AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from
 # AWS_DEFAULT_ACL =  None
 # AWS_S3_VERIFY = True
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
-
-# Media URL pointing to S3
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # PUBLIC_MEDIA_LOCATION = 'media'
-# MEDIA_ROOT = BASE_DIR / 'media'
 # STORAGES = {
 #
 #     # Media file (image) management
