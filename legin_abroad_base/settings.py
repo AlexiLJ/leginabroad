@@ -203,12 +203,6 @@ BOOTSTRAP4 = {
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
-# Media URL pointing to S3
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = '/media/'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
-
 
 AWS_ACCESS_KEY_ID = var_getter('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = var_getter('AWS_SECRET_ACCESS_KEY')
@@ -223,26 +217,16 @@ AWS_S3_OBJECT_PARAMETERS = {
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
 AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
-# AWS_DEFAULT_ACL =  None
-# AWS_S3_VERIFY = True
 
-
-# PUBLIC_MEDIA_LOCATION = 'media'
-# STORAGES = {
-#
-#     # Media file (image) management
-#     "default": {
-#         "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-#     },
-#
-#     # CSS and JS file management
-#     # "staticfiles": {
-#     #     "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-#     # },
-#         "staticfiles": {
-#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-#     },
-#     },
+STORAGES = {
+    # Media file (image) management
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 
 LOGGING = {
