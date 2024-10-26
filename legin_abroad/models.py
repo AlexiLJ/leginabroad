@@ -7,6 +7,8 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from ckeditor.fields import RichTextField
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
+
+
 # Create your models here.
 
 class Section(models.Model):
@@ -81,11 +83,3 @@ class Article(models.Model):
 
     def get_absolute_url(self):
         return reverse('legin_abroad:article', kwargs={'sslug': self.section.sslug, 'slug': self.slug})
-
-# class ArticleImage(models.Model):
-#     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
-#
-#     image = models.ImageField(upload_to='uploads/')
-
-
-

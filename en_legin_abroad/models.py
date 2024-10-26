@@ -25,14 +25,14 @@ class EnSection(models.Model):
                                              'youtube',
                                              '/static/youtube/youtube/',
                                              'plugin.js',
-                                         )],
+                                            )],
                                          )
 
     def get_absolute_url(self):
         return reverse('en_legin_abroad:en_section', kwargs={'sslug': self.sslug})
 
     def __str__(self):
-        '''returns string rev. of the model'''
+        """returns string rev. of the model"""
         return self.name
 
 
@@ -76,7 +76,7 @@ class EnArticle(models.Model):
         verbose_name_plural = 'en_articles'
 
     def __str__(self):
-        '''returns string rev. of the model'''
+        """returns string rev. of the model"""
         return self.body[:200] + "..."
 
     def get_absolute_url(self):

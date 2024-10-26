@@ -2,7 +2,7 @@ Django
 pillow
 boto3
 django-bootstrap4
-django-ckeditor-5
+django-ckeditor
 django-imagekit
 django-taggit
 django-storages
