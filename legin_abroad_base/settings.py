@@ -17,7 +17,6 @@ from .env_handler import var_getter
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ SECRET_KEY = var_getter("DJANGO_SECRET_KEY")
 DEBUG = False
 
 ALLOWED_HOSTS = ['leginabroad.com']
-
 
 # Application definition
 
@@ -41,14 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'imagekit',
-    'storages', #aws
+    'storages',  #aws
     'taggit',
     'ckeditor',
     'ckeditor_uploader',
     'legin_abroad.apps.LeginAbroadConfig',
     'en_legin_abroad.apps.EnLeginAbroadConfig'
 ]
-
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
@@ -57,52 +54,22 @@ CKEDITOR_BROWSE_SHOW_DIRS = True
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'width': '100%',
+        'width': 'auto',
         'height': 600,
         'toolbar': 'Custom',
-        'extraPlugins': ','.join([
-            'codesnippet',
-            'youtube'
-        ]),
         'toolbar_Custom': [
-            [
-                'Bold',
-                'Italic',
-                'Underline'
-            ],
-            [
-                'Font',
-                'FontSize',
-                'TextColor',
-                'BGColor'
-            ],
-            [
-                'NumberedList',
-                'BulletedList',
-                '-',
-                'Outdent',
-                'Indent',
-                '-',
-                'JustifyLeft',
-                'JustifyCenter',
-                'JustifyRight',
-                'JustifyBlock'
-            ],
-            [
-                'Link',
-                'Unlink'
-            ],
-            [
-                'RemoveFormat',
-                'Source',
-                'CodeSnippet',
-                'Image',
-                'Youtube'
-            ]
+            ['Bold', 'Italic', 'Underline'],
+            ['Font', 'FontSize', 'TextColor', 'BGColor'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+             'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Table', 'HorizontalRule'],
+            ['Smiley', 'SpecialChar'],
+            ['RemoveFormat', 'Source', 'CodeSnippet', 'Image', 'Youtube'],
+            ['Maximize']
         ],
-
+        'extraPlugins': ','.join(['codesnippet', 'youtube'])
     },
-
 }
 
 MIDDLEWARE = [
@@ -136,7 +103,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'legin_abroad_base.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -150,7 +116,6 @@ DATABASES = {
         'PORT': var_getter('PORT')
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -181,10 +146,8 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 
 
 # STATICFILES_DIRS = [BASE_DIR / 'static']
@@ -196,13 +159,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings for django-bootstrap4
 BOOTSTRAP4 = {
-'include_jquery': True
+    'include_jquery': True
 }
 # TODO get this in order after migrations and before deployment
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
-
 
 AWS_ACCESS_KEY_ID = var_getter('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = var_getter('AWS_SECRET_ACCESS_KEY')
@@ -227,7 +189,6 @@ STORAGES = {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
-
 
 LOGGING = {
     'version': 1,
@@ -263,4 +224,3 @@ LOGGING = {
         },
     },
 }
-
