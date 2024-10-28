@@ -68,6 +68,7 @@ CKEDITOR_CONFIGS = {
             ['RemoveFormat', 'Source', 'CodeSnippet', 'Image', 'Youtube'],
             ['Maximize']
         ],
+        "removePlugins": ["stylesheetparser", "iframe"],
         'extraPlugins': ','.join(['codesnippet', 'youtube']),
     },
 }
