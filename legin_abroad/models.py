@@ -6,7 +6,7 @@ from taggit.managers import TaggableManager
 from ckeditor_uploader.fields import RichTextUploadingField
 from ckeditor.fields import RichTextField
 from imagekit.models import ImageSpecField, ProcessedImageField
-from imagekit.processors import ResizeToFill
+from imagekit.processors import Thumbnail
 
 
 # Create your models here.
@@ -17,10 +17,11 @@ class Section(models.Model):
     sslug = models.SlugField(unique=True)
     date_added = models.DateTimeField(auto_now_add=True)
     thumb = ProcessedImageField(upload_to='thumbs_/%Y/%m/',
+                                processors=[Thumbnail(800, 458)],
                                 blank=True,
                                 null=True,
                                 format='PNG',
-                                options={'quality': 100}
+                                options={'quality': 90}
                                 )
     description = RichTextUploadingField(blank=True, null=True,
                                          external_plugin_resources=[(
@@ -52,8 +53,8 @@ class Article(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE, null=False, blank=False)
     topic = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=False)
-    # image_load = models.ImageField(upload_to='uploads/', null=True, blank=True)
-    body = RichTextUploadingField(blank=True, null=True,
+    body = RichTextUploadingField(blank=True,
+                                  null=True,
                                   external_plugin_resources=[(
                                       'youtube',
                                       '/static/youtube/youtube/',
@@ -63,11 +64,11 @@ class Article(models.Model):
     date_added = models.DateTimeField()
 
     thumb = ProcessedImageField(upload_to='thumbs_/%Y/%m/',
-                                processors=[ResizeToFill(800, 458)],
+                                processors=[Thumbnail(800, 458)],
                                 blank=True,
                                 null=True,
                                 format='PNG',
-                                options={'quality': 100}
+                                options={'quality': 90}
                                 )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     objects = models.Manager()  # The default manager.

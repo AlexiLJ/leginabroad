@@ -6,7 +6,7 @@ from django.urls import reverse
 from taggit.managers import TaggableManager
 from ckeditor_uploader.fields import RichTextUploadingField
 from imagekit.models import ImageSpecField, ProcessedImageField
-from imagekit.processors import ResizeToFill
+from imagekit.processors import ResizeToFill, Thumbnail
 
 
 class EnSection(models.Model):
@@ -15,10 +15,11 @@ class EnSection(models.Model):
     sslug = models.SlugField(unique=True)
     date_added = models.DateTimeField(auto_now_add=True)
     thumb = ProcessedImageField(upload_to='thumbs_/%Y/%m/',
+                                processors=[Thumbnail(800, 458)],
                                 blank=True,
                                 null=True,
                                 format='PNG',
-                                options={'quality': 100}
+                                options={'quality': 90}
                                 )
     description = RichTextUploadingField(blank=True, null=True,
                                          external_plugin_resources=[(
@@ -58,14 +59,13 @@ class EnArticle(models.Model):
                                   )],
                                   )
     date_added = models.DateTimeField()
-    # image_load = models.ImageField(upload_to='uploads/')
 
     thumb = ProcessedImageField(upload_to='thumbs_/%Y/%m/',
-                                processors=[ResizeToFill(800, 458)],
+                                processors=[Thumbnail(800, 458)],
                                 blank=True,
                                 null=True,
                                 format='PNG',
-                                options={'quality': 100}
+                                options={'quality': 90}
                                 )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     objects = models.Manager()  # The default manager.
