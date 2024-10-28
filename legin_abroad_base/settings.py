@@ -69,7 +69,6 @@ CKEDITOR_CONFIGS = {
             ['Maximize']
         ],
         'extraPlugins': ','.join(['codesnippet', 'youtube']),
-        'extraAllowedContent': 'iframe[*]',
     },
 }
 
