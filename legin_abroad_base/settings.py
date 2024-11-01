@@ -51,12 +51,14 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_BROWSE_SHOW_DIRS = True
-
+SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 CKEDITOR_CONFIGS = {
     'default': {
         'width': 'auto',
         'height': 600,
         'toolbar': 'Custom',
+        'extraAllowedContent': 'iframe[*]{*}(*);',
+        'allowedContent': True,
         'toolbar_Custom': [
             ['Bold', 'Italic', 'Underline'],
             ['Font', 'FontSize', 'TextColor', 'BGColor'],
@@ -68,7 +70,9 @@ CKEDITOR_CONFIGS = {
             ['RemoveFormat', 'Source', 'CodeSnippet', 'Image', 'Youtube'],
             ['Maximize']
         ],
-        'extraPlugins': ','.join(['codesnippet', 'youtube'])
+        'extraPlugins': ','.join(['codesnippet',
+                                  'youtube']),
+        "removePlugins": "stylesheetparser"
     },
 }
 
