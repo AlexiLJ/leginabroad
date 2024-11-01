@@ -28,6 +28,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['leginabroad.com']
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -57,6 +58,8 @@ CKEDITOR_CONFIGS = {
         'width': 'auto',
         'height': 600,
         'toolbar': 'Custom',
+        'extraAllowedContent': 'iframe[*]{*}(*);',
+        'allowedContent': True,
         'toolbar_Custom': [
             ['Bold', 'Italic', 'Underline'],
             ['Font', 'FontSize', 'TextColor', 'BGColor'],
@@ -68,10 +71,9 @@ CKEDITOR_CONFIGS = {
             ['RemoveFormat', 'Source', 'CodeSnippet', 'Image', 'Youtube'],
             ['Maximize']
         ],
-        # "removePlugins": ["stylesheetparser", "iframe"],
-        'extraPlugins': ','.join(['codesnippet', 'youtube', 'autoembed',
-            'embedsemantic', 'embedbase', 'embed', ]),
-        'extraAllowedContent': 'iframe[*]'
+        'extraPlugins': ','.join(['codesnippet',
+                                  'youtube']),
+        "removePlugins": "stylesheetparser"
     },
 }
 
@@ -106,6 +108,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'legin_abroad_base.wsgi.application'
 
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -119,6 +122,7 @@ DATABASES = {
         'PORT': var_getter('PORT')
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -182,6 +186,9 @@ AWS_S3_OBJECT_PARAMETERS = {
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
 AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
+# AWS_DEFAULT_ACL =  None
+# AWS_S3_VERIFY = True
+
 
 STORAGES = {
     # Media file (image) management
@@ -227,3 +234,4 @@ LOGGING = {
         },
     },
 }
+
