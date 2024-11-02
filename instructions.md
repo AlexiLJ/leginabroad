@@ -35,3 +35,7 @@ python manage.py makemigrations --empty yourappname
 
 python manage.py migrate yourappname
 It turns out adding an extra empty migration forces django to recheck the table and in the process, it noticed the new migrations. There's probably some caching taking place somewhere.
+
+
+psql -U your_username -d your_database -w
+psql -U leginsuperuser -d leginabroad_db -w

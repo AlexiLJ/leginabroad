@@ -52,7 +52,7 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_BROWSE_SHOW_DIRS = True
-SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+# SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 CKEDITOR_CONFIGS = {
     'default': {
         'width': 'auto',
