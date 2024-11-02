@@ -24,11 +24,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = var_getter("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# manage.py check --deploy
 DEBUG = False
+CSRF_USE_SESSIONS=True
+CSRF_COOKIE_SECURE=True
+SECURE_SSL_REDIRECT=True
+X_FRAME_OPTIONS='DENY'
+SESSION_COOKIE_SECURE=True
 
 ALLOWED_HOSTS = ['leginabroad.com']
 
-X_FRAME_OPTIONS = 'SAMEORIGIN'
 # Application definition
 
 INSTALLED_APPS = [
@@ -58,9 +63,8 @@ CKEDITOR_CONFIGS = {
         'width': 'auto',
         'height': 600,
         'toolbar': 'Custom',
-        # 'extraAllowedContent': 'iframe[*]{*}(*);',
+        'extraAllowedContent': 'iframe[*]{*}(*);',
         'allowedContent': True,
-
         'toolbar_CustomToolbarConfig': [
             {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
             {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
@@ -84,26 +88,11 @@ CKEDITOR_CONFIGS = {
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
             {'name': 'about', 'items': ['About']},
             '/',  # put this to force next toolbar on new line
-            {'name': 'customtools', 'items': [
-
-                'Preview',
-                'Maximize',
-
-            ]},
+            {'name': 'customtools', 'items': ['Preview', 'Maximize']},
         ],
         'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
 
-        # 'toolbar_Custom': [
-        #     ['Bold', 'Italic', 'Underline'],
-        #     ['Font', 'FontSize', 'TextColor', 'BGColor'],
-        #     ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-        #      'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-        #     ['Link', 'Unlink', 'Anchor'],
-        #     ['Table', 'HorizontalRule'],
-        #     ['Smiley', 'SpecialChar'],
-        #     ['RemoveFormat', 'Source', 'CodeSnippet', 'Image', 'Youtube'],
-        #     ['Maximize']
-        # ],
+
         'extraPlugins': ','.join(['codesnippet', 'youtube'])
     },
 }
