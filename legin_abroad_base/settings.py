@@ -60,17 +60,50 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'Custom',
         # 'extraAllowedContent': 'iframe[*]{*}(*);',
         'allowedContent': True,
-        'toolbar_Custom': [
-            ['Bold', 'Italic', 'Underline'],
-            ['Font', 'FontSize', 'TextColor', 'BGColor'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-             'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink', 'Anchor'],
-            ['Table', 'HorizontalRule'],
-            ['Smiley', 'SpecialChar'],
-            ['RemoveFormat', 'Source', 'CodeSnippet', 'Image', 'Youtube'],
-            ['Maximize']
+
+        'toolbar_CustomToolbarConfig': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'forms',
+             'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+                       'HiddenField']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       'Language']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert',
+             'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['About']},
+            '/',  # put this to force next toolbar on new line
+            {'name': 'customtools', 'items': [
+
+                'Preview',
+                'Maximize',
+
+            ]},
         ],
+        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+
+        # 'toolbar_Custom': [
+        #     ['Bold', 'Italic', 'Underline'],
+        #     ['Font', 'FontSize', 'TextColor', 'BGColor'],
+        #     ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+        #      'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+        #     ['Link', 'Unlink', 'Anchor'],
+        #     ['Table', 'HorizontalRule'],
+        #     ['Smiley', 'SpecialChar'],
+        #     ['RemoveFormat', 'Source', 'CodeSnippet', 'Image', 'Youtube'],
+        #     ['Maximize']
+        # ],
         'extraPlugins': ','.join(['codesnippet', 'youtube'])
     },
 }
