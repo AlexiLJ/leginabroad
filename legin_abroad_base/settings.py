@@ -58,7 +58,7 @@ CKEDITOR_CONFIGS = {
         'width': 'auto',
         'height': 600,
         'toolbar': 'Custom',
-        'extraAllowedContent': 'iframe[*]{*}(*);',
+        # 'extraAllowedContent': 'iframe[*]{*}(*);',
         'allowedContent': True,
         'toolbar_Custom': [
             ['Bold', 'Italic', 'Underline'],
@@ -71,9 +71,7 @@ CKEDITOR_CONFIGS = {
             ['RemoveFormat', 'Source', 'CodeSnippet', 'Image', 'Youtube'],
             ['Maximize']
         ],
-        'extraPlugins': ','.join(['codesnippet',
-                                  'youtube']),
-        "removePlugins": "stylesheetparser"
+        'extraPlugins': ','.join(['codesnippet', 'youtube'])
     },
 }
 
