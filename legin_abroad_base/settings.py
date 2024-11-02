@@ -28,7 +28,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['leginabroad.com']
 
-X_FRAME_OPTIONS = 'DENY'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 # Application definition
 
 INSTALLED_APPS = [
