@@ -26,11 +26,11 @@ SECRET_KEY = var_getter("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 # manage.py check --deploy
 DEBUG = False
-CSRF_USE_SESSIONS=True
-CSRF_COOKIE_SECURE=True
-SECURE_SSL_REDIRECT=True
-X_FRAME_OPTIONS='DENY'
-SESSION_COOKIE_SECURE=True
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+X_FRAME_OPTIONS = 'DENY'
+SESSION_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = ['leginabroad.com']
 
@@ -92,7 +92,6 @@ CKEDITOR_CONFIGS = {
         ],
         'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
 
-
         'extraPlugins': ','.join(['codesnippet', 'youtube'])
     },
 }
@@ -128,7 +127,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'legin_abroad_base.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -142,7 +140,6 @@ DATABASES = {
         'PORT': var_getter('PORT')
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -176,9 +173,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-
-# STATICFILES_DIRS = [BASE_DIR / 'static']
-# MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -205,10 +199,8 @@ AWS_S3_OBJECT_PARAMETERS = {
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
-AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
-# AWS_DEFAULT_ACL =  None
-# AWS_S3_VERIFY = True
-
+AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter
+                              # from generated URLs for images from s3
 
 STORAGES = {
     # Media file (image) management
@@ -254,4 +246,3 @@ LOGGING = {
         },
     },
 }
-
