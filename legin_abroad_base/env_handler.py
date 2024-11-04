@@ -1,9 +1,8 @@
-import os
 import json
 import pathlib
 
 
-def var_getter(name: str, storage: str|None = "/root/.django_env"):
+def var_getter(name: str, storage: str | None = "/home/alex/.django_env"):
     '''
 
     :param name: str name of the sys. variable
@@ -18,5 +17,3 @@ def var_getter(name: str, storage: str|None = "/root/.django_env"):
     #     var = os.environ.get(name)
     print(name, var)
     return var
-
-
