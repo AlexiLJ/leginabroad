@@ -3,7 +3,7 @@ import json
 import pathlib
 
 
-def var_getter(name: str, storage: str|None = "/root/.django_env"):
+def var_getter(name: str, storage: str|None = "legin_abroad_base/.django_env.json"):
     '''
 
     :param name: str name of the sys. variable
