@@ -31,18 +31,13 @@ def var_getter(name: str):
     :param storage: str|None
     :return: Any
     '''
+    branch = get_active_branch_name()
     with open("/pathes.json", "r") as pathes:
-        storage = json.load(pathes).get(get_active_branch_name())
+        storage = json.load(pathes).get(branch)
         print(storage)
     with open(Path(storage)) as st:
         var = json.load(st).get(name)
-
-    print(name, var)
+    if branch == 'dev':
+        print(name, var)
     return var
 
-
-# if __name__ == "__main__":
-#     var_getter()
-    # print(get_active_branch_name())
-    # print(get_git_parent_dir())
-    # get_git_parent_dir(search_start='bla bla')
