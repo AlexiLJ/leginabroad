@@ -22,6 +22,7 @@ class EnSection(models.Model):
                                 options={'quality': 90}
                                 )
     description = RichTextUploadingField(blank=True, null=True,
+                                         config_name='default',
                                          external_plugin_resources=[(
                                              'youtube',
                                              '/static/youtube/youtube/',
@@ -52,6 +53,7 @@ class EnArticle(models.Model):
     topic = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=False)
     body = RichTextUploadingField(blank=True, null=True,
+                                  config_name='default',
                                   external_plugin_resources=[(
                                       'youtube',
                                       '/static/youtube/youtube/',

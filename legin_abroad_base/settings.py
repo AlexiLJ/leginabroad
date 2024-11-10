@@ -24,9 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = var_getter("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# manage.py check --deploy
 DEBUG = False
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+X_FRAME_OPTIONS = 'DENY'
+SESSION_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = ['leginabroad.com', '*']
+ALLOWED_HOSTS = ['leginabroad.com']
 
 # Application definition
 
@@ -51,7 +57,7 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_BROWSE_SHOW_DIRS = True
-SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
+# SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 CKEDITOR_CONFIGS = {
     'default': {
         'width': 'auto',
@@ -59,20 +65,34 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'Custom',
         'extraAllowedContent': 'iframe[*]{*}(*);',
         'allowedContent': True,
-        'toolbar_Custom': [
-            ['Bold', 'Italic', 'Underline'],
-            ['Font', 'FontSize', 'TextColor', 'BGColor'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
-             'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink', 'Anchor'],
-            ['Table', 'HorizontalRule'],
-            ['Smiley', 'SpecialChar'],
-            ['RemoveFormat', 'Source', 'CodeSnippet', 'Image', 'Youtube'],
-            ['Maximize']
+        'toolbar_CustomToolbarConfig': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'forms',
+             'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+                       'HiddenField']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       'Language']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert',
+             'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['About']},
+            '/',  # put this to force next toolbar on new line
+            {'name': 'customtools', 'items': ['Preview', 'Maximize']},
         ],
-        'extraPlugins': ','.join(['codesnippet',
-                                  'youtube']),
-        "removePlugins": "stylesheetparser"
+        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+
+        'extraPlugins': ','.join(['codesnippet', 'youtube'])
     },
 }
 
@@ -153,9 +173,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-
-# STATICFILES_DIRS = [BASE_DIR / 'static']
-# MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -182,7 +199,8 @@ AWS_S3_OBJECT_PARAMETERS = {
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
-AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter from generated URLs for images from s3
+AWS_QUERYSTRING_AUTH = False  # this removes authentication query parameter
+                              # from generated URLs for images from s3
 
 STORAGES = {
     # Media file (image) management

@@ -23,9 +23,7 @@
             {% endif %}
             <p><a class="artic" href="{{ article.get_absolute_url }}">{{ article|safe }}</a></p>
             {% load i18n %}
-            {% language 'uk' %}
-              <strong>{{ article.date_added|date:'F, d, Y' }}</strong><br>
-            {% endlanguage %}
+            <strong>{{ article.date_added|date:'F, d, Y' }}</strong><br>
             <p class="tags">
               {% for tag in article.tags.all %}
                 <a class="tag d-inline-flex p-2" href="{% url "en_legin_abroad:en_article_by_tag" tag.slug %}">#{{ tag.name }}</a>
