@@ -32,8 +32,9 @@ def var_getter(name: str):
     :return: Any
     '''
     branch = get_active_branch_name()
-    with open("/pathes.json", "r") as pathes:
-        storage = json.load(pathes).get(branch)
+    pathes = Path(__file__).parent.resolve() / "pathes.json"
+    with open(pathes, "r") as p:
+        storage = json.load(p).get(branch)
         print(storage)
     with open(Path(storage)) as st:
         var = json.load(st).get(name)
