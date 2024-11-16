@@ -18,8 +18,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.sitemaps.views import sitemap
-from legin_abroad.sitemaps import ArticleSitemap, StaticViewSitemap, SectionSitemap  #, TagSitemap
+# from django.contrib.sitemaps.views import sitemap
+# from legin_abroad.sitemaps import ArticleSitemap, StaticViewSitemap, SectionSitemap  #, TagSitemap
 
 # sitemaps = {
 #     'static': StaticViewSitemap,
