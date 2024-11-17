@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'taggit',
     'ckeditor',
     'ckeditor_uploader',
-    'legin_abroad.apps.LeginAbroadConfig',
+    # 'legin_abroad.apps.LeginAbroadConfig',
     'en_legin_abroad.apps.EnLeginAbroadConfig'
 ]
 

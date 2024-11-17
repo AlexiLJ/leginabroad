@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 def get_git_parent_dir(search_start: str = 'leginabroad'):
-    cwd = list(Path.cwd().parts)
+    cwd = list(Path.cwd().parts) # getting splitted cwd dir
     if search_start not in cwd:
         raise Exception(f'No parent dir: {search_start} detected')
     for path_part in cwd[::-1]:
@@ -13,7 +13,11 @@ def get_git_parent_dir(search_start: str = 'leginabroad'):
         break
     return Path(*cwd) / '.git'
 
-def get_active_branch_name():
+def get_active_branch_name() -> str:
+    """
+
+    :return: str
+    """
     hidden_dir = get_git_parent_dir() / "HEAD"
     hidden_dir.chmod(0o444)
     # assert head_dir.is_file()
@@ -23,21 +27,19 @@ def get_active_branch_name():
         if line[0:4] == "ref:":
             return line.partition("refs/heads/")[2]
 
+
 def var_getter(name: str):
     '''
-
+    Getting sys. variables
     :param name: str name of the sys. variable
     :param storage: str|None
     :return: Any
     '''
     branch = get_active_branch_name()
-    pathes = Path(__file__).parent.resolve()/"pathes.json"
+    pathes = Path(__file__).parent.resolve() / "pathes.json"
     with open(pathes, "r") as p:
-        storage = json.load(p).get(branch)
-        print(storage)
+        storage = json.load(p).get(branch)  # environment variables
     with open(Path(storage)) as st:
         var = json.load(st).get(name)
-    if branch == 'dev':
-        print(name, var)
     return var
 

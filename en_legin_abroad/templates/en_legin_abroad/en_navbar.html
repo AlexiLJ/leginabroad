@@ -68,16 +68,11 @@
     <form class='form-inline ml-auto' method="GET" action="search" style="padding: 2px 4px">
         <input class='form-control mr-2 col-sm-4 col-md-4 col-lg-8 ' name="query" value="{{request.GET.query}}" placeholder="search" aria-label="Search">
         <!--<input class='form-control mr-2 col-sm-4 col-md-4 col-lg-8' name="q" value="{{request.GET.q}}" placeholder="пошук" aria-label="Пошук">-->
-
         <button class="btn success" type="submit">
           Search
         </button>
-        
     </form>
-    <a class="language" role="button" href="{% url 'legin_abroad:index' %}">UA</a>
-   
   </div>
-  
 </div>
 </nav>
 
@@ -90,6 +85,5 @@
     var scrolled = (winScroll / height) * 100;
     document.getElementById("myBar").style.width = scrolled + "%";
   }
-
 
 </script> 
