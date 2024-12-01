@@ -15,7 +15,6 @@ def get_git_parent_dir(search_start: str = 'leginabroad'):
 
 def get_active_branch_name() -> str:
     """
-
     :return: str
     """
     hidden_dir = get_git_parent_dir() / "HEAD"
@@ -29,7 +28,7 @@ def get_active_branch_name() -> str:
 
 def var_getter(name: str):
     '''
-    Getting sys. variables
+    Getting sys. variables based on the git branch
     :param name: str name of the sys. variable
     :param storage: str|None
     :return: Any
