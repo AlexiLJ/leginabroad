@@ -100,7 +100,7 @@
         }
         .mx-5 {
         position: relative;
-        right: 40vw;    
+        right: 40vw;
        text-align: center;
        width: 350px;
        }
@@ -145,7 +145,7 @@
         display: inline-block;
         cursor: pointer;
         right: 50%;
-    
+
     }
 
     .bar1, .bar2, .bar3 {
@@ -184,7 +184,7 @@
         position: relative;
         right: 10%}
     element.style {
-           
+
         height: auto;
         width: 51%;
         }
@@ -204,7 +204,7 @@
             height: 50px;
             font-weight: bold;
         }
-    
+
         a#banner.navbar-brand {
             color: #6A9C20;
             position: relative;
@@ -212,8 +212,8 @@
             bottom: 4vw;
             text-decoration: none;
         }
-        
-     
+
+
         a.btn.btn.sects {
             background-color: rgba(14,25,36,0.85);
             font-family: 'Roboto', sans-serif;
@@ -226,24 +226,24 @@
             border-radius: 10px;
             font-weight: bold;
             margin: 50px 30px 25px 30px;
-            
+
         }
-    
+
         ul.navbar-brand {
             display: inline-block;
             padding-top: .3125rem;
             padding-bottom: 0vw;
-    
+
             margin-right: 1rem;
             font-size: 1.25rem;
             line-height: inherit;
             white-space: nowrap;
         }
-    
+
         a.nav-link-offset-5.mr-5 {position: relative;
             bottom: 10vh;
             }
-    
+
         input.form-control.mr-2.col-sm-4.col-md-4.col-lg-8 {
             color: #575958;
             position: relative;
@@ -252,18 +252,18 @@
             /*hight: 40px;*/
             /* border: 2px solid #6A9C20; */
             background-color: #eeffcc;
-    
+
             left: -5%;
-    
+
             bottom: 10.3vh;
             /* padding-right: 40px; */
-    
+
             margin-right: 0px;
             width: 80vw;
             float: left;
-    
+
         }
-    
+
         button.btn.success {
             position: relative;
             width: 16vw;
@@ -276,7 +276,7 @@
             align-self: center;
             margin: 0px
         }
-    
+
         .breadcrumb {
             left: 30%;
             top: -8rem;
@@ -291,26 +291,26 @@
             border-radius: .25rem;
             position: absolute;
         }
-    
+
         form.form-inline.ml-auto {
             display: flex;
             top: -1vw;
             justify-content: space-between;
         }
-    
+
         div#contains.row {
             margin-top: 30px;
         }
-    
+
         img.thumb {
             width: 78%;
             position: relative;
             align-self: center;
             right: 15%;
         }
-    
+
         a#artic.artic {
-          
+
             float: unset;
             position: relative;
             display: flow;
@@ -318,26 +318,26 @@
             font-size: 120%;
             font-weight: bold;
         }
-        
+
         .mx-5 {
             position: relative;
-            right: 40vw;    
+            right: 40vw;
            text-align: center;
            width: 350px;
            }
-    
+
         strong {
             right: 10%;
             position:relative;
         }
-    
+
         a.tag.d-inline-flex.p-2 {
             position: relative;
             right: 12%;
             width: 50%;
             margin-top: -1%
         }
-    
+
         a.artic {
             position: relative;
             right: 25vw;
@@ -349,25 +349,25 @@
             left: -20vw;
             font-size: 28px;
         }
-    
+
         footer {
              position:relative;
              width: 100%;
         }
-    
+
         button.navbar-toggler.mr-auto {
             position: relative;
             right: -79vw;
             bottom: 10vh;
             margin: 0px;
         }
-    
+
         .container {
             display: inline-block;
             cursor: pointer;
-            right: 50%; 
+            right: 50%;
         }
-    
+
         .bar1, .bar2, .bar3 {
             width: 35px;
             height: 5px;
@@ -375,21 +375,21 @@
             margin: 6px 0;
             transition: 0.4s;
         }
-    
+
         .change .bar1 {
             background-color: #FF3300;
             opacity: 0.75;
             width: 36px;
             height: 6px;
         }
-    
+
         .change .bar2 {
             background-color: #FF3300;
             opacity: 0.75;
             width: 36px;
             height: 6px;
         }
-    
+
         .change .bar3 {
             background-color: #FF3300;
             opacity: 0.75;
@@ -399,5 +399,5 @@
         #navbar.navbar.navbar-expand-md.fixed-top {
              width: 100vw;
         }
-    
+
 }

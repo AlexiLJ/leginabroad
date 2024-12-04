@@ -14,7 +14,7 @@
       </div>
 
       {% for article in articles %}
-
+        <div class="shared-container article-container">
           <h1><a class="artic"  id='artic' href="{{article.get_absolute_url}}">{{ article.topic }}</a></h1>
           <a class="sect" id = 'article_section_ref' href="{{article.section.get_absolute_url}}">{{ article.section  }}</a></br>
           {% if article.thumb %}
@@ -27,9 +27,10 @@
           {% if article.tags %}
             <div class="tags">
             {% for tag in article.tags.all %}
-              <a class="tag d-inline-flex p-2" href="{% url "en_legin_abroad:en_article_by_tag" tag.slug %}">{{ tag.name }}</a>
+              <a class="tag d-inline-flex p-2" href="{% url 'en_legin_abroad:en_article_by_tag' tag.slug %}">{{ tag.name }}</a>
             {% endfor %}
             </div>
+          </div>
           {% endif %}
           {% empty %}
           <li>
