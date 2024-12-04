@@ -11,11 +11,12 @@
         <ol class="breadcrumb bg-white">
           <li class="breadcrumb-item"><a class="navbar-brand mr-auto" href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
           <li class="breadcrumb-item"><a class="navbar-brand mr-auto" href="{% url 'en_legin_abroad:en_sections' %}">Topics</a></li>
-          <li class="breadcrumb-item navbar-brand mr-auto" style="color: rgb(104, 211, 55);">{{section}}</li>
+          <li class="breadcrumb-item "><a class="navbar-brand mr-auto" href="{{section.get_absolute_url}}">{{section}}</a></li>
         </ol>
       </nav>
       <div class="article_list">
         {% for article in articles %}
+          <div class="shared-container article-container">
             <h1><a class='artic' href="{{ article.get_absolute_url }}">{{ article.topic }}</a></h1>
             <a class="sect" href="{{ article.section.get_absolute_url }}">{{ article.section }}</a></br>
             {% if article.thumb %}
@@ -29,10 +30,12 @@
                 <a class="tag d-inline-flex p-2" href="{% url "en_legin_abroad:en_article_by_tag" tag.slug %}">#{{ tag.name }}</a>
               {% endfor %}
             </p>
+          </div>
         {% empty %}
           <li>
             There is no entries for the current topic.
           </li>
+
         {% endfor %}
       </div>
     <div class="paginator">
