@@ -13,7 +13,7 @@
 }
 
 .article-container img.thumb {
-    max-width: 80%; /* Ensures the image is responsive */
+    max-width: 55%; /* Ensures the image is responsive */
     height: auto; /* Maintains aspect ratio */
     display: block; /* Avoids inline spacing issues */
     margin-top: 10px;
