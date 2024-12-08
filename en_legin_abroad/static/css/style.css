@@ -86,8 +86,6 @@ h1, h2, h3, h4, a, li, strong {
     color: whitesmoke;
 }
 
-
-
 p {
     color: #1b1e21;
     font-family: 'Roboto', sans-serif;
@@ -135,8 +133,6 @@ a.artic, .artic {
     width: 0%;
 }
 
-
-
 a#banner.navbar-brand {
     color: #6A9C35;
     padding-right: 5px;
@@ -161,7 +157,6 @@ span.navbar-toggler-icon.icon-bar {
     color: #6A9C20;
     }
 
-
 a.nav-link-offset-5.mr-5, a.sect {
     color: #6A9C20;
     opacity: 1;
@@ -174,7 +169,6 @@ a.nav-link-offset-5.mr-5:hover, a.navbar-brand.text-light.mr-auto:hover, a.sect:
 }
 
 a.navbar-brand.text-light.mr-auto { color: #6A9C20; opacity: 1; text-decoration: none; font-size: 140%;}
-
 
 strong#banner {
     color: #6A9C20;
@@ -220,9 +214,6 @@ a#breadcrumb:hover {
     font-family: 'Roboto', sans-serif;
 
 }
-
-
-
 a.tag.d-inline-flex.p-2 {
     color: #6A7C20;
     font-size: 110%;
@@ -241,6 +232,8 @@ span.navbar-toggler-icon { color: #6A9C20; }
 
 
 img.thumb {
+    width: 100px;       /* Set the width to 100px */
+    height: auto;
     padding-top: 10px;
     padding-bottom: 5px;
 }
@@ -293,7 +286,7 @@ a.navbar-brand.text-success.mr-auto {
 }
 
 .shared-container img.thumb {
-    max-width: 80%; /* Ensures the image is responsive */
+    max-width: 250px; /* Ensures the image is responsive */
     height: auto; /* Maintains aspect ratio */
     display: block; /* Avoids inline spacing issues */
     margin-top: 10px;
@@ -310,6 +303,7 @@ a.navbar-brand.text-success.mr-auto {
     text-decoration: none;
     color: #333;
 }
+
 
 
 /* a.language {
