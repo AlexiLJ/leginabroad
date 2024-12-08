@@ -267,57 +267,30 @@
             position: absolute;
         }
 
-        form.form-inline.ml-auto {
+        /*form.form-inline.ml-auto {
             display: flex;
             top: -1vw;
             justify-content: space-between;
-        }
+        }*/
 
         div#contains.row {
             margin-top: 30px;
         }
 
-        img.thumb {
-            width: 80%;
-            position: relative;
-            align-self: center;
-            right: 15%;
-        }
 
-        a#artic.artic {
-            float: unset;
-            position: relative;
-            display: flow;
-            margin-left: 10vw;
-            font-size: 65%;
-            font-weight: bold;
-        }
-
-        .mx-5 {
+        /*.mx-5 {
             position: relative;
             right: 40vw;
            text-align: center;
            width: 350px;
-           }
+           } */
 
         strong {
             right: 10%;
             position:relative;
         }
 
-        a.tag.d-inline-flex.p-2 {
-            position: relative;
-            right: 12%;
-            width: 50%;
-            margin-top: -1%
-        }
 
-        a.artic {
-            position: relative;
-            right: 25vw;
-            width: 85vw;
-            display: inline-flex;
-        }
         a.sect {
             font-size: 7vw;
             left: -20vw;
@@ -370,6 +343,57 @@
             width: 36px;
             height: 6px;
         }
+        .shared-container.article-container {
+
+            flex-direction: column; /* Align items vertically if needed */
+            align-items: self-start; /* Center items horizontally */
+        }
+
+        /* Image Styling */
+        .shared-container.article-container img.thumb {
+            max-width: 90%;
+            min-width: 50%;
+            left-margin: 7%;
+            object-fit: cover;
+            margin: 15px 0; /* Add vertical spacing */
+            border-radius: 4px; /* Rounded corners */
+        }
+
+       .shared-container.article-container a#artic.artic {
+            position: relative;
+            font-size: 1rem; /* Adjusted text size */
+            font-weight: bold;
+            color: #1b1e21;
+            font-family: 'Roboto', sans-serif;
+            display: inline-block;
+            text-align: left;
+            margin: 10px 0; /* Adds spacing between text and other elements */
+            padding: 0; /* No extra padding */
+            width: auto; /* Natural width */
+        }
+        /* Paragraph Styling */
+        .shared-container.article-container p {
+          margin: 15px 0;
+          text-align: justify; /* Better text alignment for readability */
+          color: #333; /* Standard text color */
+        }
+
+        /* Date Styling */
+        .shared-container.article-container strong {
+          display: block;
+          margin-left: 10%
+
+        }
+
+        .shared-container.article-container .tags .tag {
+          margin-top: 10px;
+          display: flex;
+          flex-wrap: wrap; /* Wrap tags to the next line if necessary */
+          gap: 5px; /* Space between tags */
+          color: #6A7C20;
+          font-size: 100%;
+          text-decoration: none;
+    }
 
 
 }
