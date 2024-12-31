@@ -12,11 +12,13 @@
         padding: 10px;
         display: flex;
         flex-direction: column; /* Stack content vertically */
-        align-items: flex-start;
+        align-items: normal;
+        width: fit-content;
     }
 
     .article_list {
-    margin-top: 45px;
+        width: auto;
+        margin-left: -30%;
     }
 
     input.form-control.mr-2.col-sm-4.col-md-4.col-lg-8{
