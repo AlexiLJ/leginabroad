@@ -11,13 +11,91 @@ a:hover {
     text-decoration: none;
 }
 
+@media screen and (max-width: 930px) {
+
+    #contains {
+  margin: 20px auto;
+  padding: 10px;
+
+}
+
+.centered {
+  text-align: center;
+}
+
+    table {
+        max-width: fit-content;
+    }
+
+    .col-8 {
+  padding: 20px; /* Add padding for readability */
+  box-sizing: border-box; /* Ensures padding is included in width calculations */
+}
+
+#article {
+  width: 100%; /* Occupy the full width of the container */
+}
+
+#article .part {
+    text-align: left;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    width: 100%;
+}
+
+#article h1 {
+  font-size: 2rem; /* Responsive heading size */
+  margin-bottom: 1rem; /* Add spacing below the heading */
+  color: #333; /* Adjust text color */
+}
+
+#article p {
+  font-size: 1rem; /* Responsive font size */
+  margin-bottom: 1rem; /* Add spacing between paragraphs */
+  width: 55% auto;
+}
+
+#article img {
+  max-width: 100%; /* Make images responsive */
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+  margin: 0 auto; /* Center align images */
+}
+
+#article .tag {
+  background-color: #f8f9fa; /* Light background for tags */
+  color: #6A9C20; /* Match your theme color */
+  margin: 5px; /* Add spacing between tags */
+  padding: 5px 10px; /* Adjust padding for better appearance */
+  border-radius: 5px; /* Slightly rounded corners */
+  text-decoration: none; /* Remove underline */
+}
+
+#article .tag:hover {
+  background-color: #6A9C20; /* Highlight on hover */
+  color: white; /* White text on hover */
+}
+
+#article .breadcrumb {
+  background: none; /* Remove default breadcrumb background */
+  padding: 0; /* Remove padding */
+  margin-bottom: 1rem; /* Space below breadcrumbs */
+}
+
+#article hr {
+  border: 0;
+  border-top: 1px solid #ddd;
+  margin: 2rem 0; /* Add spacing above and below */
+}
+}
+ /*
 @media screen and (min-width: 100px) and (max-width: 500px) {
 
     img.m-auto {
         width: 85vw;
         position: relative;
         align-self: center;
-        right: 8%;
+       right: 8%;
     }
     part {
 
@@ -49,3 +127,4 @@ a:hover {
         margin-left: 10vw;
     }
 }
+*/
