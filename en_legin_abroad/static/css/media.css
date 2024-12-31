@@ -5,13 +5,14 @@
     }
 
     a#banner.navbar-brand {
-    color: #6A9C35;
-    padding-right: 5px;
-    padding-left: 5px;
-    /* font-size: 35px; */
-    font-family: 'Roboto', sans-serif;
-    margin-left: 20px;
-    text-size-adjust: 100%;
+           color: #6A9C35;
+        /* padding-right: 5px; */
+        /* padding-left: 5px; */
+        font-size: 20px;
+        font-family: 'Roboto', sans-serif;
+        margin-left: 2%;
+        text-size-adjust: 100%;
+
     }
 
     /* Article Container */
