@@ -2,19 +2,19 @@
 {% load static %}
 
 <head>
-
+<!--  <link rel="stylesheet" href="{% static 'css/sections.css' %}" />-->
 </head>
 <body>
   {% block content %}
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb bg-white">
-        <li class="breadcrumb-item"><a id = 'breadcrumb' href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
-      </ol>
-    </nav>
+    <nav>
+        <ol class="breadcrumb bg-white">
+          <li class="breadcrumb-item"><a class="navbar-brand mr-auto" href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
+        </ol>
+      </nav>
     <div class="section-grid-container">
   
         {% for section in sections %}
-          <div class='section-div'>
+          <div class='shared-container section-container'>
             <h2><a id='sections' href="{{section.get_absolute_url}}">{{ section.name }}</a></h2>
             {% if section.thumb %}
               <a href="{{section.get_absolute_url}}"><img class='m-auto ses' style="position: center" src="{{ section.thumb.url }}"></a>
