@@ -14,8 +14,12 @@ a:hover {
 @media screen and (max-width: 930px) {
 
     #contains {
-  margin: 20px auto;
-  padding: 10px;
+ {
+    #contains {
+        /* margin: auto; */
+        /* padding: 10px; */
+        width: 130%;
+    }
 
 }
 
