@@ -2,7 +2,6 @@ import json
 
 from pathlib import Path
 
-
 def get_git_parent_dir(search_start: str = 'leginabroad'):
     cwd = list(Path.cwd().parts) # getting splitted cwd dir
     if search_start not in cwd:
