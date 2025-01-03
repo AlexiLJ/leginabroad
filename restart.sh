@@ -18,7 +18,7 @@ activate_venv() {
 }
 
 # Parse the arguments
-while getopts "tdc:" opt; do
+while getopts "tdc:d:" opt; do
   case $opt in
     t)
       run_tests=true
