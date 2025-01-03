@@ -11,7 +11,7 @@ class EnSectionAdmin(admin.ModelAdmin):
     prepopulated_fields = {'sslug': ('name',)} # autofill of sec. slug
 admin.site.register(EnSection, EnSectionAdmin)
 
-#@admin.register(Aricle)
+#@admin.register(Article)
 
 class EnArticleAdmin(admin.ModelAdmin):
     body = forms.CharField(widget=CKEditorWidget())
