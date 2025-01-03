@@ -9,7 +9,7 @@ venv_path="venv"
 activate_venv() {
   if [ -d "$1" ]; then
     echo "$(pwd)/$1/bin/activate"
-    sudo source "$(pwd)/$1/bin/activate"
+    source "$(pwd)/$1/bin/activate"
     echo "Virtual environment activated: $1"
   else
     echo "Error: Virtual environment not found at $1"
