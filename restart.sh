@@ -38,10 +38,10 @@ done
 
 # If the -t flag is passed, run tests
 if [ "$run_tests" = true ]; then
-  # activate venv
   activate_venv "$venv_path"
   echo "Running tests..."
-  PGPASSWORD="$POSTGRESQL_PASSWORD" psql -U $POSTGRESQL_USER -d postgres -c "ALTER USER $POSTGRESQL_USER CREATEDB;"
+  # if error occur with rights, go to the postgres user:
+  # sudo su postgres > psql > ALTER USER $POSTGRESQL_USER CREATEDB;
   python manage.py test || { echo "Tests failed! Aborting."; deactivate; exit 1; }
   deactivate
 fi
