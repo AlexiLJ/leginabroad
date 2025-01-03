@@ -8,11 +8,9 @@ venv_path="venv"
 
 activate_venv() {
   if [ -d "$1" ]; then
-    echo "$(pwd)/$1/bin/activate"
     source "$(pwd)/$1/bin/activate"
     echo "Virtual environment activated: $1"
     echo "The Python interpreter being used is: $(which python)"
-
   else
     echo "Error: Virtual environment not found at $1"
     exit 1
