@@ -45,3 +45,17 @@ if [ "$run_tests" = true ]; then
   echo "Running tests..."
   python manage.py test || { echo "Tests failed! Aborting."; deactivate; exit 1; }
   deactivate
+fi
+
+if [ "$run_collectstatic" = true ]; then
+  activate_venv "$venv_path"
+  echo "Running python3 manage.py collectstatic"
+  python manage.py collectstatic || { echo "Tests failed! Aborting."; deactivate; exit 1; }
+  deactivate
+fi
+
+echo "Reloading services."
+sudo systemctl restart gunicorn
+sudo systemctl daemon-reload  # reload the systemd manager configuration
+sudo systemctl restart gunicorn.socket gunicorn.service
+sudo nginx -t && sudo systemctl restart nginx
