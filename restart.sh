@@ -41,7 +41,7 @@ if [ "$run_tests" = true ]; then
   # activate venv
   activate_venv "$venv_path"
   echo "Running tests..."
-  PGPASSWORD="$POSTGRESQL_PASSWORD" psql -U postgres -d postgres -c "ALTER USER $POSTGRESQL_USER CREATEDB;"
+  PGPASSWORD="$POSTGRESQL_PASSWORD" psql -U $POSTGRESQL_USER -d postgres -c "ALTER USER $POSTGRESQL_USER CREATEDB;"
   python manage.py test || { echo "Tests failed! Aborting."; deactivate; exit 1; }
   deactivate
 fi
