@@ -11,6 +11,8 @@ activate_venv() {
     echo "$(pwd)/$1/bin/activate"
     source "$(pwd)/$1/bin/activate"
     echo "Virtual environment activated: $1"
+    echo "The Python interpreter being used is: $(which python)"
+
   else
     echo "Error: Virtual environment not found at $1"
     exit 1
@@ -18,7 +20,7 @@ activate_venv() {
 }
 
 # Parse the arguments
-while getopts "tdc:d:" opt; do
+while getopts "tcd" opt; do
   case $opt in
     t)
       run_tests=true
@@ -41,19 +43,5 @@ if [ "$run_tests" = true ]; then
   # activate venv
   activate_venv "$venv_path"
   echo "Running tests..."
-  sudo python3 manage.py test || { echo "Tests failed! Aborting."; deactivate; exit 1; }
+  python manage.py test || { echo "Tests failed! Aborting."; deactivate; exit 1; }
   deactivate
-fi
-
-if [ "$run_collectstatic" = true ]; then
-  activate_venv "$venv_path"
-  echo "Running python3 manage.py collectstatic"
-  sudo python3 manage.py collectstatic || { echo "Tests failed! Aborting."; deactivate; exit 1; }
-  deactivate
-fi
-
-echo "Reloading services."
-sudo systemctl restart gunicorn
-sudo systemctl daemon-reload  # reload the systemd manager configuration
-sudo systemctl restart gunicorn.socket gunicorn.service
-sudo nginx -t && sudo systemctl restart nginx
