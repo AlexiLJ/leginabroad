@@ -32,7 +32,7 @@ SECURE_SSL_REDIRECT = True
 X_FRAME_OPTIONS = 'DENY'
 SESSION_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = ['leginabroad.com']
+ALLOWED_HOSTS = ["leginabroad.com", "www.leginabroad.com"]
 
 # Application definition
 
@@ -182,7 +182,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 BOOTSTRAP4 = {
     'include_jquery': True
 }
-# TODO get this in order after migrations and before deployment
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
