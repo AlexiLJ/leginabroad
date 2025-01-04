@@ -78,6 +78,13 @@ h2 {
 
 }
 
+a#sections {
+    color: #6a9c20;
+    font-size: 80%;
+}
+img.m-auto.ses {
+
+}
 /*a#sections:hover {*/
 /*    color: #FF3300;*/
 /*    font-size: 34px;*/
