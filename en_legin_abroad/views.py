@@ -79,7 +79,8 @@ class ArticleDetailView(DetailView):
         article = get_object_or_404(EnArticle, slug=slug, status='published')
         tag = article.tags.all()
         article_tags_ids = article.tags.values_list('id', flat=True)
-        similar_articles = EnArticle.objects.all().filter(tags__in=article_tags_ids).exclude(id=article.id)
+        similar_articles = EnArticle.objects.all().filter(status='published',
+                                                          tags__in=article_tags_ids).exclude(id=article.id)
         similar_articles = similar_articles.annotate(same_tags=Count('tags')).order_by('-same_tags')[:3]
 
         context['article'] = article
@@ -149,7 +150,14 @@ def tag_search(request, tag_slug=None):
                 rank=SearchRank(search_vector, search_query)
             ).filter(search=search_query, status='published').order_by('-rank')
 
-    context = {'form': form, 'query': query, 'results': results, 'sections': sections, 'section': section, 'tag': tag}
+    context = {
+               'form': form,
+               'query': query,
+               'results': results,
+               'sections': sections,
+               'section': section,
+               'tag': tag
+               }
 
     return render(request, 'en_legin_abroad/en_search.html', context)
 

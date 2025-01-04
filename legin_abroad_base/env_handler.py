@@ -2,7 +2,6 @@ import json
 
 from pathlib import Path
 
-
 def get_git_parent_dir(search_start: str = 'leginabroad'):
     cwd = list(Path.cwd().parts) # getting splitted cwd dir
     if search_start not in cwd:
@@ -19,6 +18,7 @@ def get_active_branch_name() -> str:
     """
     hidden_dir = get_git_parent_dir() / "HEAD"
     hidden_dir.chmod(0o444)
+    # assert head_dir.is_file()
     with open(hidden_dir) as f:
         content = f.read().splitlines()
     for line in content:

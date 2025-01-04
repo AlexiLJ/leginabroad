@@ -14,7 +14,7 @@ urlpatterns = [
 	path('<slug:sslug>/search', views.SearchView.as_view(), name='en_search'),
 	path('tag/<slug:tag_slug>/search', views.tag_search, name='en_search'),
 	
-	path('sections/<slug:sslug>', views.section, name='en_section'),#Sections url
+	path('sections/<slug:sslug>', views.section, name='en_section'),  #Sections url
 	path('sections', views.SectionsListView.as_view(), name='en_sections'),
 	
 
