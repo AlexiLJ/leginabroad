@@ -1,5 +1,4 @@
 from pydoc_data.topics import topics
-
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from en_legin_abroad.models import EnArticle, EnSection
@@ -20,7 +19,7 @@ class EnArticleEnSectionTest(TestCase):
         self.assertTrue(self.first_article.section.name=="First section")
         self.assertTrue(self.first_article.topic=="First article")
         self.assertTrue(self.first_sections.date_added == self.first_article.date_added)
-        self.assertIn("TEST", str(self.first_article.body))
+        self.assertIn(" TEST ", str(self.first_article.body))
 
     def test_absolute_sections_url(self):
         self.assertIn(f"{self.first_sections.sslug}",
