@@ -54,6 +54,7 @@
         font-family: 'Roboto', sans-serif;
         display: inline-block;
         max-width: fit-content;
+        text-align: left;
     }
 
         /* Tags */
@@ -67,7 +68,16 @@
     .shared-container.article-container strong {
         font-size: 0.8rem;
         margin: 5px 0;
+        text-align: left;
     }
+
+    .shared-container.article-container a.sect {
+    color: #6A9C20;
+    opacity: 1;
+    text-decoration: none;
+    font-size: 20px;
+    text-align: left;
+}
 
     /* Sidebar Adjustments */
     .col-4 {
