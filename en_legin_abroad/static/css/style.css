@@ -185,6 +185,11 @@ a.navbar-brand.mr-auto {
     white-space: nowrap;
     color: #6A9C20;
 }
+a.navbar-brand.mr-auto:hover {
+    color: #FF3300;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
 
 /* Navbar end*/
 
@@ -231,13 +236,6 @@ li#active {
 
 span.navbar-toggler-icon { color: #6A9C20; }
 
-
-/*img.thumb {*/
-/*    width: 100px;       !* Set the width to 100px *!*/
-/*    height: auto;*/
-/*    padding-top: 10px;*/
-/*    padding-bottom: 5px;*/
-/*}*/
 
 .header { overflow: auto; }
 
@@ -305,8 +303,6 @@ a.navbar-brand.text-success.mr-auto {
     text-decoration: none;
     color: #333;
 }
-
-
 
 /* a.language {
     font-size: 145%;
