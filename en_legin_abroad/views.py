@@ -1,9 +1,6 @@
-from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from taggit.models import Tag
-from django.http import Http404
-from django.conf import settings
 from django.views.generic import View, ListView, DetailView
 from django.db.models import Count
 from .models import EnSection, EnArticle
