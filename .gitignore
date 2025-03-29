@@ -160,3 +160,4 @@ cython_debug/
 .idea/
 pathes.json
 useful_commands.md
+leginabroad_db_backup_*.dump
