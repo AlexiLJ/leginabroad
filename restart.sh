@@ -42,15 +42,13 @@ if [ "$run_tests" = true ]; then
   echo "Running tests..."
   # if error occur with rights, go to the postgres user:
   # sudo su postgres > psql > ALTER USER $POSTGRESQL_USER CREATEDB;
-  python3 manage.py test || { echo "Tests failed! Aborting."; deactivate; exit 1; }
-  deactivate
+  python3.13 manage.py test || { echo "Tests failed! Aborting."; deactivate; }
 fi
 
 if [ "$run_collectstatic" = true ]; then
   activate_venv "$venv_path"
-  echo "Running python3 manage.py collectstatic"
-  sudo python3 manage.py collectstatic || { echo "Tests failed! Aborting."; deactivate; exit 1; }
-  deactivate
+  echo "Running python3.13 manage.py collectstatic"
+  python3.13 manage.py collectstatic || { echo "Tests failed! Aborting."; deactivate; }
 fi
 
 echo "Reloading services."
