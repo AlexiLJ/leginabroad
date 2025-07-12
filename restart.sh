@@ -9,7 +9,7 @@ venv_path="venv"
 activate_venv() {
     source "$(pwd)/$1/bin/activate"
     echo "Virtual environment activated: $1"
-    echo "The Python interpreter being used is: $(which python)"
+    echo "The Python interpreter being used is: $(which python3.13)"
 }
 
 # Parse the arguments
