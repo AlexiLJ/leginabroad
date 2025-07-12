@@ -7,14 +7,9 @@ run_collectstatic=false
 venv_path="venv"
 
 activate_venv() {
-  if [ -d "$1" ]; then
     source "$(pwd)/$1/bin/activate"
     echo "Virtual environment activated: $1"
     echo "The Python interpreter being used is: $(which python)"
-  else
-    echo "Error: Virtual environment not found at $1"
-    exit 1
-  fi
 }
 
 # Parse the arguments
@@ -48,7 +43,7 @@ fi
 if [ "$run_collectstatic" = true ]; then
   activate_venv "$venv_path"
   echo "Running python3.13 manage.py collectstatic"
-  python3.13 manage.py collectstatic || { echo "Tests failed! Aborting."; deactivate; }
+  python3.13 manage.py collectstatic || { echo "Collectstatic failed. Aborting."; deactivate; }
 fi
 
 echo "Reloading services."
