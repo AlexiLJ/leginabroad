@@ -49,7 +49,7 @@ fi
 if [ "$run_collectstatic" = true ]; then
   activate_venv "$venv_path"
   echo "Running python3 manage.py collectstatic"
-  python3 manage.py collectstatic || { echo "Tests failed! Aborting."; deactivate; exit 1; }
+  sudo python3 manage.py collectstatic || { echo "Tests failed! Aborting."; deactivate; exit 1; }
   deactivate
 fi
 
