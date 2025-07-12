@@ -25,12 +25,12 @@ SECRET_KEY = var_getter("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # manage.py check --deploy
-DEBUG = False
-CSRF_USE_SESSIONS = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
-X_FRAME_OPTIONS = 'DENY'
-SESSION_COOKIE_SECURE = True
+DEBUG = True
+# CSRF_USE_SESSIONS = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+# X_FRAME_OPTIONS = 'DENY'
+# SESSION_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = ["leginabroad.com", "www.leginabroad.com"]
 
