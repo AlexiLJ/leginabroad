@@ -32,7 +32,7 @@ DEBUG = True
 # X_FRAME_OPTIONS = 'DENY'
 # SESSION_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = ["leginabroad.com", "www.leginabroad.com"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
