@@ -58,11 +58,12 @@
         color: rgba(14,25,36,0.85);
     }
 
-    .show-search #searchInput {
+        .show-search #searchInput {
         display: inline-block;
         top: 1px;
+        width: 85%;
         margin-top: -1.5%;
-        right: 19%;
+        right: 12%;
     }
 
    .show-search #submitButton {
