@@ -86,4 +86,11 @@
     document.getElementById("myBar").style.width = scrolled + "%";
   }
 
+  const form = document.querySelector('form');
+  const toggleButton = document.getElementById('toggleButton');
+
+  toggleButton.addEventListener('click', function () {
+    form.classList.toggle('show-search');
+  });
+
 </script> 
