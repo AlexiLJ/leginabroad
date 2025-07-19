@@ -14,9 +14,7 @@
     color: rgba(14,25,36,0.85);
 }
 
-#toggleButton {
-      display: none;
-    }
+
 
 
 input.form-control.mr-2.col-sm-4.col-md-4.col-lg-8{
@@ -66,49 +64,14 @@ a.language:hover {
     text-decoration: none;
 }
 
+a#banner.navbar-brand:hover {
+        pointer-events: none;
+    }
 
-/*
-@media screen and (max-width: 930px)  {
-   #submitButton {
+
+@media screen and (min-width: 931px) {
+   #toggleButton {
       display: none;
     }
 
-    {
-        font-size: 135%;
-        font-family: 'Roboto', sans-serif;
-        color: #6A9C20;
-        border-radius: 6px;
-        border: 2px solid #6A9C20;
-        padding: 2px 7px;
-        cursor: pointer;
-        margin-bottom: 10px;
-    }
-    */
-
-    a#banner.navbar-brand:hover {
-        pointer-events: none;
-    }
 }
-/*
-@media screen and (max-width: 400px) {
-    .btn.success {
-        font-size: 50%;
-        font-family: 'Roboto', sans-serif;
-        color: #6A9C20;
-        border-radius: 6px;
-        border: 2px solid #6A9C20;
-        padding: 2px 7px;
-        cursor: pointer;
-        margin-bottom: 10px;
-    }
-
-    a#banner.navbar-brand {
-        color: #6A9C40;
-        font-size: 70%;
-    }
-
-     a#banner.navbar-brand:hover {
-        pointer-events: none;
-    }
-}
-*/
