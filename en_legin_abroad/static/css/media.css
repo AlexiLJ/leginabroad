@@ -35,7 +35,8 @@
       display: none;
     }
 
-        #toggleButton {
+    #toggleButton {
+        display: block;
         font-size: 135%;
         font-family: 'Roboto', sans-serif;
         color: #6A9C20;
@@ -57,15 +58,19 @@
         color: rgba(14,25,36,0.85);
     }
 
-    #searchInput {
+    .show-search #searchInput {
         display: inline-block;
         top: 1px;
         margin-top: -1.5%;
-        right: 19%;
+        right: 21%;
     }
 
-    #submitButton {
-
+   .show-search #submitButton {
+        display: inline;
+        top: 1px;
+        margin-top: -13%;
+        margin-left: 80%;
+        font-size: 100%;
     }
 
     /* Images */

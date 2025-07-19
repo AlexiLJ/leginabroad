@@ -36,7 +36,7 @@ a.btn.btn.sects:hover{
     a.btn.btn.sects {display: none;}
 }
 
-@media screen and (min-width: 320px) and (max-width: 930px) {
+@media screen and (max-width: 930px) {
     a.btn.btn.sects {display: none;}
 }
 

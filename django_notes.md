@@ -41,4 +41,3 @@ use the usermod command
 sudo usermod -a -G groupName userName
 
 psql -U your_username -d your_database -w
-psql -U leginsuperuser -d leginabroad_db -w

@@ -46,6 +46,9 @@ a.language {
     margin: 0px
 } 
 
+button#toggleButton {
+    display: none;
+  }
 
 /* a.language {
     font-size: 145%;
