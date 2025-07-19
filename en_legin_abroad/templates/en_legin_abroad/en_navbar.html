@@ -11,8 +11,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-
+    <link rel="stylesheet" href="{% static 'nav.css' %}" />
+    <link rel="stylesheet" href="{% static 'media.css' %}" />
 </head>
 
 <nav class="navbar navbar-expand-md fixed-top" id="navbar" >
@@ -62,16 +62,21 @@
               </li>
             {% endfor %}
           </div>
+        </div>
       </ul>
     </ul>
     
     <form class='form-inline ml-auto' method="GET" action="search" style="padding: 2px 4px">
-        <input class='form-control mr-2 col-sm-4 col-md-4 col-lg-8 ' name="query" value="{{request.GET.query}}" placeholder="search" aria-label="Search">
-        <!--<input class='form-control mr-2 col-sm-4 col-md-4 col-lg-8' name="q" value="{{request.GET.q}}" placeholder="пошук" aria-label="Пошук">-->
-        <button class="btn success" type="submit">
+        <input class='form-control mr-2 col-sm-4 col-md-4 col-lg-8 ' id="searchInput" name="query" value="{{request.GET.query}}" placeholder="search" aria-label="Search">
+        <button class="btn success" id="submitButton" type="submit">
           Search
         </button>
     </form>
+
+    <!-- Show Search Button -->
+     <button type="button" id="toggleButton" class="btn btn-secondary">
+        Search
+     </button>
   </div>
 </div>
 </nav>
@@ -85,5 +90,12 @@
     var scrolled = (winScroll / height) * 100;
     document.getElementById("myBar").style.width = scrolled + "%";
   }
+
+  const form = document.querySelector('form');
+  const toggleButton = document.getElementById('toggleButton');
+
+  toggleButton.addEventListener('click', function () {
+    form.classList.toggle('show-search');
+  });
 
 </script> 

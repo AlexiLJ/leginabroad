@@ -1,4 +1,4 @@
-.btn.success {
+#submitButton {
     font-size: 145%;
     font-family: 'Roboto', sans-serif;
     color: #6A9C20;
@@ -8,27 +8,16 @@
     cursor: pointer;
 }
 
-button.btn.success:hover{
+#submitButton:hover{
     background-color: #86C232;
     border: 2px solid #86C232;
     color: rgba(14,25,36,0.85);
 }
 
-.btn.btn-success{
-    font-size: 145%;
-    background-color: #ceff99;
-    font-family: 'Roboto', sans-serif;
-    color: #6A9C20;
-    border: 2px solid #6A9C20;
-    padding: 2px 4px;
-    cursor: pointer;
-}
+#toggleButton {
+      display: none;
+    }
 
-.btn.btn-success:hover{
-    background-color: #FF652F;
-    border: 2px solid #FF652F;
-    color: #222629;
-}
 
 input.form-control.mr-2.col-sm-4.col-md-4.col-lg-8{
     color: #575958;
@@ -36,6 +25,9 @@ input.form-control.mr-2.col-sm-4.col-md-4.col-lg-8{
     text-align:center;
     /*border: 2px solid #6A9C20;*/
     background-color: #eeffcc;
+    /* right: 19%;
+    margin-top: -2%; */
+
 }
 a#search_text_link{
     font-family: 'Roboto', sans-serif;
@@ -74,8 +66,14 @@ a.language:hover {
     text-decoration: none;
 }
 
-@media screen and (min-width: 402px) and (max-width: 930px)  {
-    .btn.success {
+
+/*
+@media screen and (max-width: 930px)  {
+   #submitButton {
+      display: none;
+    }
+
+    {
         font-size: 135%;
         font-family: 'Roboto', sans-serif;
         color: #6A9C20;
@@ -85,12 +83,13 @@ a.language:hover {
         cursor: pointer;
         margin-bottom: 10px;
     }
+    */
 
     a#banner.navbar-brand:hover {
         pointer-events: none;
     }
 }
-
+/*
 @media screen and (max-width: 400px) {
     .btn.success {
         font-size: 50%;
@@ -112,3 +111,4 @@ a.language:hover {
         pointer-events: none;
     }
 }
+*/
