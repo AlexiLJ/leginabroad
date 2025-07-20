@@ -91,44 +91,12 @@ a:hover {
   border-top: 1px solid #ddd;
   margin: 2rem 0; /* Add spacing above and below */
 }
+
+#articles-content {
+ flex: 0 0 100% !important;
+  max-width: 100% !important;
+    margin-left: 0 !important;
+  padding: 1rem; /* Optional, for spacing */
 }
- /*
-@media screen and (min-width: 100px) and (max-width: 500px) {
 
-    img.m-auto {
-        width: 85vw;
-        position: relative;
-        align-self: center;
-       right: 8%;
-    }
-    part {
-
-
-        width: 350px;
-
-
-    }
-
-    p {width: 100vw;}
-
-    img {
-        width: 85vw;
-    }
-    address {
-        margin-bottom: 1rem;
-        font-style: normal;
-        line-height: inherit;
-        width: min-content;
-    }
-
-    h1 {
-        font-size: 70%;
-        text-align:center;
-        float: initial;
-        left: -35vw;
-        position: relative;
-        display: flow-root;
-        margin-left: 10vw;
-    }
 }
-*/
