@@ -35,7 +35,14 @@ a#page_a:hover {
     font-family: 'Roboto', sans-serif;
 }
 
-/* @media screen and (min-width: 100px) and (max-width: 500px) {
+@media screen and (max-width: 930px) {
+ #pagination {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 5px;                  /* Space between items */
+    font-size: 80%;            /* Make everything smaller */
+    padding: 20px;
+  }
 
-    
-} */
+}
