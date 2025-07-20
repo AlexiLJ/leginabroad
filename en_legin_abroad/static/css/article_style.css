@@ -13,6 +13,13 @@ a:hover {
 
 @media screen and (max-width: 930px) {
 
+ body.article-detail-page #articles-content {
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      padding: 1rem;
+    }
+
     #contains {
  {
     #contains {
@@ -90,13 +97,6 @@ a:hover {
   border: 0;
   border-top: 1px solid #ddd;
   margin: 2rem 0; /* Add spacing above and below */
-}
-
-#articles-content {
- flex: 0 0 100% !important;
-  max-width: 100% !important;
-    margin-left: 0 !important;
-  padding: 1rem; /* Optional, for spacing */
 }
 
 }
