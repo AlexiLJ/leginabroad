@@ -58,11 +58,12 @@
         color: rgba(14,25,36,0.85);
     }
 
-    .show-search #searchInput {
+        .show-search #searchInput {
         display: inline-block;
         top: 1px;
+        width: 85%;
         margin-top: -1.5%;
-        right: 21%;
+        right: 12%;
     }
 
    .show-search #submitButton {
@@ -73,8 +74,15 @@
         font-size: 100%;
     }
 
+     #article-card {
+        min-width: 120%;
+        /* padding: 0; /* Optional: removes inner spacing */ */
+        margin: 0 auto; /* Optional: centers content if needed */
+        /* box-sizing: border-box; */
+     }
+
     /* Images */
-    .shared-container.article-container img.thumb {
+    #article-card img.thumb {
         max-width: 100%; /* Ensure the image scales within its container */
         height: auto; /* Maintain aspect ratio */
         margin: 10px 0;

@@ -5,10 +5,7 @@
 <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
 <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
 <head>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/article_style.css' %}">
- 
   <title>{{ article.topic }}</title>
-
 </head>>
 {% block content %}
   <nav aria-label="breadcrumb">
@@ -24,9 +21,9 @@
       <a href="{{article.get_absolute_url}}"><img class='m-auto' style="position: center" src="{{ article.thumb.url }}"></a>
     {% endif %}
     <h1>{{ article.topic }}</h1>
-  
+
       <strong>{{ article.date_added|date:'F, d, Y' }}</strong>
-  
+
     <p class="article">{{ article.body|safe }}</p><br>
     </div>
     <div class="foot">
@@ -45,8 +42,8 @@
     {% empty %}
       None...
     {% endfor %}
+  </div>
 
-    <hr width="800px" margin-left="auto">
 
   <p>
     <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>

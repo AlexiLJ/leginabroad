@@ -8,7 +8,7 @@
           <h2>Articles with tag: "{{ tag.name }}":</h2>
         {% endif %}
         {% for article in articles %}
-          <div class="shared-container article-container">
+          <div class="shared-container article-container" id="article-card">
             <h1><a class='artic' href="{{ article.get_absolute_url }}">{{ article.topic }}</a></h1>
             <a class="sect" href="{{ article.section.get_absolute_url }}">{{ article.section }}</a></br>
             {% if article.thumb %}

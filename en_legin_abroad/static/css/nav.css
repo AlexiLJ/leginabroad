@@ -45,19 +45,3 @@ a.language {
     align-self: center;
     margin: 0px
 } 
-
-
-/* a.language {
-    font-size: 145%;
-    font-family: 'Roboto', sans-serif;
-    color: #6A9C20;
-    border: 2px solid #6A9C20;
-    padding: 2px 7px;
-    cursor: pointer;
-} */
-/* 
-area.language:hover {
-    background-color: #86C232;
-    border: 2px solid #86C232;
-    color: rgba(14,25,36,0.85);
-} */

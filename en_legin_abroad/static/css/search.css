@@ -14,18 +14,12 @@
     color: rgba(14,25,36,0.85);
 }
 
-
-
-
 input.form-control.mr-2.col-sm-4.col-md-4.col-lg-8{
     color: #575958;
     font-size: large;
     text-align:center;
     /*border: 2px solid #6A9C20;*/
     background-color: #eeffcc;
-    /* right: 19%;
-    margin-top: -2%; */
-
 }
 a#search_text_link{
     font-family: 'Roboto', sans-serif;
