@@ -143,16 +143,6 @@ a#banner.navbar-brand {
     margin-left: 25px;
 }
 
-/*a#banner.navbar-brand:hover {
-    color: #6A9C40;
-    padding-right: 5px;
-    padding-left: 5px;
-    font-size: 35px;
-    font-family: 'Roboto', sans-serif;
-    margin-right: 80px;
-    margin-left: 25px;
-} */
-
 span.navbar-toggler-icon.icon-bar {
     color: #6A9C20;
     }
