@@ -48,7 +48,7 @@ jobs:
       - name: Deploy with collect static
         if: steps.changes.outputs.css == 'true'
         run: |
-          ssh target 'cd ~/leginabroad && git pull --ff-only && sudo ./restart.sh -c -y'
+          ssh target 'cd ~/leginabroad && git pull --ff-only && yes | sudo ./restart.sh -c'
 
       - name: Deploy without changes in static files
         if: steps.changes.outputs.css != 'true'
