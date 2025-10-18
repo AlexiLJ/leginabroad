@@ -14,6 +14,19 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            css:
+            - 'en_legin_abroad/static/css/**/*.css'
+            - 'css/**/*.css'
+            - 'static/**/*.css'
+
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -32,6 +45,11 @@ jobs:
             StrictHostKeyChecking no
           END
 
-      - name: Deploy
+      - name: Deploy with collect static
+        if: steps.changes.outputs.css == 'true'
         run: |
-          ssh target "cd ~/leginabroad && git pull && sudo ./restart.sh"
+          ssh target 'cd ~/leginabroad && git pull --ff-only && sudo ./restart.sh -c'
+
+      - name: Deploy without changes in static files
+        run: |
+          ssh target 'cd ~/leginabroad && git pull --ff-only && sudo ./restart.sh -c'
