@@ -24,13 +24,14 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           cat >>~/.ssh/config <<END
-          Host $SSH_HOST
+          Host target
             HostName $SSH_HOST
             User $SSH_USER
             IdentityFile ~/.ssh/id_rsa
+            LogLevel ERROR
             StrictHostKeyChecking no
           END
 
       - name: Deploy
         run: |
-          ssh $SSH_USER@$SSH_HOST "cd ~/leginabroad && git pull && ./restart.sh" "cd ~/leginabroad && git pull && ./restart.sh"
+          ssh target "cd ~/leginabroad && git pull && ./restart.sh" "cd ~/leginabroad && git pull && ./restart.sh"
