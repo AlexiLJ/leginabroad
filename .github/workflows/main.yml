@@ -33,4 +33,4 @@ jobs:
 
       - name: Deploy
         run: |
-          ssh target "cd ~/leginabroad && git pull && ./restart.sh"
+          ssh $SSH_USER@$SSH_HOST "cd ~/leginabroad && git pull && ./restart.sh" "cd ~/leginabroad && git pull && ./restart.sh"
