@@ -1,0 +1,101 @@
+@media screen and (max-width: 930px) {
+    /* Navbar Adjustments */
+    #navbar.navbar.navbar-expand-md.fixed-top {
+        width: 100%;
+    }
+
+    a#banner.navbar-brand {
+           color: #6A9C35;
+        /* padding-right: 5px; */
+        /* padding-left: 5px; */
+        font-size: 20px;
+        font-family: 'Roboto', sans-serif;
+        margin-left: 2%;
+        text-size-adjust: 100%;
+
+    }
+
+    /* Article Container */
+    .shared-container.article-container {
+        max-width: 930px;
+        margin: 8px auto; /* Centering the container */
+        padding: 10px;
+        display: flex;
+        flex-direction: column; /* Stack content vertically */
+        align-items: normal;
+    }
+
+    .article_list {
+        width: auto;
+        margin-left: -30%;
+    }
+
+    input.form-control.mr-2.col-sm-4.col-md-4.col-lg-8 {
+        display: none;
+    }
+
+    /* Images */
+    .shared-container.article-container img.thumb {
+        max-width: 100%; /* Ensure the image scales within its container */
+        height: auto; /* Maintain aspect ratio */
+        margin: 10px 0;
+    }
+
+    /* Article Links */
+    .shared-container.article-container a#artic.artic {
+        font-size: 1.2rem;
+        margin: 10px 0;
+        text-align: left;
+        color: #333; /* Neutral text color */
+    }
+
+    a.artic, .artic, p a.artic {
+        color: #1b1e21;
+        font-family: 'Roboto', sans-serif;
+        display: inline-block;
+        max-width: fit-content;
+        text-align: left;
+    }
+
+        /* Tags */
+    .shared-container.article-container .tags .tag {
+        margin: 5px 0;
+        font-size: 0.9rem;
+        display: inline-block;
+    }
+
+    /* Date Styling */
+    .shared-container.article-container strong {
+        font-size: 0.8rem;
+        margin: 5px 0;
+        text-align: left;
+    }
+
+    .shared-container.article-container a.sect {
+    color: #6A9C20;
+    opacity: 1;
+    text-decoration: none;
+    font-size: 20px;
+    text-align: left;
+}
+
+    /* Sidebar Adjustments */
+    .col-4 {
+        display: none; /* Hide the sidebar for smaller screens */
+    }
+
+    /* Main Content Area */
+    .col-8 {
+        max-width: 930px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+
+    /* Footer */
+    footer {
+        max-width: 930px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 10px 0;
+    }
+}
