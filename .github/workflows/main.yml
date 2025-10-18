@@ -51,5 +51,6 @@ jobs:
           ssh target 'cd ~/leginabroad && git pull --ff-only && sudo ./restart.sh -c -y'
 
       - name: Deploy without changes in static files
+        if: steps.changes.outputs.css != 'true'
         run: |
           ssh target 'cd ~/leginabroad && git pull --ff-only && sudo ./restart.sh'

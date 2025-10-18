@@ -67,9 +67,12 @@ a.language {
     font-weight: bold;
 }
 
+
 a.language:hover {
     background-color: #86C232;
     border: 2px solid #86C232;
     color: rgba(14,25,36,0.85);
     text-decoration: none;
 }
+
+
