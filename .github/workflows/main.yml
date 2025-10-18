@@ -1,6 +1,36 @@
 name: Continuous Integration
 
-on :
+on:
   push:
-      branches:
-        -master
+    branches:
+      - master
+
+concurrency:
+  group: master
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          cat >>~/.ssh/config <<END
+          Host $SSH_HOST
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/id_rsa
+            StrictHostKeyChecking no
+          END
+
+      - name: Deploy
+        run:
+          ssh $SSH_USER@$SSH_HOST "cd ~/leginabroad && git pull && ./restart.sh"
