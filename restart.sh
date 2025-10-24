@@ -38,13 +38,14 @@ if [ "$run_tests" = true ]; then
   echo "Running tests..."
   # if error occur with rights, go to the postgres user:
   # sudo su postgres > psql > ALTER USER $POSTGRESQL_USER CREATEDB;
-  python3 manage.py test || { echo "Tests failed! Aborting."; deactivate; }
+  python manage.py test || { echo "Tests failed! Aborting."; deactivate; }
 fi
 
 if [ "$run_collectstatic" = true ]; then
   activate_venv "$venv_path"
+  echo "The Python version: $(python --version)"
   echo "Running python3 manage.py collectstatic"
-  python3 manage.py collectstatic || { echo "Collectstatic failed. Aborting."; deactivate; }
+  python manage.py collectstatic || { echo "Collectstatic failed. Aborting."; deactivate; }
 fi
 
 echo "Reloading services."
@@ -52,5 +53,3 @@ sudo systemctl restart gunicorn
 sudo systemctl daemon-reload  # reload the systemd manager configuration
 sudo systemctl restart gunicorn.socket gunicorn.service
 sudo nginx -t && sudo systemctl restart nginx
-echo "current python run: $(which python3)"
-echo "current python run: $(python3 --version)"
