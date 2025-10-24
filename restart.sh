@@ -9,7 +9,7 @@ venv_path="venv"
 activate_venv() {
     source "$(pwd)/$1/bin/activate"
     echo "Virtual environment activated: $1"
-    echo "The Python interpreter being used is: $(which python3.13)"
+    echo "The Python interpreter being used is: $(which python3)"
 }
 
 # Parse the arguments
@@ -37,13 +37,13 @@ if [ "$run_tests" = true ]; then
   echo "Running tests..."
   # if error occur with rights, go to the postgres user:
   # sudo su postgres > psql > ALTER USER $POSTGRESQL_USER CREATEDB;
-  python3.13 manage.py test || { echo "Tests failed! Aborting."; deactivate; }
+  python3 manage.py test || { echo "Tests failed! Aborting."; deactivate; }
 fi
 
 if [ "$run_collectstatic" = true ]; then
   activate_venv "$venv_path"
   echo "Running python3.13 manage.py collectstatic"
-  python3.13 manage.py collectstatic || { echo "Collectstatic failed. Aborting."; deactivate; }
+  python3 manage.py collectstatic || { echo "Collectstatic failed. Aborting."; deactivate; }
 fi
 
 echo "Reloading services."
@@ -51,3 +51,4 @@ sudo systemctl restart gunicorn
 sudo systemctl daemon-reload  # reload the systemd manager configuration
 sudo systemctl restart gunicorn.socket gunicorn.service
 sudo nginx -t && sudo systemctl restart nginx
+echo "current python run: $(which python3)"
