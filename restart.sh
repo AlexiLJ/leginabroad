@@ -9,7 +9,8 @@ venv_path="venv"
 activate_venv() {
     source "$(pwd)/$1/bin/activate"
     echo "Virtual environment activated: $1"
-    echo "The Python interpreter being used is: $(which python3)"
+    echo "The Python interpreter being used is: $(which python)"
+    echo "The Python version: $(python --version)"
 }
 
 # Parse the arguments
@@ -42,7 +43,7 @@ fi
 
 if [ "$run_collectstatic" = true ]; then
   activate_venv "$venv_path"
-  echo "Running python3.13 manage.py collectstatic"
+  echo "Running python3 manage.py collectstatic"
   python3 manage.py collectstatic || { echo "Collectstatic failed. Aborting."; deactivate; }
 fi
 
@@ -52,3 +53,4 @@ sudo systemctl daemon-reload  # reload the systemd manager configuration
 sudo systemctl restart gunicorn.socket gunicorn.service
 sudo nginx -t && sudo systemctl restart nginx
 echo "current python run: $(which python3)"
+echo "current python run: $(python3 --version)"
