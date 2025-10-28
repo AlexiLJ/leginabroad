@@ -31,6 +31,8 @@ CSRF_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
 X_FRAME_OPTIONS = 'DENY'
 SESSION_COOKIE_SECURE = True
+# settings.py (Django ≥ 3.0)
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 
 ALLOWED_HOSTS = ["leginabroad.com", "www.leginabroad.com"]
 
