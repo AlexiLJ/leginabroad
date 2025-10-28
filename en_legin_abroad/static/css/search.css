@@ -18,12 +18,11 @@ input.form-control.mr-2.col-sm-4.col-md-4.col-lg-8{
     color: #575958;
     font-size: large;
     text-align:center;
-    /*border: 2px solid #6A9C20;*/
-    background-color: #eeffcc;
+    background-color: #efface;
 }
 a#search_text_link{
     font-family: 'Roboto', sans-serif;
-    color:#6A9C20;
+    color: #6A9C20;
     font-size: 155%;
 }
 a.res:hover, a#search_text_link:hover{
@@ -62,10 +61,8 @@ a#banner.navbar-brand:hover {
         pointer-events: none;
     }
 
-
 @media screen and (min-width: 931px) {
    #toggleButton {
       display: none;
     }
-
 }
