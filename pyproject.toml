@@ -1,0 +1,17 @@
+[project]
+name = "leginabroad"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "boto3>=1.40.64",
+    "django>=5.2.7",
+    "django-bootstrap4>=25.2",
+    "django-ckeditor>=6.7.3",
+    "django-imagekit>=6.0.0",
+    "django-storages>=1.14.6",
+    "django-taggit>=6.1.0",
+    "gunicorn>=23.0.0",
+    "pillow>=12.0.0",
+    "psycopg[binary]>=3.2.12",
+    "whitenoise>=6.11.0",
+]
