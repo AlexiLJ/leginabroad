@@ -36,11 +36,11 @@ while getopts ":tcp:e:h" opt; do
 done
 
 # Ensure uv is available
-if ! command -v uv >/dev/null 2>&1; then
-  echo "Error: 'uv' is not installed or not on PATH."
-  echo "See: https://docs.astral.sh/uv/"
-  exit 1
-fi
+#if ! command -v uv >/dev/null 2>&1; then
+#  echo "Error: 'uv' is not installed or not on PATH."
+#  echo "See: https://docs.astral.sh/uv/"
+#  exit 1
+#fi
 
 # Make uv use a specific env directory if requested
 if [[ -n "$env_path" ]]; then
