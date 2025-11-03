@@ -81,6 +81,8 @@ if $run_collectstatic; then
     exit 1
   fi
 fi
+echo "==> Interpreter in use:"
+uv run python -c 'import sys,platform; print(sys.executable); print(platform.python_version())'
 
 echo "==> Reloading services..."
 # Reload systemd and restart gunicorn units
