@@ -53,4 +53,4 @@ jobs:
       - name: Deploy without changes in static files
         if: steps.changes.outputs.css != 'true'
         run: |
-          ssh target 'echo uv --version; cd ~/leginabroad && git pull --ff-only && sudo ./restart.sh'
+          ssh target 'echo "$(uv --version)"; cd ~/leginabroad && git pull --ff-only && sudo ./restart.sh'
