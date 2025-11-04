@@ -35,15 +35,15 @@ while getopts ":tcp:e:h" opt; do
   esac
 done
 
-## 1) Make sure uv is on PATH even in non-interactive shells (SSH/cron)
-#export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
-#
-## 2) Resolve uv once; fail fast with a clear message if missing
-#UV_BIN="${UV_BIN:-$(command -v uv || true)}"
-#if [[ -z "$UV_BIN" ]]; then
-#  echo "Error: uv not found. Add it to PATH or set UV_BIN=/full/path/to/uv" >&2
-#  exit 127
-#fi
+
+echo "$HOME"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+UV_BIN="${UV_BIN:-$(command -v uv || true)}"
+if [[ -z "$UV_BIN" ]]; then
+  echo "uv not found on PATH: $PATH" >&2
+  exit 127
+fi
+
 
 # Make uv use a specific env directory if requested
 if [[ -n "$env_path" ]]; then
