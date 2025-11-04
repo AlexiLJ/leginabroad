@@ -35,8 +35,6 @@ while getopts ":tcp:e:h" opt; do
   esac
 done
 
-
-echo "$HOME"
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 UV_BIN="${UV_BIN:-$(command -v uv || true)}"
 if [[ -z "$UV_BIN" ]]; then
@@ -89,15 +87,8 @@ uv run python -c 'import sys,platform; print(sys.executable); print(platform.pyt
 
 echo "==> Reloading services..."
 # Reload systemd and restart gunicorn units
-sudo systemctl daemon-reload
-sudo systemctl restart gunicorn.socket gunicorn.service
-
-# Test and (re)load nginx
-if sudo nginx -t; then
-  sudo systemctl reload nginx
-else
-  echo "nginx config test failed; NOT reloading nginx."
-  exit 1
-fi
+systemctl daemon-reload
+systemctl restart gunicorn.socket gunicorn.service
+systemctl reload nginx
 
 echo "Done."

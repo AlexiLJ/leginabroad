@@ -30,7 +30,6 @@ a.btn.btn.sects:hover{
 }
 
 
-
 @media screen and (max-width: 320px) {
 
     a.btn.btn.sects {display: none;}
