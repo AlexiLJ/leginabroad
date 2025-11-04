@@ -42,11 +42,13 @@ body {
 </div>*/
 /*container_base треба шоб база займала все всю сторінку повністю на сто процентів, #main ти всталяєш
 як матрійошку шоб розмістити адекватно контент на тому шо може лишити container_base пустим */
+
 #main {
     padding-bottom: 40px;
     margin-left:20px;
     margin-right:20px;
 }
+
 div#contains.row {
     margin-top: 50px;
 }
@@ -66,6 +68,7 @@ footer {
     left: 0;
     right: 0;
 }
+
 .center p {
     margin: 0;
     position: absolute;
@@ -293,54 +296,3 @@ a.navbar-brand.text-success.mr-auto {
     text-decoration: none;
     color: #333;
 }
-
-/* a.language {
-    font-size: 145%;
-    font-family: 'Roboto', sans-serif;
-    color: #6A9C20;
-    border: 2px solid #6A9C20;
-    padding: 2px 7px;
-    cursor: pointer;
-}  */
-
-/*
-    a#page {
-        font-size: 125%;
-        font-family: 'Roboto', sans-serif;
-        color: #61892F;
-        border: 2px solid #61892F;
-        padding: 6px 16px;
-        cursor: pointer;
-    }
-
-    a#page_a {
-        font-size: 125%;
-        background-color: #D9F27A;
-        font-family: 'Roboto', sans-serif;
-        color: #61892F;
-        border: 2px solid #61892F;
-        padding: 6px 16px;
-        cursor: pointer;
-        position: relative;
-        left: 20%;
-    }
-
-    a#page:hover {
-        font-size: 125%;
-        background-color: #86C232;
-        border: 2px solid #86C232;
-        color: #222629;
-        font-family: 'Roboto', sans-serif;
-    }
-
-    a#page_a:hover {
-        font-size: 125%;
-        background-color: #86C232;
-        border: 2px solid #86C232;
-        color: #222629;
-        font-family: 'Roboto', sans-serif;
-    }
-
-*/
-
-
