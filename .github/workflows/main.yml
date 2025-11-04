@@ -26,10 +26,6 @@ jobs:
             - 'en_legin_abroad/static/css/**/*.css'
             - 'css/**/*.css'
             - 'static/**/*.css'
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-        
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -51,9 +47,9 @@ jobs:
       - name: Deploy with collect static
         if: steps.changes.outputs.css == 'true'
         run: |
-          ssh target 'bash -lc "cd ~/leginabroad && git pull --ff-only && yes yes | sudo ./restart.sh -c"'
+          ssh target 'cd ~/leginabroad && git pull --ff-only && yes yes | sudo ./restart.sh -c'
 
       - name: Deploy without changes in static files
         if: steps.changes.outputs.css != 'true'
         run: |
-          ssh target 'bash -lc "cd ~/leginabroad && git pull --ff-only && sudo ./restart.sh"'
+          ssh target 'cd ~/leginabroad && git pull --ff-only && sudo ./restart.sh'
