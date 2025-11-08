@@ -1,11 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from taggit.models import Tag
-from django.views.generic import View, ListView, DetailView
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
-from .models import EnSection, EnArticle
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import DetailView, ListView, View
+from taggit.models import Tag
+
 from .forms import SearchForm
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from .models import EnArticle, EnSection
 
 
 def index(request, tag_slug=None):
@@ -109,7 +110,7 @@ class SearchView(View):
                 search_query = SearchQuery(query)
                 results = EnArticle.objects.annotate(
                     search=search_vector,
-                    rank=SearchRank(search_vector, search_query)
+                    rank=SearchRank(search_vector, search_query),
                 ).filter(search=search_query, status='published').order_by('-rank')
         resultss = results
         resultss = list(dict.fromkeys(resultss))
@@ -144,7 +145,7 @@ def tag_search(request, tag_slug=None):
             search_query = SearchQuery(query)
             results = EnArticle.objects.annotate(
                 search=search_vector,
-                rank=SearchRank(search_vector, search_query)
+                rank=SearchRank(search_vector, search_query),
             ).filter(search=search_query, status='published').order_by('-rank')
 
     context = {
@@ -153,7 +154,7 @@ def tag_search(request, tag_slug=None):
                'results': results,
                'sections': sections,
                'section': section,
-               'tag': tag
+               'tag': tag,
                }
 
     return render(request, 'en_legin_abroad/en_search.html', context)

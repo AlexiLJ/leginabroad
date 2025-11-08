@@ -1,18 +1,18 @@
-from pydoc_data.topics import topics
 from django.test import TestCase
-from django.core.exceptions import ValidationError
+
 from en_legin_abroad.models import EnArticle, EnSection
+
 
 class EnArticleEnSectionTest(TestCase):
     def setUp(self):
         self.first_sections = EnSection(name="First section",
-                                        sslug="fist_section"
+                                        sslug="fist_section",
                                         )
         self.first_article = EnArticle(section=self.first_sections,
                                        topic="First article",
                                        slug="first_article",
                                        date_added = self.first_sections.date_added,
-                                       body="TEST TEST TEST TEST"
+                                       body="TEST TEST TEST TEST",
                                        )
 
     def test_article_integrity(self):

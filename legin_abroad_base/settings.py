@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+
 from .env_handler import var_getter
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -52,7 +53,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     # 'legin_abroad.apps.LeginAbroadConfig',
-    'en_legin_abroad.apps.EnLeginAbroadConfig'
+    'en_legin_abroad.apps.EnLeginAbroadConfig',
 ]
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
@@ -94,7 +95,7 @@ CKEDITOR_CONFIGS = {
         ],
         'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
 
-        'extraPlugins': ','.join(['codesnippet', 'youtube'])
+        'extraPlugins': ','.join(['codesnippet', 'youtube']),
     },
 }
 
@@ -106,7 +107,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'legin_abroad_base.urls'
@@ -139,8 +140,8 @@ DATABASES = {
         'USER': var_getter('POSTGRESQL_USER'),
         'PASSWORD': var_getter('POSTGRESQL_PASSWORD'),
         'HOST': var_getter('HOST_NAME'),
-        'PORT': var_getter('PORT')
-    }
+        'PORT': var_getter('PORT'),
+    },
 }
 
 # Password validation
@@ -182,7 +183,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings for django-bootstrap4
 BOOTSTRAP4 = {
-    'include_jquery': True
+    'include_jquery': True,
 }
 
 STATIC_URL = 'static/'

@@ -1,6 +1,6 @@
 import json
-
 from pathlib import Path
+
 
 def get_git_parent_dir(search_start: str = 'leginabroad'):
     cwd = list(Path.cwd().parts) # getting splitted cwd dir
@@ -27,15 +27,14 @@ def get_active_branch_name() -> str:
 
 
 def var_getter(name: str):
-    '''
+    """
     Getting sys. variables based on the git branch
     :param name: str name of the sys. variable
-    :param storage: str|None
     :return: Any
-    '''
+    """
     branch = get_active_branch_name()
     pathes = Path(__file__).parent.resolve() / "pathes.json"
-    with open(pathes, "r") as p:
+    with open(pathes) as p:
         storage = json.load(p).get(branch)  # environment variables
     with open(Path(storage)) as st:
         var = json.load(st).get(name)

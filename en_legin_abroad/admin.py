@@ -1,9 +1,10 @@
-from django.contrib import admin
 from ckeditor.widgets import CKEditorWidget
 from django import forms
+from django.contrib import admin
 
 # Register your models here.
-from en_legin_abroad.models import EnSection, EnArticle
+from en_legin_abroad.models import EnArticle, EnSection
+
 
 #@admin.register(Section)
 class EnSectionAdmin(admin.ModelAdmin):

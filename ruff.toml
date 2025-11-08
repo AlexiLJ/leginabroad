@@ -1,0 +1,59 @@
+# Adjust to your project
+line-length = 120
+target-version = "py314"
+src = ["."]
+respect-gitignore = true
+
+# Don't waste time linting generated or irrelevant stuff
+exclude = [
+    ".venv",
+    "venv",
+    "migrations",
+    "static",
+    "node_modules",
+    "dist",
+    "build",
+]
+
+[lint]
+# Base Flake8 errors/warnings + isort + bugbear + Django + upgrades + style helpers
+select = [
+    "E",   # pycodestyle (errors)
+    "F",   # pyflakes
+    "W",   # pycodestyle (warnings)
+    "I",   # isort (import sorting)
+    "B",   # flake8-bugbear
+    "DJ",  # flake8-django rules
+    "UP",  # pyupgrade
+    "N",   # pep8-naming
+    "SIM", # flake8-simplify
+    "COM", # flake8-commas
+    "PT",  # pytest-style (if you use pytest)
+]
+
+# Things that are often annoying/noisy in Django projects
+ignore = [
+    "E501",   # line length (ruff can auto-fix/format instead, if you use ruff format or black)
+]
+
+[lint.per-file-ignores]
+# Settings and manage.py often have module-level imports / config that trigger some rules
+"manage.py" = ["DJ001", "DJ008"]
+"*/settings.py" = ["E402", "F401", "F403"]
+
+# Django migrations are generated; don't fight them
+"*/migrations/*.py" = [
+    "E501",
+    "E402",
+    "F401",
+    "F403",
+    "B008",
+    "DJ001",
+]
+
+[format]
+# Only if you use Ruff as a formatter too
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+docstring-code-format = true

@@ -1,13 +1,13 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.urls import reverse
+from imagekit.models import ProcessedImageField
+from imagekit.processors import Thumbnail
 from taggit.managers import TaggableManager
-from ckeditor_uploader.fields import RichTextUploadingField
-from imagekit.models import ImageSpecField, ProcessedImageField
-from imagekit.processors import ResizeToFill, Thumbnail
 
 
 class EnSection(models.Model):
-    """Section if the blog"""
+    """Section of the blog"""
     name = models.CharField(max_length=70)
     sslug = models.SlugField(unique=True)
     date_added = models.DateTimeField(auto_now_add=True)
@@ -16,7 +16,7 @@ class EnSection(models.Model):
                                 blank=True,
                                 null=True,
                                 format='PNG',
-                                options={'quality': 90}
+                                options={'quality': 90},
                                 )
     description = RichTextUploadingField(blank=True, null=True,
                                          config_name='default',
@@ -64,7 +64,7 @@ class EnArticle(models.Model):
                                 blank=True,
                                 null=True,
                                 format='PNG',
-                                options={'quality': 90}
+                                options={'quality': 90},
                                 )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     objects = models.Manager()  # The default manager.
