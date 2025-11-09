@@ -21,7 +21,7 @@ def index(request, tag_slug=None):
         articles = articles.filter(tags__in=[tag])
 
     paginator = Paginator(articles, 5)  # 5 posts on each page
-    page = request.GET.get('page', )
+    page = request.GET.get('page' )
 
     try:
         articles = paginator.page(page)
@@ -53,7 +53,7 @@ def section(request, sslug):
     section = get_object_or_404(EnSection, sslug=sslug)
     articles = section.enarticle_set.order_by('-date_added').filter(status='published')
     paginator = Paginator(articles, 5)
-    page = request.GET.get('page', )
+    page = request.GET.get('page' )
     try:
         articles = paginator.page(page)
     except PageNotAnInteger:

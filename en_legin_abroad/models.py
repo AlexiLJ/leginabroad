@@ -27,17 +27,18 @@ class EnSection(models.Model):
                                             )],
                                          )
 
-    def get_absolute_url(self):
-        return reverse('en_legin_abroad:en_section', kwargs={'sslug': self.sslug})
-
     def __str__(self):
         """returns string rev. of the model"""
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('en_legin_abroad:en_section', kwargs={'sslug': self.sslug})
+
+
 
 class EnPublishedManager(models.Manager):
     def get_queryset(self):
-        return super(EnPublishedManager, self).get_queryset().filter(status='published')
+        return super().get_queryset().filter(status='published')
 
 
 class EnArticle(models.Model):
@@ -80,4 +81,3 @@ class EnArticle(models.Model):
 
     def get_absolute_url(self):
         return reverse('en_legin_abroad:en_article', kwargs={'sslug': self.section.sslug, 'slug': self.slug})
-

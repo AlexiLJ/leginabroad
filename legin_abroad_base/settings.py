@@ -93,8 +93,6 @@ CKEDITOR_CONFIGS = {
             '/',  # put this to force next toolbar on new line
             {'name': 'customtools', 'items': ['Preview', 'Maximize']},
         ],
-        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
-
         'extraPlugins': ','.join(['codesnippet', 'youtube']),
     },
 }

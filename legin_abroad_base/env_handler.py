@@ -35,8 +35,8 @@ def var_getter(name: str):
     branch = get_active_branch_name()
     pathes = Path(__file__).parent.resolve() / "pathes.json"
     with open(pathes) as p:
-        storage = json.load(p).get(branch, )  # environment variables
+        storage = json.load(p).get(branch )  # environment variables
     with open(Path(storage)) as st:
-        var = json.load(st).get(name, )
+        var = json.load(st).get(name )
     return var
 
