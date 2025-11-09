@@ -21,7 +21,7 @@ def index(request, tag_slug=None):
         articles = articles.filter(tags__in=[tag])
 
     paginator = Paginator(articles, 5)  # 5 posts on each page
-    page = request.GET.get('page')
+    page = request.GET.get('page', )
 
     try:
         articles = paginator.page(page)
@@ -53,7 +53,7 @@ def section(request, sslug):
     section = get_object_or_404(EnSection, sslug=sslug)
     articles = section.enarticle_set.order_by('-date_added').filter(status='published')
     paginator = Paginator(articles, 5)
-    page = request.GET.get('page')
+    page = request.GET.get('page', )
     try:
         articles = paginator.page(page)
     except PageNotAnInteger:
@@ -69,10 +69,26 @@ def section(request, sslug):
 
 
 class ArticleDetailView(DetailView):
+    """
+    View for displaying detailed information about a single article.
+    Handles article display with related tags and similar articles suggestions.
+    """
     model = EnArticle
-    '''returns html slug'''
 
     def get(self, request, slug, tag_slug=None, *args, **kwargs):
+        """
+        Handles GET requests for article detail view.
+
+        Args:
+            request: The HTTP request
+            slug: The article's slug identifier
+            tag_slug: Optional tag slug for filtering
+            *args: Variable length argument list
+            **kwargs: Arbitrary keyword arguments
+
+        Returns:
+            Rendered article detail template with article and related content
+        """
         context = {}
         article = get_object_or_404(EnArticle, slug=slug, status='published')
         tag = article.tags.all()
@@ -130,8 +146,7 @@ def tag_search(request, tag_slug=None):
     form = SearchForm()
     query = None
     results = []
-    sections = section = EnSection.objects.all()
-    articles = EnArticle.objects.all().order_by('-date_added').filter(status='published')
+    sections = EnSection.objects.all()
     tag = get_object_or_404(Tag, slug=tag_slug)
 
     if 'query' in request.GET:
@@ -161,7 +176,7 @@ def tag_search(request, tag_slug=None):
 
 
 def about(request):
-    sections = section = EnSection.objects.all()
+    sections = EnSection.objects.all()
     articles = EnArticle.objects.all().order_by('-date_added').filter(status='published')
     context = {'sections': sections, 'section': section, 'articles': articles}
 
