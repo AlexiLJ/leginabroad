@@ -29,7 +29,7 @@ class EnSection(models.Model):
                 "youtube",
                 "/static/youtube/youtube/",
                 "plugin.js",
-            )
+            ),
         ],
     )
 
@@ -65,7 +65,7 @@ class EnArticle(models.Model):
                 "youtube",
                 "/static/youtube/youtube/",
                 "plugin.js",
-            )
+            ),
         ],
     )
     date_added = models.DateTimeField()
