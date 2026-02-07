@@ -29,4 +29,5 @@ class EnArticleAdmin(admin.ModelAdmin):
         fields = "__all__"
 
 
+
 admin.site.register(EnArticle, EnArticleAdmin)
