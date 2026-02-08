@@ -28,6 +28,4 @@ class EnArticleAdmin(admin.ModelAdmin):
         model = EnArticle
         fields = "__all__"
 
-
-
 admin.site.register(EnArticle, EnArticleAdmin)
