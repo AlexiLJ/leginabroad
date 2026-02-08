@@ -28,10 +28,10 @@ from django.urls import include, path
 #     'article': ArticleSitemap,
 #     'section': SectionSitemap,
 # }
+
 urlpatterns = [
     path("admin_LA/", admin.site.urls),
     path("", include("en_legin_abroad.urls")),
-    # path('', include('legin_abroad.urls')),
     # path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path("ckeditor/", include("ckeditor_uploader.urls")),
 ]
