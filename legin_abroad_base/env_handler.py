@@ -13,6 +13,7 @@ def get_git_parent_dir(search_start: str = "leginabroad") -> Path:
     return Path(*cwd_parts) / ".git"
 
 
+
 def get_active_branch_name() -> str:
     head_file = get_git_parent_dir() / "HEAD"
     with open(head_file) as f:
@@ -22,6 +23,7 @@ def get_active_branch_name() -> str:
             return line.partition("refs/heads/")[2]
     # detached HEAD case
     return "DETACHED_HEAD"
+
 
 
 def var_getter(name: str):
