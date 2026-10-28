@@ -16,6 +16,8 @@ class PublicPageTests(TestCase):
         self.assertContains(response, "Python · Django · Test automation")
         self.assertContains(response, "Travel notes from a life abroad.")
         self.assertContains(response, "Coming later")
+        self.assertContains(response, "ca-pub-5630827130172417")
+        self.assertContains(response, "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
 
     def test_about_page_explains_the_site_and_author(self):
         response = self.client.get(reverse("en_legin_abroad:en_about"))
