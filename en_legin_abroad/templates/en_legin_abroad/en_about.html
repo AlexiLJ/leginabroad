@@ -7,6 +7,13 @@
 {% block sidebar %}{% endblock %}
 
 {% block content %}
+  <nav class="content-breadcrumb" aria-label="Breadcrumb">
+    <ol class="content-breadcrumb__list">
+      <li><a href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
+      <li class="content-breadcrumb__current" aria-current="page">About</li>
+    </ol>
+  </nav>
+
   <section class="about-hero" aria-labelledby="about-title">
     <div class="about-hero__intro">
       <p class="eyebrow">About Legin' Abroad</p>

@@ -73,6 +73,15 @@
     </section>
   {% endif %}
 
+  {% if tag %}
+    <nav class="content-breadcrumb" aria-label="Breadcrumb">
+      <ol class="content-breadcrumb__list">
+        <li><a href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
+        <li class="content-breadcrumb__current" aria-current="page">#{{ tag.name }}</li>
+      </ol>
+    </nav>
+  {% endif %}
+
   <section class="latest-section" id="latest-articles" aria-labelledby="latest-title">
     <div class="section-heading section-heading--row">
       <div>

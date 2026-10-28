@@ -1,46 +1,125 @@
 {% extends "en_legin_abroad/en_base.html" %}
-{% load static %}
 
-<head>
-  
-</head>
-
-{% block title %}Search{% endblock %}
+{% block title %}{% if query %}Search results for “{{ query }}”{% else %}Search articles{% endif %} — Legin' Abroad{% endblock %}
+{% block meta_description %}Search practical Legin' Abroad guides about Python, Django, testing, deployment, and software development.{% endblock %}
+{% block body_class %}search-page{% endblock %}
 
 {% block content %}
-  {% if query %}
-    <h1>Articles with "{{ query }}"</h1>
-    <h3>
-      {% with results.count as total_results %}
-        {% if total_results == 1 %}
-          Found {{ total_results }} match
+  <nav class="content-breadcrumb" aria-label="Breadcrumb">
+    <ol class="content-breadcrumb__list">
+      <li><a href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
+      <li class="content-breadcrumb__current" aria-current="page">Search</li>
+    </ol>
+  </nav>
+
+  <section class="search-hero" aria-labelledby="search-title">
+    <div class="search-hero__heading">
+      <p class="eyebrow">Search the field notes</p>
+      <h1 id="search-title">
+        {% if query %}
+          Results for “{{ query }}”
         {% else %}
-          
-          Found {{ total_results }} matches
+          Find a practical guide.
         {% endif %}
-      {% endwith %}
-    </h3>
-    {% for article in resultss %}
-      <div class="results">
-        <h4><a class="res" href="{{ article.get_absolute_url }}">{{ article.topic }}</a></h4>
+      </h1>
+      <p>
+        Search tutorials and field notes about Python, Django, testing, deployment, and the work behind reliable software.
+      </p>
+    </div>
 
-          {{ article.results.count }}
-
-        {{ article.body|safe|truncatewords:5 }}
+    <form class="search-panel" method="get" action="{% url 'en_legin_abroad:en_search' %}" role="search">
+      <label for="article-search-input">What are you looking for?</label>
+      <div class="search-panel__controls">
+        <input
+          id="article-search-input"
+          name="query"
+          type="search"
+          value="{{ request.GET.query|default:'' }}"
+          placeholder="Try “Django deployment”"
+          autocomplete="off"
+          required
+        >
+        <button class="button button--primary" type="submit">Search articles</button>
       </div>
-      {% empty %}
-        <p id="search_text">Sorry, no results has been found...</p>
-      {% endfor %}
-      <p><a id="search_text_link" href="{% url "en_legin_abroad:en_search" %}">Search more</a></p>
-    {% else %}
-    <h1>Articles search</h1>
-
-    <form class='form-inline ml-auto' method="GET" action="search">
-        <input class='form-control mr-2 col-sm-4 col-md-4 col-lg-8' name="query" value="{{request.GET.query}}" placeholder="search" aria-label="Search">
-        <!--<input class='form-control mr-2 col-sm-4 col-md-4 col-lg-8' name="q" value="{{request.GET.q}}" placeholder="пошук" aria-label="Пошук">-->
-        <button class="btn btn-success" type="submit">
-          Search
-        </button>
     </form>
+  </section>
+
+  {% if query %}
+    <section class="search-results" aria-labelledby="search-results-title">
+      <div class="section-heading section-heading--row">
+        <div>
+          <p class="eyebrow">Search results</p>
+          <h2 id="search-results-title">
+            {% with resultss|length as total_results %}
+              {{ total_results }} match{{ total_results|pluralize:"es" }} found
+            {% endwith %}
+          </h2>
+        </div>
+        <a class="text-link" href="{% url 'en_legin_abroad:en_sections' %}">Browse all topics <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="article-list search-results__list">
+        {% for article in resultss %}
+          <article class="article-card">
+            {% if article.thumb %}
+              <a class="article-card__image" href="{{ article.get_absolute_url }}" aria-label="Read {{ article.topic }}">
+                <img src="{{ article.thumb.url }}" alt="" loading="lazy">
+              </a>
+            {% endif %}
+
+            <div class="article-card__body">
+              <div class="article-card__meta">
+                <a href="{{ article.section.get_absolute_url }}">{{ article.section }}</a>
+                <span aria-hidden="true">·</span>
+                <time datetime="{{ article.date_added|date:'Y-m-d' }}">{{ article.date_added|date:'M d, Y' }}</time>
+              </div>
+              <h3><a href="{{ article.get_absolute_url }}">{{ article.topic }}</a></h3>
+              <p class="article-card__excerpt">{{ article.body|striptags|truncatewords:30 }}</p>
+
+              {% if article.tags.all %}
+                <div class="article-card__tags" aria-label="Article tags">
+                  {% for tag in article.tags.all %}
+                    <a href="{% url 'en_legin_abroad:en_article_by_tag' tag.slug %}">#{{ tag.name }}</a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <a class="article-card__read" href="{{ article.get_absolute_url }}">Read article <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        {% empty %}
+          <div class="empty-state search-empty">
+            <span class="search-empty__icon" aria-hidden="true">?</span>
+            <h3>No matching articles yet.</h3>
+            <p>Try a shorter phrase, use a broader keyword, or explore the topic collection.</p>
+            <a class="button button--secondary" href="{% url 'en_legin_abroad:en_sections' %}">Explore topics</a>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% else %}
+    <section class="search-suggestions" aria-labelledby="search-suggestions-title">
+      <div class="section-heading">
+        <p class="eyebrow">A good place to start</p>
+        <h2 id="search-suggestions-title">Popular paths through the archive.</h2>
+      </div>
+      <div class="search-suggestions__links">
+        <a href="{% url 'en_legin_abroad:en_search' %}?query=Django">
+          <span>01</span>
+          <strong>Django</strong>
+          <small>Applications, patterns, and production lessons</small>
+        </a>
+        <a href="{% url 'en_legin_abroad:en_search' %}?query=Testing">
+          <span>02</span>
+          <strong>Testing</strong>
+          <small>Automation, quality, and safer releases</small>
+        </a>
+        <a href="{% url 'en_legin_abroad:en_search' %}?query=Deployment">
+          <span>03</span>
+          <strong>Deployment</strong>
+          <small>Linux, CI/CD, and reliable operations</small>
+        </a>
+      </div>
+    </section>
   {% endif %}
-{% endblock %}
+{% endblock content %}

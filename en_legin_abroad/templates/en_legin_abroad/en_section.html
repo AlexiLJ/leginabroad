@@ -1,45 +1,77 @@
 {% extends "en_legin_abroad/en_base.html" %}
-{% load static %}
-<head >
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
 
-</head>
-<body>
-  {% block content %}
+{% block title %}{{ section }} articles — Legin' Abroad{% endblock %}
+{% block meta_description %}Practical {{ section }} guides and field notes from Legin' Abroad.{% endblock %}
+{% block body_class %}topic-page{% endblock %}
 
-      <nav>
-        <ol class="breadcrumb bg-white">
-          <li class="breadcrumb-item"><a class="navbar-brand mr-auto" href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
-          <li class="breadcrumb-item"><a class="navbar-brand mr-auto" href="{% url 'en_legin_abroad:en_sections' %}">Topics</a></li>
-          <li class="breadcrumb-item "><a class="navbar-brand mr-auto" href="{{section.get_absolute_url}}">{{section}}</a></li>
-        </ol>
-      </nav>
-      <div class="article_list">
-        {% for article in articles %}
-          <div class="shared-container article-container">
-            <h1><a class='artic' href="{{ article.get_absolute_url }}">{{ article.topic }}</a></h1>
-            <a class="sect" href="{{ article.section.get_absolute_url }}">{{ article.section }}</a></br>
-            {% if article.thumb %}
-              <a href="{{ article.get_absolute_url }}"><img class='thumb' src="{{ article.thumb.url }}"></a></br>
-            {% endif %}
-            <p><a class="artic" href="{{ article.get_absolute_url }}">{{ article|safe }}</a></p>
-            {% load i18n %}
-            <strong>{{ article.date_added|date:'F, d, Y' }}</strong><br>
-            <p class="tags">
-              {% for tag in article.tags.all %}
-                <a class="tag d-inline-flex p-2" href="{% url "en_legin_abroad:en_article_by_tag" tag.slug %}">#{{ tag.name }}</a>
-              {% endfor %}
-            </p>
-          </div>
-        {% empty %}
-          <li>
-            There is no entries for the current topic.
-          </li>
+{% block content %}
+  <nav class="content-breadcrumb" aria-label="Breadcrumb">
+    <ol class="content-breadcrumb__list">
+      <li><a href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
+      <li><a href="{% url 'en_legin_abroad:en_sections' %}">Topics</a></li>
+      <li class="content-breadcrumb__current" aria-current="page">{{ section }}</li>
+    </ol>
+  </nav>
 
-        {% endfor %}
+  <header class="topic-hero">
+    <p class="eyebrow">Topic collection</p>
+    <h1>{{ section }}</h1>
+    {% if section.description %}
+      <p>{{ section.description|striptags|truncatewords:38 }}</p>
+    {% else %}
+      <p>Practical guides, lessons, and field notes collected around {{ section }}.</p>
+    {% endif %}
+  </header>
+
+  <section class="topic-articles" aria-labelledby="topic-articles-title">
+    <div class="section-heading section-heading--row">
+      <div>
+        <p class="eyebrow">Latest in {{ section }}</p>
+        <h2 id="topic-articles-title">Articles and field notes</h2>
       </div>
+      <a class="text-link" href="{% url 'en_legin_abroad:en_sections' %}">All topics <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="article-list">
+      {% for article in articles %}
+        <article class="article-card">
+          {% if article.thumb %}
+            <a class="article-card__image" href="{{ article.get_absolute_url }}" aria-label="Read {{ article.topic }}">
+              <img src="{{ article.thumb.url }}" alt="" loading="lazy">
+            </a>
+          {% endif %}
+
+          <div class="article-card__body">
+            <div class="article-card__meta">
+              <a href="{{ article.section.get_absolute_url }}">{{ article.section }}</a>
+              <span aria-hidden="true">·</span>
+              <time datetime="{{ article.date_added|date:'Y-m-d' }}">{{ article.date_added|date:'M d, Y' }}</time>
+            </div>
+            <h3><a href="{{ article.get_absolute_url }}">{{ article.topic }}</a></h3>
+            <p class="article-card__excerpt">{{ article.body|striptags|truncatewords:30 }}</p>
+
+            {% if article.tags.all %}
+              <div class="article-card__tags" aria-label="Article tags">
+                {% for tag in article.tags.all %}
+                  <a href="{% url 'en_legin_abroad:en_article_by_tag' tag.slug %}">#{{ tag.name }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <a class="article-card__read" href="{{ article.get_absolute_url }}">Read article <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty-state">
+          <h3>No articles in this topic yet.</h3>
+          <p>New field notes are on the way. Explore another topic in the meantime.</p>
+          <a class="button button--secondary" href="{% url 'en_legin_abroad:en_sections' %}">Explore topics</a>
+        </div>
+      {% endfor %}
+    </div>
+
     <div class="paginator">
       {% include "en_legin_abroad/en_pagination.html" with page=articles %}
     </div>
-  {% endblock content %}
-</body>
+  </section>
+{% endblock content %}

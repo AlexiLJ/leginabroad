@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 
@@ -24,6 +25,8 @@ class PublicPageTests(TestCase):
         self.assertContains(response, "I turn real development problems into practical guides.")
         self.assertContains(response, "Editorial principles")
         self.assertContains(response, "Travel Notes")
+        self.assertContains(response, 'class="content-breadcrumb"')
+        self.assertContains(response, 'aria-current="page">About</li>')
 
     def test_article_page_uses_site_breadcrumb(self):
         section = EnSection.objects.create(name="Tech", sslug="tech")
@@ -66,3 +69,70 @@ class PublicPageTests(TestCase):
         self.assertContains(response, 'class="pagination-nav"')
         self.assertContains(response, "Page <strong>2</strong> of 2", html=True)
         self.assertContains(response, 'aria-current="page">2</span>')
+
+    def test_search_page_uses_redesigned_layout(self):
+        response = self.client.get(reverse("en_legin_abroad:en_search"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "en_legin_abroad/en_search.html")
+        self.assertContains(response, 'class="content-breadcrumb"')
+        self.assertContains(response, 'class="search-hero"')
+        self.assertContains(response, "Find a practical guide.")
+        self.assertContains(response, "Popular paths through the archive.")
+        self.assertContains(response, f'action="{reverse("en_legin_abroad:en_search")}"')
+
+    def test_search_results_use_article_cards_and_empty_state(self):
+        section = EnSection.objects.create(name="Tech", sslug="tech")
+        article = EnArticle.objects.create(
+            section=section,
+            topic="Deploying Django safely",
+            slug="deploying-django-safely",
+            body="<p>A practical deployment walkthrough.</p>",
+            date_added=timezone.now(),
+            status="published",
+        )
+
+        results_html = render_to_string(
+            "en_legin_abroad/en_search.html",
+            {"query": "Django", "resultss": [article], "sections": [section]},
+        )
+        empty_html = render_to_string(
+            "en_legin_abroad/en_search.html",
+            {"query": "missing", "resultss": [], "sections": [section]},
+        )
+
+        self.assertIn('class="article-card"', results_html)
+        self.assertIn("Deploying Django safely", results_html)
+        self.assertIn("1 match found", " ".join(results_html.split()))
+        self.assertIn('class="empty-state search-empty"', empty_html)
+        self.assertIn("No matching articles yet.", empty_html)
+
+    def test_topic_pages_use_consistent_breadcrumbs_and_article_cards(self):
+        section = EnSection.objects.create(
+            name="Tech",
+            sslug="tech",
+            description="<p>Practical software guides.</p>",
+        )
+        article = EnArticle.objects.create(
+            section=section,
+            topic="A mobile-friendly article",
+            slug="a-mobile-friendly-article",
+            body="<p>Useful details for the article card.</p>",
+            date_added=timezone.now(),
+            status="published",
+        )
+
+        topics_response = self.client.get(reverse("en_legin_abroad:en_sections"))
+        topic_response = self.client.get(section.get_absolute_url())
+
+        self.assertEqual(topics_response.status_code, 200)
+        self.assertContains(topics_response, 'class="content-breadcrumb"')
+        self.assertContains(topics_response, 'aria-current="page">Topics</li>')
+        self.assertContains(topics_response, 'class="topic-card"')
+
+        self.assertEqual(topic_response.status_code, 200)
+        self.assertContains(topic_response, 'class="content-breadcrumb"')
+        self.assertContains(topic_response, 'aria-current="page">Tech</li>')
+        self.assertContains(topic_response, 'class="article-card"')
+        self.assertContains(topic_response, article.topic)
+        self.assertNotContains(topic_response, 'class="article-container"')

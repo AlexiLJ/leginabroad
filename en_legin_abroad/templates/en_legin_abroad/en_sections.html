@@ -1,29 +1,54 @@
 {% extends "en_legin_abroad/en_base.html" %}
-{% load static %}
 
-<head>
-<!--  <link rel="stylesheet" href="{% static 'css/sections.css' %}" />-->
-</head>
-<body>
-  {% block content %}
-    <nav>
-        <ol class="breadcrumb bg-white">
-          <li class="breadcrumb-item"><a class="navbar-brand mr-auto" href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
-        </ol>
-      </nav>
-    <div class="section-grid-container">
-  
-        {% for section in sections %}
-          <div class='shared-container section-container'>
-            <h2><a id='sections' href="{{section.get_absolute_url}}">{{ section.name }}</a></h2>
-            {% if section.thumb %}
-              <a href="{{section.get_absolute_url}}"><img class='m-auto ses' style="position: center" src="{{ section.thumb.url }}"></a>
-            {% endif %}
-            {% if section.description %}
-              <p><a class="sections" href="{{ section.get_absolute_url }}">{{ section.description|safe|truncatewords:150 }}</a></p>
-            {% endif %}
-          </div>
-        {% endfor %}
+{% block title %}Topics — Legin' Abroad{% endblock %}
+{% block meta_description %}Browse practical guides about Python, Django, testing, deployment, and reliable software by topic.{% endblock %}
+{% block body_class %}topics-page{% endblock %}
+
+{% block content %}
+  <nav class="content-breadcrumb" aria-label="Breadcrumb">
+    <ol class="content-breadcrumb__list">
+      <li><a href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
+      <li class="content-breadcrumb__current" aria-current="page">Topics</li>
+    </ol>
+  </nav>
+
+  <header class="topic-hero">
+    <p class="eyebrow">Browse the archive</p>
+    <h1>Choose a topic.</h1>
+    <p>Follow a focused path through practical guides on building, testing, and deploying dependable software.</p>
+  </header>
+
+  <section class="topic-directory" aria-labelledby="topic-directory-title">
+    <div class="section-heading">
+      <p class="eyebrow">Topic collections</p>
+      <h2 id="topic-directory-title">Start with what you are working on.</h2>
     </div>
-  {% endblock content %}
-</body>
+
+    <div class="topic-directory__grid">
+      {% for section in sections %}
+        <article class="topic-card">
+          {% if section.thumb %}
+            <a class="topic-card__image" href="{{ section.get_absolute_url }}" aria-label="Browse {{ section.name }} articles">
+              <img src="{{ section.thumb.url }}" alt="" loading="lazy">
+            </a>
+          {% endif %}
+          <div class="topic-card__body">
+            <span class="topic-card__number" aria-hidden="true">0{{ forloop.counter }}</span>
+            <h3><a href="{{ section.get_absolute_url }}">{{ section.name }}</a></h3>
+            {% if section.description %}
+              <p>{{ section.description|striptags|truncatewords:28 }}</p>
+            {% else %}
+              <p>Practical articles and field notes collected around {{ section.name }}.</p>
+            {% endif %}
+            <a class="article-card__read" href="{{ section.get_absolute_url }}">Browse topic <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty-state">
+          <h3>No topics have been published yet.</h3>
+          <p>New collections are being prepared. Check back soon.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock content %}
