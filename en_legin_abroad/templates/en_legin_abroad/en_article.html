@@ -1,59 +1,71 @@
 {% extends "en_legin_abroad/en_base.html" %}
 {% load static %}
 
-<script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
-<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
-<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-<head>
-  <title>{{ article.topic }}</title>
-</head>>
+{% block title %}{{ article.topic }} — Legin' Abroad{% endblock %}
+{% block meta_description %}Read {{ article.topic }}, a practical guide from Legin' Abroad.{% endblock %}
 {% block body_class %}article-detail-page{% endblock %}
+
+{% block static %}
+  <script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+  <script defer src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+  <script defer src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+{% endblock %}
+
 {% block content %}
-  <nav aria-label="breadcrumb" id="breadcrumb">
-    <ol class="breadcrumb bg-white ml">
-      <li class="breadcrumb-item"><a class="navbar-brand mr-auto" style='color: #6A9C20;' href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
-      <li class="breadcrumb-item"><a class="navbar-brand mr-auto" style='color: #6A9C20;' href="{% url 'en_legin_abroad:en_sections' %}">Topics</a></li>
-      <li class="breadcrumb-item"><a class="navbar-brand mr-auto" style='color: #6A9C20;' href="{{article.section.get_absolute_url}}">{{ article.section.name }}</a></li>
+  <nav class="content-breadcrumb" aria-label="Breadcrumb">
+    <ol class="content-breadcrumb__list">
+      <li><a href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
+      <li><a href="{% url 'en_legin_abroad:en_sections' %}">Topics</a></li>
+      <li><a href="{{ article.section.get_absolute_url }}">{{ article.section.name }}</a></li>
+      <li class="content-breadcrumb__current" aria-current="page" title="{{ article.topic }}">
+        {{ article.topic|truncatechars:42 }}
+      </li>
     </ol>
   </nav>
-  <div id="article">
-    <div class="part">
+
+  <article class="article-detail" id="article">
     {% if article.thumb %}
-      <a href="{{article.get_absolute_url}}"><img class='m-auto' style="position: center" src="{{ article.thumb.url }}"></a>
+      <img class="article-detail__cover" src="{{ article.thumb.url }}" alt="" loading="eager">
     {% endif %}
-    <h1>{{ article.topic }}</h1>
 
-        <strong>{{ article.date_added|date:'F, d, Y' }}</strong>
+    <header class="article-detail__header">
+      <a class="eyebrow" href="{{ article.section.get_absolute_url }}">{{ article.section.name }}</a>
+      <h1>{{ article.topic }}</h1>
+      <time datetime="{{ article.date_added|date:'Y-m-d' }}">{{ article.date_added|date:'F d, Y' }}</time>
+    </header>
 
-      <p class="article">{{ article.body|safe }}</p><br>
-      </div>
-      <div class="foot">
-        {% if article.tags %}
-          {% for tag in article.tags.all %}
-            <a class="tag d-inline-flex p-2" href="{% url "en_legin_abroad:en_article_by_tag" tag.slug %}">#{{ tag.name }}</a>
-          {% endfor %}
-        {% endif %}
-      </div>
-
-      <h3>Similar articles:</h3>
-      {% for article in similar_articles %}
-        <p>
-          <a class="artic"  id="artic" href="{{ article.get_absolute_url }}">{{ article.topic|truncatewords:7 }}</a>
-        </p>
-      {% empty %}
-        None...
-      {% endfor %}
+    <div class="article-detail__body article">
+      {{ article.body|safe }}
     </div>
 
+    {% if article.tags.all %}
+      <div class="article-detail__tags" aria-label="Article tags">
+        {% for tag in article.tags.all %}
+          <a href="{% url 'en_legin_abroad:en_article_by_tag' tag.slug %}">#{{ tag.name }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </article>
 
-  <p>
+  <section class="related-articles" aria-labelledby="related-title">
+    <p class="eyebrow">Keep reading</p>
+    <h2 id="related-title">Similar articles</h2>
+    <div class="related-articles__list">
+      {% for related_article in similar_articles %}
+        <a href="{{ related_article.get_absolute_url }}">
+          <span>{{ related_article.section.name }}</span>
+          <strong>{{ related_article.topic|truncatewords:10 }}</strong>
+          <span class="related-articles__arrow" aria-hidden="true">→</span>
+        </a>
+      {% empty %}
+        <p>More related field notes are coming soon.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="article-social" aria-label="Article sharing and discussion">
     <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-    <a href="http://www.reddit.com/submit?url=http://{{ request.build_absolute_uri }}/">  Reddit</a>
-    <!--<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}/">Facebook</a> -->
-  </p>
-  <hr/>
-  <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+    <a href="https://www.reddit.com/submit?url={{ request.build_absolute_uri|urlencode }}" rel="noopener noreferrer">Share on Reddit</a>
   </div>
+  <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
 {% endblock content %}
-<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
-<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
