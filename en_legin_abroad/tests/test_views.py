@@ -7,6 +7,17 @@ from en_legin_abroad.models import EnArticle, EnSection
 
 
 class PublicPageTests(TestCase):
+    def test_ads_txt_declares_google_adsense_seller(self):
+        response = self.client.get(reverse("en_legin_abroad:ads_txt"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "text/plain; charset=utf-8")
+        self.assertEqual(response["Cache-Control"], "public, max-age=86400")
+        self.assertEqual(
+            response.content.decode(),
+            "google.com, pub-5630827130172417, DIRECT, f08c47fec0942fa0\n",
+        )
+
     def test_homepage_uses_redesigned_template(self):
         response = self.client.get(reverse("en_legin_abroad:en_index"))
 

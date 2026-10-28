@@ -1,12 +1,23 @@
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView, ListView, View
 from taggit.models import Tag
 
 from .forms import SearchForm
 from .models import EnArticle, EnSection
+
+
+def ads_txt(request):
+    """Declare Google AdSense as an authorized seller for this domain."""
+    response = HttpResponse(
+        "google.com, pub-5630827130172417, DIRECT, f08c47fec0942fa0\n",
+        content_type="text/plain; charset=utf-8",
+    )
+    response["Cache-Control"] = "public, max-age=86400"
+    return response
 
 
 def index(request, tag_slug=None):

@@ -8,6 +8,7 @@ app_name = "en_legin_abroad"
 
 urlpatterns = [
     path("", views.index, name="en_index"),
+    path("ads.txt", views.ads_txt, name="ads_txt"),
     path("search", views.SearchView.as_view(), name="en_search"),
     path("sections/search", views.SearchView.as_view(), name="en_search"),
     path("<slug:sslug>/search", views.SearchView.as_view(), name="en_search"),
