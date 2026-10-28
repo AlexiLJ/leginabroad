@@ -1,21 +1,94 @@
 {% extends "en_legin_abroad/en_base.html" %}
-{% load static %}
 
-<body>
+{% block title %}About Alex — Legin' Abroad{% endblock %}
+{% block meta_description %}Meet Alex, the Python developer and software tester behind Legin' Abroad, and learn what guides the site's practical tutorials.{% endblock %}
+{% block body_class %}about-page{% endblock %}
+{% block layout_class %}site-layout--wide{% endblock %}
+{% block sidebar %}{% endblock %}
+
 {% block content %}
-  <h1 style="margin-left: 25%">ABOUT</h1>
-  <div class="row">
-      <div>
-        <p style='width: 600px; margin-left: 15px; font-size: 110%; text-align: center;'>Hi! My name is Alex, and I studied physics for some time. I’ve been living abroad for a long time and have over three years of experience in Python development and testing.
-          On this platform, I share my thoughts on travel, student life in the Czech Republic, my experience of almost a year spent in Japan, and many other topics.
-          <br>
-            I hope my experiences and insights will be interesting to someone.
-          </br>
-        </p>
-        <br>
-        <p style='width: 500px; margin-left: 15px; font-size: 90%; text-align: center;'><em>* All material presented on this resource is my subjective opinion or description of my personal experience.</em>
-        </p>
+  <section class="about-hero" aria-labelledby="about-title">
+    <div class="about-hero__intro">
+      <p class="eyebrow">About Legin' Abroad</p>
+      <h1 id="about-title">I turn real development problems into practical guides.</h1>
+    </div>
+    <div class="about-hero__summary">
+      <p>
+        I'm Alex, a Python developer and software tester with a background in physics. I write about the work behind reliable applications: implementation, automated testing, deployment, and the lessons that only appear after software meets the real world.
+      </p>
+      <div class="button-row">
+        <a class="button button--primary" href="{% url 'en_legin_abroad:en_index' %}">Explore the articles</a>
+        <a class="button button--secondary button--on-light" href="https://github.com/AlexiLJ" rel="noopener noreferrer">See my GitHub</a>
       </div>
-  </div>
+    </div>
+  </section>
+
+  <section class="about-story" aria-labelledby="story-title">
+    <div class="about-story__aside">
+      <p class="eyebrow">The story</p>
+      <h2 id="story-title">Curiosity, code, and life abroad.</h2>
+    </div>
+    <div class="about-story__copy">
+      <p>
+        I started in physics, where asking precise questions and testing assumptions is part of the job. That way of thinking followed me into software development and quality engineering. Today, I use Python to build applications, automate repetitive work, and make systems easier to trust.
+      </p>
+      <p>
+        The name <strong>Legin' Abroad</strong> comes from years of living outside my home country—including student life in the Czech Republic and almost a year in Japan. The site began as a place to record those experiences. It has grown into a focused technical notebook for the problems I solve and the tools I use.
+      </p>
+      <p class="about-story__future">
+        Travel will have its own place here, too. A dedicated <strong>Travel Notes</strong> section is planned for stories and practical observations from the Czech Republic, Japan, and future journeys.
+      </p>
+      <p>
+        My goal is simple: publish the explanation I wish I had when I first faced the problem.
+      </p>
+    </div>
+  </section>
+
+  <section class="about-principles" aria-labelledby="principles-title">
+    <div class="section-heading">
+      <p class="eyebrow">Editorial principles</p>
+      <h2 id="principles-title">What you can expect here.</h2>
+    </div>
+    <div class="principles-grid">
+      <article>
+        <span aria-hidden="true">01</span>
+        <h3>Reproducible examples</h3>
+        <p>Code should be runnable, prerequisites should be clear, and the expected result should not be a mystery.</p>
+      </article>
+      <article>
+        <span aria-hidden="true">02</span>
+        <h3>Real trade-offs</h3>
+        <p>I explain why an approach worked, where it can fail, and when another option may be a better fit.</p>
+      </article>
+      <article>
+        <span aria-hidden="true">03</span>
+        <h3>First-hand learning</h3>
+        <p>The strongest articles come from building, testing, breaking, fixing, and documenting the result.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="about-topics" aria-labelledby="topics-title">
+    <div>
+      <p class="eyebrow">Core topics</p>
+      <h2 id="topics-title">The work behind dependable Python software.</h2>
+    </div>
+    <ul>
+      <li><strong>Python & Django</strong><span>Application architecture, tooling, and maintainable implementation.</span></li>
+      <li><strong>Testing & quality</strong><span>Pytest, Playwright, API testing, and useful automation strategy.</span></li>
+      <li><strong>Deployment</strong><span>Linux, CI/CD, PostgreSQL, backups, and operating applications.</span></li>
+    </ul>
+  </section>
+
+  <section class="about-cta">
+    <div>
+      <p class="eyebrow">Start exploring</p>
+      <h2>Find the guide that solves your next problem.</h2>
+    </div>
+    <a class="button button--primary" href="{% url 'en_legin_abroad:en_sections' %}">Browse all topics</a>
+  </section>
+
+  <p class="editorial-note">
+    Articles reflect my personal experience and understanding at the time of publication. Technical decisions depend on context, so verify critical changes in your own environment before using them in production.
+  </p>
 {% endblock content %}
-</body>

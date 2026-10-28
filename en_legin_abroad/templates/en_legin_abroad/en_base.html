@@ -1,74 +1,96 @@
 {% load static %}
 {% load bootstrap4 %}
-
+<!doctype html>
 <html lang="en">
   <head>
-      <!-- Required meta tags -->
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'css/media.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'css/article_style.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'css/sections.css' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block meta_description %}Practical Python, Django, testing, and deployment guides based on real projects.{% endblock %}">
+    <meta name="theme-color" content="#111a17">
 
-      <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="canonical" href="https://leginabroad.com{{ request.path }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-      <title>Legin' abroad</title>
-      {% block static %}{% endblock %}
-      {% bootstrap_css %}
-      {% bootstrap_javascript %}
-      <!-- Global site tag (gtag.js) - Google Analytics -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142983434-1"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'UA-142983434-1');
-        </script>
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/media.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" href="{% static 'css/article_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sections.css' %}">
+    <link rel="stylesheet" href="{% static 'css/side_bar_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+
+    <title>{% block title %}Legin' Abroad — Practical Python, Django & Testing{% endblock %}</title>
+    {% block static %}{% endblock %}
+
+    <!-- Google Analytics. Replace this legacy Universal Analytics property when a GA4 property is available. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142983434-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-142983434-1');
+    </script>
   </head>
 
   <body class="{% block body_class %}{% endblock %}">
-    <div id="container_base">
-      <div id="main">
-        <div class="header">
-          {% include 'en_legin_abroad/en_navbar.html' %}
-        </div>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
-        <div class='row' id="contains">
-          <div class='col-4'>
+    <header class="site-header">
+      {% include 'en_legin_abroad/en_navbar.html' %}
+      <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress__bar" id="myBar"></div>
+      </div>
+    </header>
+
+    <div class="site-shell">
+      <div class="site-layout {% block layout_class %}{% endblock %}">
+        {% block sidebar %}
+          <aside class="site-sidebar" aria-label="Topic navigation">
             {% include 'en_legin_abroad/en_side_bar.html' %}
-          </div>
-          <div class='col-8 ml-auto centered' id="articles-content">
-            {% block content %}
-            {% endblock content %}
-          </div>
-        </div>
+          </aside>
+        {% endblock sidebar %}
+
+        <main class="site-content" id="main-content">
+          {% block content %}{% endblock content %}
+        </main>
       </div>
     </div>
 
-    <div class="progress-container">
-      <div class="progress-bar" id="myBar"></div>
-    </div>
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div>
+          <a class="site-footer__brand" href="{% url 'en_legin_abroad:en_index' %}">Legin' Abroad</a>
+          <p>Practical notes on Python, Django, testing, and shipping reliable software.</p>
+        </div>
+        <nav class="site-footer__links" aria-label="Footer navigation">
+          <a href="{% url 'en_legin_abroad:en_index' %}">Articles</a>
+          <a href="{% url 'en_legin_abroad:en_sections' %}">Topics</a>
+          <a href="{% url 'en_legin_abroad:en_about' %}">About</a>
+        </nav>
+        <p class="site-footer__copyright">&copy; {% now "Y" %} Leginabroad.com</p>
+      </div>
+    </footer>
 
-  <footer>
-    <div class="center">
-      <p>&copy Leginabroad.com</p>
-    </div>
-  </footer>
+    {% bootstrap_javascript jquery='full' %}
+    <script>
+      (function () {
+        const progressBar = document.getElementById('myBar');
+        if (!progressBar) return;
 
+        function updateReadingProgress() {
+          const scrollableHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          const progress = scrollableHeight > 0
+            ? (document.documentElement.scrollTop / scrollableHeight) * 100
+            : 0;
+          progressBar.style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateReadingProgress, { passive: true });
+        updateReadingProgress();
+      }());
+    </script>
   </body>
-
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://connect.facebook.net/uk_UK/sdk.js#xfbml=1&version=v3.2';
-    fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-
-
 </html>

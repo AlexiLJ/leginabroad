@@ -189,8 +189,7 @@ def tag_search(request, tag_slug=None):
 
 
 def about(request):
-    sections = EnSection.objects.all()
-    articles = EnArticle.objects.all().order_by("-date_added").filter(status="published")
-    context = {"sections": sections, "section": section, "articles": articles}
+    sections = EnSection.objects.all().order_by("date_added")
+    context = {"sections": sections}
 
     return render(request, "en_legin_abroad/en_about.html", context)

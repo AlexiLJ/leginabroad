@@ -1,37 +1,128 @@
 {% extends "en_legin_abroad/en_base.html" %}
 {% load static %}
 
-<body>
-  {% block content %}
-      <div class="article_list">
-        {% if tag %}
-          <h2>Articles with tag: "{{ tag.name }}":</h2>
-        {% endif %}
-        {% for article in articles %}
-          <div class="shared-container article-container" id="article-card">
-            <h1><a class='artic' href="{{ article.get_absolute_url }}">{{ article.topic }}</a></h1>
-            <a class="sect" href="{{ article.section.get_absolute_url }}">{{ article.section }}</a></br>
-            {% if article.thumb %}
-              <a href="{{ article.get_absolute_url }}"><img class='thumb' src="{{ article.thumb.url }}"></a></br>
-            {% endif %}
-            <p><a class="artic" href="{{ article.get_absolute_url }}">{{ article|safe }}</a></p>
-            {% load i18n %}
-            <br><strong>{{ article.date_added|date:'F, d, Y' }}</strong>
-             <br>  <p class="tags">
-              {% for tag in article.tags.all %}
-                <a class="tag d-inline-flex p-2" href="{% url "en_legin_abroad:en_article_by_tag" tag.slug %}">#{{ tag.name }}</a>
-              {% endfor %}
-            </p>
-          </div>
-        {% empty %}
-          <li>
-            There is no entries for the current topic.
-          </li>
-        {% endfor %}
+{% block title %}Practical Python, Django & Testing Guides — Legin' Abroad{% endblock %}
+{% block meta_description %}Field-tested tutorials on Python, Django, automated testing, CI/CD, and deployment, written from real development experience.{% endblock %}
+{% block body_class %}home-page{% endblock %}
+{% block layout_class %}site-layout--wide{% endblock %}
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+  {% if not tag %}
+    <section class="home-hero" aria-labelledby="home-hero-title">
+      <div class="home-hero__content">
+        <p class="eyebrow">Python · Django · Test automation</p>
+        <h1 id="home-hero-title">Build software that works beyond the tutorial.</h1>
+        <p class="home-hero__lead">
+          Practical guides for building, testing, and deploying reliable Python applications—grounded in real projects and the lessons they teach.
+        </p>
+        <div class="button-row">
+          <a class="button button--primary" href="#latest-articles">Read the latest guides</a>
+          <a class="button button--secondary" href="{% url 'en_legin_abroad:en_about' %}">About Alex</a>
+        </div>
       </div>
+
+      <aside class="home-hero__note" aria-label="What you will find here">
+        <span class="home-hero__note-label">Field notes</span>
+        <h2>Useful, reproducible, honest.</h2>
+        <ul>
+          <li>Runnable examples, not vague summaries</li>
+          <li>Testing and deployment trade-offs</li>
+          <li>Mistakes, fixes, and what changed</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="focus-grid" aria-labelledby="focus-title">
+      <div class="section-heading">
+        <p class="eyebrow">What I write about</p>
+        <h2 id="focus-title">From first commit to production.</h2>
+      </div>
+      <div class="focus-grid__items">
+        <article class="focus-card">
+          <span class="focus-card__number">01</span>
+          <h3>Python & Django</h3>
+          <p>Patterns, tooling, and implementation details for maintainable web applications.</p>
+        </article>
+        <article class="focus-card">
+          <span class="focus-card__number">02</span>
+          <h3>Testing & quality</h3>
+          <p>Pytest, Playwright, API testing, and pragmatic ways to make releases safer.</p>
+        </article>
+        <article class="focus-card">
+          <span class="focus-card__number">03</span>
+          <h3>Deployment & automation</h3>
+          <p>CI/CD, Linux, PostgreSQL, and the operational work behind a reliable service.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="travel-teaser" aria-labelledby="travel-teaser-title">
+      <div class="travel-teaser__copy">
+        <p class="eyebrow">Beyond the code · Coming later</p>
+        <h2 id="travel-teaser-title">Travel notes from a life abroad.</h2>
+        <p>
+          A separate travel journal is planned for stories, useful observations, and lessons from living in the Czech Republic, spending almost a year in Japan, and exploring what comes next.
+        </p>
+      </div>
+      <div class="travel-teaser__places" aria-label="Planned travel topics">
+        <span>Czech Republic</span>
+        <span>Japan</span>
+        <span>Future journeys</span>
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="latest-section" id="latest-articles" aria-labelledby="latest-title">
+    <div class="section-heading section-heading--row">
+      <div>
+        <p class="eyebrow">{% if tag %}Filtered collection{% else %}Latest field notes{% endif %}</p>
+        <h2 id="latest-title">
+          {% if tag %}Articles tagged “{{ tag.name }}”{% else %}Recent articles{% endif %}
+        </h2>
+      </div>
+      <a class="text-link" href="{% url 'en_legin_abroad:en_sections' %}">Browse all topics <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="article-list">
+      {% for article in articles %}
+        <article class="article-card">
+          {% if article.thumb %}
+            <a class="article-card__image" href="{{ article.get_absolute_url }}" aria-label="Read {{ article.topic }}">
+              <img src="{{ article.thumb.url }}" alt="" loading="lazy">
+            </a>
+          {% endif %}
+
+          <div class="article-card__body">
+            <div class="article-card__meta">
+              <a href="{{ article.section.get_absolute_url }}">{{ article.section }}</a>
+              <span aria-hidden="true">·</span>
+              <time datetime="{{ article.date_added|date:'Y-m-d' }}">{{ article.date_added|date:'M d, Y' }}</time>
+            </div>
+            <h3><a href="{{ article.get_absolute_url }}">{{ article.topic }}</a></h3>
+            <div class="article-card__excerpt">{{ article|safe }}</div>
+
+            {% if article.tags.all %}
+              <div class="article-card__tags" aria-label="Article tags">
+                {% for tag in article.tags.all %}
+                  <a href="{% url 'en_legin_abroad:en_article_by_tag' tag.slug %}">#{{ tag.name }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <a class="article-card__read" href="{{ article.get_absolute_url }}">Read article <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty-state">
+          <h3>No articles here yet.</h3>
+          <p>New field notes are on the way. Try another topic in the meantime.</p>
+        </div>
+      {% endfor %}
+    </div>
 
     <div class="paginator">
       {% include "en_legin_abroad/en_pagination.html" with page=articles %}
     </div>
-  {% endblock content %}
-</body>
+  </section>
+{% endblock content %}
