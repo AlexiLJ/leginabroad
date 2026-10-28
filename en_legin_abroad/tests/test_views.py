@@ -1,9 +1,17 @@
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 
 from en_legin_abroad.models import EnArticle, EnSection
+
+
+class HealthCheckTests(SimpleTestCase):
+    def test_health_check(self):
+        response = self.client.get(reverse("en_legin_abroad:health_check"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {"status": "ok"})
 
 
 class PublicPageTests(TestCase):

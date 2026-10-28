@@ -1,13 +1,18 @@
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView, ListView, View
 from taggit.models import Tag
 
 from .forms import SearchForm
 from .models import EnArticle, EnSection
+
+
+def health_check(request):
+    """Lightweight liveness check for Docker and the reverse proxy."""
+    return JsonResponse({"status": "ok"})
 
 
 def ads_txt(request):

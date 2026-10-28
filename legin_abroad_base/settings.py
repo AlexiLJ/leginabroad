@@ -18,6 +18,19 @@ from .env_handler import var_getter
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+def env_bool(name: str, default: bool) -> bool:
+    """Read a conventional boolean value from the environment."""
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def env_list(name: str, default: str) -> list[str]:
+    """Read a comma-separated environment variable."""
+    return [item.strip() for item in os.getenv(name, default).split(",") if item.strip()]
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -26,16 +39,22 @@ SECRET_KEY = var_getter("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # manage.py check --deploy
-DEBUG = False
+DEBUG = env_bool("DJANGO_DEBUG", False)
 CSRF_USE_SESSIONS = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
+CSRF_COOKIE_SECURE = env_bool("DJANGO_CSRF_COOKIE_SECURE", not DEBUG)
+SECURE_SSL_REDIRECT = env_bool("DJANGO_SECURE_SSL_REDIRECT", not DEBUG)
 X_FRAME_OPTIONS = "DENY"
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = env_bool("DJANGO_SESSION_COOKIE_SECURE", not DEBUG)
 # settings.py (Django ≥ 3.0)
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_REDIRECT_EXEMPT = [r"^healthz/$"]
 
-ALLOWED_HOSTS = ["leginabroad.com", "www.leginabroad.com"]
+ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "leginabroad.com,www.leginabroad.com")
+CSRF_TRUSTED_ORIGINS = env_list(
+    "DJANGO_CSRF_TRUSTED_ORIGINS",
+    "https://leginabroad.com,https://www.leginabroad.com",
+)
 
 # Application definition
 
@@ -132,13 +151,13 @@ CKEDITOR_CONFIGS = {
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "legin_abroad_base.urls"
@@ -217,7 +236,7 @@ BOOTSTRAP4 = {
     "include_jquery": True,
 }
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
 AWS_ACCESS_KEY_ID = var_getter("AWS_ACCESS_KEY_ID")
@@ -264,18 +283,12 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "verbose",
         },
-        "file": {
-            "level": "ERROR",  # Log errors to a file
-            "class": "logging.FileHandler",
-            "filename": os.path.join(BASE_DIR, "django_error.log"),
-            "formatter": "verbose",
-        },
     },
     "loggers": {
         "django": {
-            "handlers": ["console", "file"],  # Output logs to console and file
-            "level": "DEBUG",  # Set log level to DEBUG for detailed information
-            "propagate": True,
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
         },
     },
 }

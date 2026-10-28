@@ -1,5 +1,9 @@
 import json
+import os
 from pathlib import Path
+
+
+_MISSING = object()
 
 
 def get_git_parent_dir(search_start: str = "leginabroad") -> Path:
@@ -26,16 +30,39 @@ def get_active_branch_name() -> str:
 
 
 
-def var_getter(name: str):
+def var_getter(name: str, default=_MISSING):
     """
-    Getting sys. variables based on the git branch
-    :param name: str name of the sys. variable
-    :return: Any
+    Return a setting from the process environment.
+
+    The branch-based JSON lookup remains as a temporary fallback so the current
+    host deployment keeps working while Docker is introduced. Containers should
+    always provide settings through environment variables.
     """
-    branch = get_active_branch_name()
-    pathes = Path(__file__).parent.resolve() / "pathes.json"
-    with open(pathes) as p:
-        storage = json.load(p).get(branch)  # environment variables
-    with open(Path(storage)) as st:
-        var = json.load(st).get(name)
-    return var
+    if name in os.environ:
+        value = os.environ[name]
+        if value:
+            return value
+        raise RuntimeError(f"Environment variable {name} is set but empty")
+
+    try:
+        branch = get_active_branch_name()
+        paths_file = Path(__file__).parent.resolve() / "pathes.json"
+        with paths_file.open(encoding="utf-8") as paths_stream:
+            storage = json.load(paths_stream).get(branch)
+        if not storage:
+            raise RuntimeError(f"No legacy settings file is configured for branch {branch}")
+        with Path(storage).open(encoding="utf-8") as storage_stream:
+            value = json.load(storage_stream).get(name)
+    except (FileNotFoundError, RuntimeError) as error:
+        if default is not _MISSING:
+            return default
+        raise RuntimeError(
+            f"Missing required setting {name}. Set it as an environment variable "
+            "or configure the legacy settings files."
+        ) from error
+
+    if value is not None:
+        return value
+    if default is not _MISSING:
+        return default
+    raise RuntimeError(f"Missing required setting {name}")

@@ -7,6 +7,7 @@ from . import views
 app_name = "en_legin_abroad"
 
 urlpatterns = [
+    path("healthz/", views.health_check, name="health_check"),
     path("", views.index, name="en_index"),
     path("ads.txt", views.ads_txt, name="ads_txt"),
     path("search", views.SearchView.as_view(), name="en_search"),
