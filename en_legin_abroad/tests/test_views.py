@@ -30,6 +30,27 @@ class PublicPageTests(TestCase):
         self.assertContains(response, "ca-pub-5630827130172417")
         self.assertContains(response, "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
 
+    def test_homepage_excerpt_does_not_render_links_from_article_body(self):
+        section = EnSection.objects.create(name="Tech", sslug="tech")
+        EnArticle.objects.create(
+            section=section,
+            topic="Article with an inline link",
+            slug="article-with-an-inline-link",
+            body=(
+                "<p>A safe excerpt containing "
+                '<a href="/should-not-appear-in-card">an inline link</a> '
+                "and enough surrounding text to exercise card rendering.</p>"
+            ),
+            date_added=timezone.now(),
+            status="published",
+        )
+
+        response = self.client.get(reverse("en_legin_abroad:en_index"), secure=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "A safe excerpt containing an inline link")
+        self.assertNotContains(response, 'href="/should-not-appear-in-card"')
+
     def test_about_page_explains_the_site_and_author(self):
         response = self.client.get(reverse("en_legin_abroad:en_about"))
 

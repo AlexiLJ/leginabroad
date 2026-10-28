@@ -87,8 +87,8 @@ class EnArticle(models.Model):
         verbose_name_plural = "en_articles"
 
     def __str__(self):
-        """returns string rev. of the model"""
-        return self.body[:200] + "..."
+        """Return a stable, human-readable article label."""
+        return self.topic
 
     def get_absolute_url(self):
         return reverse("en_legin_abroad:en_article", kwargs={"sslug": self.section.sslug, "slug": self.slug})

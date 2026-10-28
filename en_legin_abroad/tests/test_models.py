@@ -23,6 +23,9 @@ class EnArticleEnSectionTest(TestCase):
         self.assertTrue(self.first_sections.date_added == self.first_article.date_added)
         self.assertIn(" TEST ", str(self.first_article.body))
 
+    def test_article_string_representation_uses_topic(self):
+        self.assertEqual(str(self.first_article), "First article")
+
     def test_absolute_sections_url(self):
         self.assertIn(f"{self.first_sections.sslug}", self.first_sections.get_absolute_url())
 

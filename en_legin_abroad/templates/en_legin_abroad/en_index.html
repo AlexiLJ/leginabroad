@@ -109,7 +109,7 @@
               <time datetime="{{ article.date_added|date:'Y-m-d' }}">{{ article.date_added|date:'M d, Y' }}</time>
             </div>
             <h3><a href="{{ article.get_absolute_url }}">{{ article.topic }}</a></h3>
-            <div class="article-card__excerpt">{{ article|safe }}</div>
+            <p class="article-card__excerpt">{{ article.body|striptags|truncatewords:30 }}</p>
 
             {% if article.tags.all %}
               <div class="article-card__tags" aria-label="Article tags">
