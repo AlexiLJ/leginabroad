@@ -4,6 +4,9 @@ services:
       # Keep the existing host static directory available to Nginx while the
       # application runs in Docker. It must be writable by UID/GID 10001.
       - ./static:/app/static
+      # PostgreSQL remains bound to host loopback. Share only its Unix socket
+      # instead of exposing port 5432 to the Docker bridge or public network.
+      - /var/run/postgresql:/var/run/postgresql
     read_only: true
     tmpfs:
       - /tmp:size=64m,mode=1777

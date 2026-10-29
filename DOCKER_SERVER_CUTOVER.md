@@ -40,16 +40,37 @@ DJANGO_CSRF_COOKIE_SECURE=true
 DJANGO_SESSION_COOKIE_SECURE=true
 DJANGO_ALLOWED_HOSTS=leginabroad.com,www.leginabroad.com,127.0.0.1
 DJANGO_CSRF_TRUSTED_ORIGINS=https://leginabroad.com,https://www.leginabroad.com
+HOST_NAME=/var/run/postgresql
 ```
 
-The first server trial assumes PostgreSQL is reachable through
-`host.docker.internal`. PostgreSQL must listen on the Docker host gateway and
-`pg_hba.conf` must allow only the Docker bridge network. Do not publish port
-5432 through the firewall.
+PostgreSQL remains bound to host loopback. The production Compose overlay mounts
+`/var/run/postgresql` into the web container, and an absolute Django database
+host selects that Unix socket instead of TCP.
 
-If the database is intentionally bound only to `127.0.0.1`, stop here and use
-the host-network transition described in `DOCKER_CADDY_MIGRATION.md` instead of
-loosening PostgreSQL broadly.
+Find the active client-authentication file:
+
+```bash
+sudo -u postgres psql -Atqc "SHOW hba_file;"
+sudo -u postgres psql -Atqc "SHOW unix_socket_directories;"
+```
+
+Back up the reported `pg_hba.conf`, then add this rule before a broader
+`local all all peer` rule:
+
+```text
+local   DATABASE_NAME   DATABASE_USER   scram-sha-256
+```
+
+Use the real database and role names from `.env.docker`. Reload PostgreSQL and
+test the socket interactively without putting the password in shell history:
+
+```bash
+sudo systemctl reload postgresql
+psql --host=/var/run/postgresql --username=DATABASE_USER \
+  --dbname=DATABASE_NAME --password --command='SELECT 1;'
+```
+
+Do not change `listen_addresses` and do not publish port 5432.
 
 ## 3. Prepare the static directory
 
