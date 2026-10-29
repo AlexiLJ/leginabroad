@@ -1,0 +1,112 @@
+<!--
+Admin metadata (do not paste this comment into the visible article):
+Title: Migrating My Django Site to Docker Without Breaking Production — Part 1
+Slug: migrating-django-site-to-docker-part-1
+Section: Tech
+Status: Draft
+Tags: Docker, Django, Deployment, Gunicorn, Learning, UV
+Suggested summary: The first low-risk steps in moving a running Django site to Docker while keeping Nginx and PostgreSQL unchanged.
+-->
+
+<p>I have wanted to containerize this website for a while, but a working production service is not the right place for a “big bang” rewrite. My goal is not simply to make Docker start Django. The goal is to introduce a repeatable deployment unit without changing the database, reverse proxy, TLS configuration, and application runtime all at once.</p>
+
+<p>For the first milestone, I am containerizing only Django and Gunicorn. PostgreSQL and Nginx stay on the server. Caddy may replace Nginx later, but that will be a separate migration with its own rollback plan.</p>
+
+<h2>Why I am separating the migration</h2>
+
+<p>If I moved Django, PostgreSQL, Nginx, TLS, and the deployment pipeline in one release, a failure would have too many possible causes. By keeping Nginx and PostgreSQL unchanged, I can test one important question first: can the existing Django application run reliably inside a container?</p>
+
+<p>The first target architecture is simple:</p>
+
+<pre><code>Internet
+    |
+    v
+Nginx on the VPS
+    |
+    v
+Django + Gunicorn in Docker
+    |
+    v
+PostgreSQL on the VPS</code></pre>
+
+<p>This also gives me a fast rollback. If the container has a problem, Nginx can point back to the existing systemd-managed Gunicorn service.</p>
+
+<h2>The first blocker: configuration depended on Git</h2>
+
+<p>The application originally discovered the current Git branch by reading <code>.git/HEAD</code>. It then used the branch name to select a JSON file containing configuration values. That works in a checkout on one server, but it is a poor fit for a container.</p>
+
+<p>A production image should not contain the <code>.git</code> directory or secret JSON files. Configuration should arrive at runtime through environment variables or a dedicated secret manager.</p>
+
+<p>I changed the settings loader so environment variables have priority. The old branch-based JSON lookup remains temporarily as a fallback, which means the existing host deployment can continue working while I test Docker. Once the container deployment is stable, the legacy loader can be removed.</p>
+
+<pre><code>if name in os.environ:
+    return os.environ[name]
+
+# Temporary compatibility fallback for the current host deployment.
+return read_value_from_legacy_json(name)</code></pre>
+
+<p>This is an example of a useful migration pattern: introduce the new path first, prove it, and remove the old path only after the new deployment is reliable.</p>
+
+<h2>Container-friendly logging</h2>
+
+<p>The application also wrote errors to a file inside the project directory. Containers work better when the application writes logs to standard output and standard error. Docker can then collect, rotate, and forward those logs without requiring a writable application filesystem.</p>
+
+<p>Gunicorn access and error logs now use <code>-</code>, and Django uses its console handler. The Compose configuration also limits the local JSON log files so they cannot grow forever.</p>
+
+<h2>A small health endpoint</h2>
+
+<p>I added a lightweight endpoint at <code>/healthz/</code>:</p>
+
+<pre><code>{"status": "ok"}</code></pre>
+
+<p>It does not query PostgreSQL, so it answers a focused liveness question: is Django running and able to serve a request? Docker uses this endpoint for its health check. A separate readiness check that verifies dependencies can be added later if it becomes necessary.</p>
+
+<h2>Building with Python 3.14 and UV</h2>
+
+<p>The image uses Python 3.14 and installs dependencies from the committed <code>uv.lock</code> file. UV is copied from Astral’s versioned container image instead of being downloaded by an unpinned shell installer during the build.</p>
+
+<pre><code>FROM python:3.14-slim-trixie
+
+COPY --from=ghcr.io/astral-sh/uv:0.13.6 /uv /uvx /bin/
+
+COPY pyproject.toml uv.lock ./
+RUN uv sync --locked --no-dev --no-install-project</code></pre>
+
+<p>Copying the dependency files before the application source improves layer caching. A normal code change does not force Docker to reinstall every Python dependency.</p>
+
+<p>The final process runs as an unprivileged user rather than root:</p>
+
+<pre><code>USER app
+
+CMD ["gunicorn", "legin_abroad_base.wsgi:application",
+     "--bind", "0.0.0.0:8000",
+     "--access-logfile", "-",
+     "--error-logfile", "-"]</code></pre>
+
+<h2>Keeping secrets out of the image</h2>
+
+<p>The Docker build context excludes local environments, Git metadata, SSH keys, database dumps, secret JSON files, and runtime environment files. The repository contains only an example environment file with placeholders.</p>
+
+<p>The real <code>.env.docker</code> file must never be committed. On the server it will be readable only by the deployment user. In a later iteration I may move these values to a dedicated secret store, but an ignored and permission-restricted environment file is a reasonable first step for this small deployment.</p>
+
+<h2>My first validation loop</h2>
+
+<p>Before touching Nginx, I can build and test the image locally:</p>
+
+<pre><code>cp .env.docker.example .env.docker
+docker compose build
+docker compose run --rm web python manage.py check
+docker compose run --rm web python manage.py showmigrations --plan
+docker compose run --rm web python manage.py collectstatic --noinput
+docker compose up -d
+curl http://127.0.0.1:8000/healthz/</code></pre>
+
+<p>I will also verify the homepage, article pages, search, CSS, S3-hosted images, and the Django admin. Passing a health check is useful, but it does not prove that the whole site behaves correctly.</p>
+
+<h2>What comes next</h2>
+
+<p>The next milestone is to run this image on the VPS behind the existing Nginx configuration. I will keep the old Gunicorn service ready for rollback, change only the upstream destination, and observe the application before removing anything.</p>
+
+<p>Only after that deployment is stable will I update the GitHub Actions pipeline to build and restart the container. Replacing Nginx with Caddy will come later as another isolated change.</p>
+
+<p>Docker is not the goal by itself. The real goal is a deployment that is reproducible, understandable, and easy to recover when something goes wrong.</p>

@@ -1,0 +1,29 @@
+.git
+.github
+.idea
+.venv
+__pycache__
+*.py[cod]
+*.log
+
+# Local and production secrets
+.env
+.env.*
+!.env.docker.example
+.ssh
+**/.ssh
+**/.django_env.json
+**/pathes.json
+
+# Stateful or generated data
+*.dump
+db.sqlite3*
+static
+media
+htmlcov
+.coverage*
+.pytest_cache
+
+# Local notes and editor files
+*.swp
+*.tmp

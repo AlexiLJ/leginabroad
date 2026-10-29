@@ -1,0 +1,191 @@
+<!--
+Admin metadata (do not paste this comment into the visible article):
+Title: Running My Django Site in Docker Behind Nginx — Part 2
+Slug: running-django-in-docker-behind-nginx-part-2
+Section: Tech
+Status: Draft
+Tags: Docker, Django, Deployment, Gunicorn, Learning, Nginx, UV
+Suggested summary: Building and testing the Django image, hardening its production Compose configuration, and preparing a reversible Nginx cutover.
+Suggested publication order: Publish after “Migrating My Django Site to Docker Without Breaking Production — Part 1”.
+-->
+
+<p>In the first part of this migration, I made the Django application container-ready. Configuration can now come from environment variables, logs go to standard output, and Docker has a lightweight health endpoint at <code>/healthz/</code>.</p>
+
+<p>The second milestone is about proving that the image actually works and preparing a low-risk production cutover. I am still not replacing PostgreSQL, Nginx, TLS, or the GitHub Actions deployment in this step. The objective is narrower: run Django and Gunicorn in Docker behind the existing Nginx configuration, while keeping the old systemd Gunicorn service available for rollback.</p>
+
+<h2>Building the image for real</h2>
+
+<p>A Dockerfile that looks correct is not enough. The first useful test is a complete image build using the committed lock file:</p>
+
+<pre><code>docker build --tag leginabroad:milestone-1 .</code></pre>
+
+<p>The image built successfully with Python 3.14 and the dependencies locked by UV. I then ran Django's system check inside the image with placeholder configuration values. This verified that the container does not depend on the Git repository or the old secret JSON files.</p>
+
+<pre><code>docker run --rm \
+  --env DJANGO_SECRET_KEY=container-smoke-test-only \
+  --env DJANGO_SECURE_SSL_REDIRECT=false \
+  --env POSTGRESQL_NAME=unused \
+  --env POSTGRESQL_USER=unused \
+  --env POSTGRESQL_PASSWORD=unused \
+  --env HOST_NAME=host.docker.internal \
+  --env PORT=5432 \
+  leginabroad:milestone-1 \
+  python manage.py check</code></pre>
+
+<p>The database values are deliberately unused in this smoke test. Django can load its configuration and run system checks without querying PostgreSQL.</p>
+
+<h2>Verifying Gunicorn and the container user</h2>
+
+<p>Next, I started the image on local port <code>8001</code> and called the health endpoint:</p>
+
+<pre><code>curl http://127.0.0.1:8001/healthz/
+
+{"status": "ok"}</code></pre>
+
+<p>I also checked the process identity inside the running container:</p>
+
+<pre><code>uid=10001(app) gid=10001(app) groups=10001(app)</code></pre>
+
+<p>This matters because an internet-facing application should not run as root when it does not need root privileges. Gunicorn can listen on port <code>8000</code> as an ordinary user, and Nginx remains responsible for public ports 80 and 443.</p>
+
+<h2>The production Compose overlay</h2>
+
+<p>The base Compose file remains convenient for local work. Production adds a second file:</p>
+
+<pre><code>docker compose \
+  --env-file .env.docker \
+  -f compose.yaml \
+  -f compose.production.yaml \
+  up -d</code></pre>
+
+<p>The production overlay applies several restrictions:</p>
+
+<ul>
+  <li>The container root filesystem is read-only.</li>
+  <li>Linux capabilities are dropped.</li>
+  <li><code>no-new-privileges</code> prevents privilege escalation.</li>
+  <li>A small temporary filesystem is mounted at <code>/tmp</code> for Gunicorn.</li>
+  <li>The application is published only on <code>127.0.0.1:8000</code>.</li>
+  <li>Container logs are rotated instead of growing without a limit.</li>
+</ul>
+
+<p>Binding to <code>127.0.0.1</code> is important. The Django container should not bypass Nginx and become directly reachable from the internet.</p>
+
+<h2>Static files need an explicit plan</h2>
+
+<p>The existing Nginx configuration already serves collected static files from the server. A Docker named volume would hide those files from host Nginx, so the production overlay bind-mounts the existing repository <code>static</code> directory into the container:</p>
+
+<pre><code>services:
+  web:
+    volumes:
+      - ./static:/app/static</code></pre>
+
+<p>Django can collect static files into this directory, while Nginx continues reading them from the same host path. Because the container runs as UID and GID <code>10001</code>, the directory must be prepared once:</p>
+
+<pre><code>mkdir -p static
+sudo chown -R 10001:10001 static
+sudo chmod -R u=rwX,go=rX static</code></pre>
+
+<p>This avoids changing the static-file architecture during the application cutover. I can reconsider whether Caddy, WhiteNoise, or a dedicated static service should own this responsibility later.</p>
+
+<h2>A repeatable deployment script</h2>
+
+<p>I added a deployment script for the container milestone:</p>
+
+<pre><code>bash scripts/deploy-container.sh</code></pre>
+
+<p>It performs the following checks and actions:</p>
+
+<ol>
+  <li>Requires the server environment file to have permissions <code>600</code>.</li>
+  <li>Builds the image from the locked dependencies.</li>
+  <li>Runs <code>manage.py check --deploy</code>.</li>
+  <li>Verifies that UID <code>10001</code> can write the static directory.</li>
+  <li>Optionally applies reviewed migrations.</li>
+  <li>Runs <code>collectstatic</code>.</li>
+  <li>Starts the container.</li>
+  <li>Waits until Docker reports the service as healthy.</li>
+</ol>
+
+<p>Migrations are not automatic. A deployment containing reviewed migrations must request them explicitly:</p>
+
+<pre><code>bash scripts/deploy-container.sh --migrate</code></pre>
+
+<p>This is intentional. Application rollback and database rollback are different problems, and a schema change needs its own tested recovery plan.</p>
+
+<h2>Starting Docker before changing Nginx</h2>
+
+<p>The script stops after starting a healthy container. It does not edit Nginx and it does not stop the current systemd Gunicorn service. That creates a useful intermediate state:</p>
+
+<pre><code>Internet
+    |
+    v
+Nginx ──────────&gt; systemd Gunicorn
+
+127.0.0.1:8000 ─&gt; Docker Gunicorn (healthy, not receiving public traffic)</code></pre>
+
+<p>At this point I can test the new application directly from the server:</p>
+
+<pre><code>curl --fail http://127.0.0.1:8000/healthz/
+
+curl --fail \
+  --header 'Host: leginabroad.com' \
+  --header 'X-Forwarded-Proto: https' \
+  http://127.0.0.1:8000/</code></pre>
+
+<p>The forwarded-protocol header verifies that Django behaves correctly when HTTPS is terminated by Nginx.</p>
+
+<h2>The smallest possible Nginx cutover</h2>
+
+<p>After the direct checks pass, the Nginx change is limited to the application upstream:</p>
+
+<pre><code>location / {
+    proxy_pass http://127.0.0.1:8000;
+    proxy_http_version 1.1;
+
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}</code></pre>
+
+<p>The domain names, TLS certificates, HTTP-to-HTTPS redirect, and static-file location stay unchanged. Nginx must validate the configuration before it reloads:</p>
+
+<pre><code>sudo nginx -t
+sudo systemctl reload nginx</code></pre>
+
+<p>A reload is preferable to a hard restart because existing connections are handled gracefully.</p>
+
+<h2>Rollback comes before cleanup</h2>
+
+<p>I will keep the original Nginx site configuration and the systemd Gunicorn service during the first observation period. If the container fails, the rollback order is important:</p>
+
+<ol>
+  <li>Restore the previous Nginx configuration.</li>
+  <li>Restart the systemd Gunicorn socket and service.</li>
+  <li>Validate and reload Nginx.</li>
+  <li>Verify the public site.</li>
+  <li>Only then stop the Docker service.</li>
+</ol>
+
+<p>Stopping Docker before restoring the old Nginx upstream would create an unnecessary outage.</p>
+
+<h2>What this milestone deliberately does not change</h2>
+
+<ul>
+  <li>PostgreSQL remains on the host.</li>
+  <li>Nginx still handles TLS and public traffic.</li>
+  <li>The old Gunicorn service remains available for rollback.</li>
+  <li>GitHub Actions still uses the current deployment path.</li>
+  <li>Caddy is not introduced yet.</li>
+</ul>
+
+<p>Keeping those boundaries makes the result easier to understand. If the container works locally but fails behind Nginx, I know where to look. If PostgreSQL connectivity fails, I have not simultaneously changed the database deployment.</p>
+
+<h2>What comes next</h2>
+
+<p>The next step is the manual VPS trial and Nginx cutover. After it has been stable long enough to trust, I can update GitHub Actions to build and restart the Compose service automatically.</p>
+
+<p>Caddy still comes later. Replacing the reverse proxy at the same time as introducing Docker would remove the main benefit of this staged migration: knowing which change caused a problem.</p>
+
+<p>The most useful lesson so far is that containerization is not primarily about writing a Dockerfile. It is about making configuration, permissions, networking, health checks, static files, and rollback behavior explicit.</p>
