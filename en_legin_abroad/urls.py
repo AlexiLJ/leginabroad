@@ -18,6 +18,7 @@ urlpatterns = [
     path("sections", views.SectionsListView.as_view(), name="en_sections"),
     path("tag/<slug:tag_slug>/", views.index, name="en_article_by_tag"),
     path("about", views.about, name="en_about"),
+    path("prague-cost-of-living/", views.prague_cost_of_living, name="prague_cost_of_living"),
     path("<slug:sslug>/<slug:slug>", views.ArticleDetailView.as_view(), name="en_article"),
 ]
 

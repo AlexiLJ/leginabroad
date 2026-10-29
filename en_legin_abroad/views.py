@@ -15,6 +15,11 @@ def health_check(request):
     return JsonResponse({"status": "ok"})
 
 
+def prague_cost_of_living(request):
+    """A browser-only budget planner; no income data is submitted or stored."""
+    return render(request, "en_legin_abroad/prague_cost_of_living.html")
+
+
 def ads_txt(request):
     """Declare Google AdSense as an authorized seller for this domain."""
     response = HttpResponse(

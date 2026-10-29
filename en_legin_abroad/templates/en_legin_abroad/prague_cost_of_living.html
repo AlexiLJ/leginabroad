@@ -1,0 +1,86 @@
+{% extends "en_legin_abroad/en_base.html" %}
+{% load static %}
+{% block title %}Prague Cost of Living Guide & Calculator — Legin' Abroad{% endblock %}
+{% block meta_description %}Plan your monthly Prague budget with editable costs, single-person and couple scenarios, and a simple savings calculator in Czech koruna.{% endblock %}
+{% block layout_class %}site-layout--wide{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block static %}
+<link rel="stylesheet" href="{% static 'css/prague-budget.css' %}">
+<script src="{% static 'js/prague-budget.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+<nav class="content-breadcrumb" aria-label="Breadcrumb"><ol class="content-breadcrumb__list">
+  <li><a href="{% url 'en_legin_abroad:en_index' %}">Home</a></li>
+  <li aria-current="page">Prague cost of living</li>
+</ol></nav>
+<section class="budget-hero">
+  <p class="eyebrow">Living in Prague · A practical starting point</p>
+  <h1>Make room for life<br>in Prague.</h1>
+  <p class="budget-lead">What could your month actually cost? Start with a solo or couple budget, make it your own, and see what’s left to save.</p>
+  <span class="budget-date">All amounts in CZK · Estimates reviewed 29 October 2026</span>
+</section>
+<noscript><p class="budget-warning">Enable JavaScript to use the calculator. The guide and example budgets below are still available.</p></noscript>
+<div class="budget-workspace" id="budget-calculator">
+  <section class="budget-panel" aria-labelledby="planner-title">
+    <div class="budget-panel-heading"><div><p class="eyebrow">01 / Your month</p><h2 id="planner-title">Build your budget</h2></div><span class="budget-unit">CZK / month</span></div>
+    <form id="budget-form">
+      <fieldset class="budget-scenarios">
+        <legend>Start with a household scenario</legend>
+        <label><input type="radio" name="scenario" value="single" checked><span>Just me <small>One adult · own apartment</small></span></label>
+        <label><input type="radio" name="scenario" value="couple"><span>Two of us <small>Two adults · shared apartment</small></span></label>
+      </fieldset>
+      <p class="budget-hint">Switching scenario loads fresh example amounts for every field.</p>
+      <div class="budget-income"><label for="income">Household take-home income <small>After tax, for everyone combined</small></label><input id="income" name="income" type="number" min="0" max="10000000" step="1" value="50000" required inputmode="numeric"></div>
+      <h3 class="budget-expenses-heading">Monthly expenses</h3>
+      <div class="budget-field"><label for="rent">Rent <small>Apartment only, before bills</small></label><input id="rent" name="rent" type="number" min="0" max="10000000" step="1" value="22000" required inputmode="numeric"></div>
+      <div class="budget-field"><label for="utilities">Utilities & service charges <small>Energy, water, heating, building fees</small></label><input id="utilities" name="utilities" type="number" min="0" max="10000000" step="1" value="4500" required inputmode="numeric"></div>
+      <div class="budget-field"><label for="groceries">Groceries <small>Food and household essentials</small></label><input id="groceries" name="groceries" type="number" min="0" max="10000000" step="1" value="6000" required inputmode="numeric"></div>
+      <div class="budget-field"><label for="transport">Public transport <small>Monthly adult passes, Prague only</small></label><input id="transport" name="transport" type="number" min="0" max="10000000" step="1" value="550" required inputmode="numeric"></div>
+      <div class="budget-field"><label for="connectivity">Internet & mobile <small>Home connection and phone plans</small></label><input id="connectivity" name="connectivity" type="number" min="0" max="10000000" step="1" value="1000" required inputmode="numeric"></div>
+      <div class="budget-field"><label for="leisure">Eating out & leisure <small>Cafés, restaurants, gym, activities</small></label><input id="leisure" name="leisure" type="number" min="0" max="10000000" step="1" value="3500" required inputmode="numeric"></div>
+      <div class="budget-field"><label for="other">Other & buffer <small>Clothes, health costs, subscriptions</small></label><input id="other" name="other" type="number" min="0" max="10000000" step="1" value="2000" required inputmode="numeric"></div>
+      <p class="budget-error" id="budget-error" role="alert" hidden>Enter a whole amount from 0 to 10,000,000 CZK in every field to see your results.</p>
+      <button class="button button--secondary budget-reset" type="reset">Reset this scenario</button>
+      <p class="budget-hint">Updates as you type. Your numbers stay on this page and are cleared when you reload.</p>
+    </form>
+  </section>
+  <aside class="budget-summary" aria-labelledby="summary-title">
+    <p class="eyebrow">02 / The bigger picture</p><h2 id="summary-title">Your Prague budget</h2>
+    <div id="budget-results" aria-live="polite" aria-atomic="true">
+      <p class="budget-result-label">Total monthly expenses</p><strong class="budget-total" id="total">39,550 Kč</strong>
+      <div class="budget-divider"></div>
+      <p class="budget-result-label" id="balance-label">Left to save each month</p><strong class="budget-balance" id="balance">10,450 Kč</strong>
+      <p id="balance-note">20.9% of your take-home income</p>
+      <dl class="budget-facts"><div><dt>Annual savings potential</dt><dd id="annual">125,400 Kč</dd></div><div><dt>Monthly cost per person</dt><dd id="per-person">39,550 Kč</dd></div></dl>
+      <p class="budget-summary-note" id="summary-note">A projection of 12 identical months, before unexpected costs or investment returns.</p>
+    </div>
+    <a class="budget-guide-link" href="#living-cost-guide">What should I budget for? ↓</a>
+  </aside>
+</div>
+<section class="budget-guide" id="living-cost-guide" aria-labelledby="guide-title">
+  <p class="eyebrow">03 / Know what’s included</p><h2 id="guide-title">A little context before you pack.</h2>
+  <div class="budget-guide-grid">
+    <article><span class="eyebrow">Housing</span><h3>Start with your actual rent.</h3><p>Rent is usually the biggest variable. Our examples use 22,000 Kč for one adult and 28,000 Kč for a couple sharing an apartment. These are editable planning assumptions, not quoted market averages. Location, size, and condition matter.</p><p>Check whether an advert includes building charges, heating, and energy. Put each cost in your budget only once.</p></article>
+    <article><span class="eyebrow">Getting around</span><h3>One pass goes a long way.</h3><p>The standard personal Prague adult pass costs 550 Kč monthly. A 3,650 Kč annual pass works out to about 304 Kč per month, but you pay upfront. The couple example includes two monthly passes.</p><p>These fares cover Prague zones P, 0 and B. Airport Express, travel outside Prague, and taxis need a separate budget. <a href="https://pid.cz/jizdne-a-tarif/" target="_blank" rel="noopener noreferrer">Check official PID fares ↗</a></p></article>
+    <article><span class="eyebrow">Arriving & settling in</span><h3>Keep a separate move-in fund.</h3><p>This calculator covers recurring monthly spending. A rental deposit, any agency fee, moving, furniture, and initial travel are additional upfront costs. Ask for a complete breakdown before signing.</p><p>Use take-home income after payroll deductions. Add any separately paid health insurance, visa costs, debts, car costs, or dependants’ expenses to “Other & buffer.”</p></article>
+  </div>
+</section>
+<section class="budget-examples" aria-labelledby="examples-title">
+  <h2 id="examples-title">Two starting points. Your own numbers.</h2>
+  <p>Illustrative monthly household budgets in CZK. Couples share rent and bills; they do not simply double the solo budget.</p>
+  <div class="budget-table-wrap"><table><caption>Default scenarios used by the calculator</caption><thead><tr><th scope="col">Per month</th><th scope="col">One adult</th><th scope="col">Couple</th></tr></thead><tbody>
+    <tr><th scope="row">Take-home income</th><td>50,000 Kč</td><td>80,000 Kč</td></tr>
+    <tr><th scope="row">Rent</th><td>22,000 Kč</td><td>28,000 Kč</td></tr>
+    <tr><th scope="row">Utilities & service charges</th><td>4,500 Kč</td><td>5,500 Kč</td></tr>
+    <tr><th scope="row">Groceries</th><td>6,000 Kč</td><td>10,000 Kč</td></tr>
+    <tr><th scope="row">Public transport</th><td>550 Kč</td><td>1,100 Kč</td></tr>
+    <tr><th scope="row">Internet & mobile</th><td>1,000 Kč</td><td>1,500 Kč</td></tr>
+    <tr><th scope="row">Eating out & leisure</th><td>3,500 Kč</td><td>6,000 Kč</td></tr>
+    <tr><th scope="row">Other & buffer</th><td>2,000 Kč</td><td>3,000 Kč</td></tr>
+    <tr class="budget-table-total"><th scope="row">Total expenses</th><td>39,550 Kč</td><td>55,100 Kč</td></tr>
+    <tr class="budget-table-total"><th scope="row">Left to save</th><td>10,450 Kč</td><td>24,900 Kč</td></tr>
+  </tbody></table></div>
+  <p class="budget-hint">Method: add monthly expenses, subtract them from household take-home income, and multiply the balance by 12 for the annual projection. A negative balance is a shortfall.</p>
+  <p class="budget-hint">Sources & assumptions: <a href="https://pid.cz/jizdne-a-tarif/">PID official fares</a> for transport; <a href="https://www.deloitte.com/cz-sk/en/Industries/real-estate/collections/rent-index.html">Deloitte Rent Index</a> for rental-market context. All other amounts and example incomes are editorial planning assumptions. They are not a live price feed or a salary estimate.</p>
+</section>
+{% endblock %}

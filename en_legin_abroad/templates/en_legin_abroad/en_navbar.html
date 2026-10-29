@@ -33,6 +33,9 @@
         <li class="nav-item">
           <a class="nav-link {% if request.resolver_match.url_name == 'en_about' %}is-active{% endif %}" href="{% url 'en_legin_abroad:en_about' %}">About</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'prague_cost_of_living' %}is-active{% endif %}" href="{% url 'en_legin_abroad:prague_cost_of_living' %}">Prague budget</a>
+        </li>
       </ul>
 
       <form class="site-search" method="get" action="{% url 'en_legin_abroad:en_search' %}" role="search">
