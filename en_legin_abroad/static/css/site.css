@@ -583,51 +583,6 @@ input:focus-visible {
     font-size: 0.96rem;
 }
 
-.travel-teaser {
-    margin-top: 22px;
-    padding: clamp(28px, 4vw, 44px);
-    border: 1px solid #efd7c4;
-    border-radius: var(--radius-md);
-    background:
-        radial-gradient(circle at 88% 20%, rgba(243, 109, 61, 0.14), transparent 24%),
-        #fff7ef;
-    display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
-    gap: clamp(30px, 6vw, 80px);
-    align-items: end;
-}
-
-.travel-teaser .eyebrow {
-    color: #b74a23;
-}
-
-.travel-teaser h2 {
-    margin-bottom: 14px;
-    font-size: clamp(1.8rem, 4vw, 3rem);
-}
-
-.travel-teaser__copy > p:last-child {
-    max-width: 700px;
-    margin-bottom: 0;
-}
-
-.travel-teaser__places {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 9px;
-    justify-content: flex-end;
-}
-
-.travel-teaser__places span {
-    padding: 7px 11px;
-    border: 1px solid #e8c7af;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.68);
-    color: #7a452d;
-    font-size: 0.8rem;
-    font-weight: 700;
-}
-
 .article-list {
     display: grid;
     gap: 22px;
@@ -1347,13 +1302,6 @@ input:focus-visible {
     font-size: 1.08rem;
 }
 
-.about-story__copy .about-story__future {
-    padding: 18px 20px;
-    border-left: 4px solid var(--accent);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    background: #fff7ef;
-}
-
 .about-story__copy p:first-child::first-letter {
     float: left;
     margin: 7px 8px 0 0;
@@ -1709,14 +1657,6 @@ input:focus-visible {
     .focus-grid__items,
     .principles-grid {
         grid-template-columns: minmax(0, 1fr);
-    }
-
-    .travel-teaser {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .travel-teaser__places {
-        justify-content: flex-start;
     }
 
     .focus-card,

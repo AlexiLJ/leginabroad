@@ -33,8 +33,8 @@ class PublicPageTests(TestCase):
         self.assertTemplateUsed(response, "en_legin_abroad/en_index.html")
         self.assertContains(response, "Build software that works beyond the tutorial.")
         self.assertContains(response, "Python · Django · Test automation")
-        self.assertContains(response, "Travel notes from a life abroad.")
-        self.assertContains(response, "Coming later")
+        self.assertNotContains(response, "Travel notes from a life abroad.")
+        self.assertNotContains(response, "Coming later")
         self.assertContains(response, "ca-pub-5630827130172417")
         self.assertContains(response, "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
 
@@ -66,7 +66,8 @@ class PublicPageTests(TestCase):
         self.assertTemplateUsed(response, "en_legin_abroad/en_about.html")
         self.assertContains(response, "I turn real development problems into practical guides.")
         self.assertContains(response, "Editorial principles")
-        self.assertContains(response, "Travel Notes")
+        self.assertContains(response, "Adapting to unfamiliar places")
+        self.assertNotContains(response, "Travel Notes")
         self.assertContains(response, 'class="content-breadcrumb"')
         self.assertContains(response, 'aria-current="page">About</li>')
 
