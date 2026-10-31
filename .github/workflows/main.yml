@@ -20,6 +20,7 @@ jobs:
 
     steps:
       - name: Configure SSH
+        id: configure_ssh
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
@@ -38,13 +39,27 @@ jobs:
             fi
           done
 
+          ssh_host="$(printf '%s' "$SSH_HOST" | tr -d '\r\n')"
+          ssh_user="$(printf '%s' "$SSH_USER" | tr -d '\r\n')"
+
+          if [[ ! "$ssh_host" =~ ^[A-Za-z0-9.-]+$ ]]; then
+            echo "::error::SSH_HOST must contain only a hostname or IPv4 address, without quotes or a URL scheme"
+            exit 1
+          fi
+
+          if [[ ! "$ssh_user" =~ ^[A-Za-z_][A-Za-z0-9_-]*$ ]]; then
+            echo "::error::SSH_USER is not a valid SSH username"
+            exit 1
+          fi
+
           install -m 700 -d ~/.ssh
 
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          printf '%s\n' "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
           host_key="$(
             printf '%s\n' "$SSH_KNOWN_HOSTS" |
+              tr -d '\r' |
               awk '
                 $1 == "ssh-ed25519" { print $1 " " $2; exit }
                 $2 == "ssh-ed25519" { print $2 " " $3; exit }
@@ -56,18 +71,23 @@ jobs:
             exit 1
           fi
 
-          printf '%s %s\n' "$SSH_HOST" "$host_key" > ~/.ssh/known_hosts
+          printf '%s %s\n' "$ssh_host" "$host_key" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
-          if ! ssh-keygen -F "$SSH_HOST" -f ~/.ssh/known_hosts >/dev/null; then
+          if ! ssh-keygen -l -f ~/.ssh/known_hosts >/dev/null 2>&1; then
+            echo "::error::SSH_KNOWN_HOSTS contains a truncated or malformed ED25519 key"
+            exit 1
+          fi
+
+          if ! ssh-keygen -F "$ssh_host" -f ~/.ssh/known_hosts >/dev/null; then
             echo "::error::Could not create a known-host entry for SSH_HOST"
             exit 1
           fi
 
           cat > ~/.ssh/config <<EOF
           Host target
-            HostName $SSH_HOST
-            User $SSH_USER
+            HostName $ssh_host
+            User $ssh_user
             IdentityFile ~/.ssh/id_rsa
             IdentitiesOnly yes
             StrictHostKeyChecking yes
@@ -106,7 +126,7 @@ jobs:
             https://leginabroad.com/
 
       - name: Show diagnostics after failure
-        if: ${{ failure() }}
+        if: ${{ failure() && steps.configure_ssh.outcome == 'success' }}
         continue-on-error: true
         run: |
           ssh target 'cd ~/leginabroad \
