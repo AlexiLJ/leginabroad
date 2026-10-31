@@ -1,55 +1,92 @@
-name: Continuous Integration
+name: Deploy Docker
 
 on:
   push:
     branches:
       - master
 
+permissions:
+  contents: read
+
 concurrency:
-  group: master
-  cancel-in-progress: true
+  group: production-deploy
+  cancel-in-progress: false
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy production
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    timeout-minutes: 30
 
-      - uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            css:
-            - 'en_legin_abroad/static/css/**/*.css'
-            - 'css/**/*.css'
-            - 'static/**/*.css'
+    steps:
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
         run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          install -m 700 -d ~/.ssh
+
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          cat >>~/.ssh/config <<END
+
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+          cat > ~/.ssh/config <<EOF
           Host target
             HostName $SSH_HOST
             User $SSH_USER
             IdentityFile ~/.ssh/id_rsa
+            IdentitiesOnly yes
+            StrictHostKeyChecking yes
+            UserKnownHostsFile ~/.ssh/known_hosts
             LogLevel ERROR
-            StrictHostKeyChecking no
-          END
+          EOF
 
-      - name: Deploy with collect static
-        if: steps.changes.outputs.css == 'true'
-        run: |
-          ssh target 'cd ~/leginabroad && git pull --ff-only && yes yes | sudo ./restart.sh -c'
+          chmod 600 ~/.ssh/config
 
-      - name: Deploy without changes in static files
-        if: steps.changes.outputs.css != 'true'
+      - name: Deploy exact revision
         run: |
-          ssh target 'cd ~/leginabroad && git pull --ff-only && sudo ./restart.sh'
+          ssh target "cd ~/leginabroad \
+            && git pull --ff-only \
+            && test \"\$(git rev-parse HEAD)\" = \"$GITHUB_SHA\" \
+            && bash scripts/deploy-container.sh"
+
+      - name: Verify public website
+        run: |
+          curl \
+            --fail \
+            --show-error \
+            --silent \
+            --retry 5 \
+            --retry-delay 3 \
+            --retry-all-errors \
+            https://leginabroad.com/healthz/
+
+          curl \
+            --fail \
+            --show-error \
+            --silent \
+            --head \
+            --retry 5 \
+            --retry-delay 3 \
+            --retry-all-errors \
+            https://leginabroad.com/
+
+      - name: Show diagnostics after failure
+        if: ${{ failure() }}
+        continue-on-error: true
+        run: |
+          ssh target 'cd ~/leginabroad \
+            && docker compose \
+              --env-file .env.docker \
+              -f compose.yaml \
+              -f compose.production.yaml \
+              ps \
+            && docker compose \
+              --env-file .env.docker \
+              -f compose.yaml \
+              -f compose.production.yaml \
+              logs --tail=100 web'
