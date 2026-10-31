@@ -26,13 +26,43 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
         run: |
+          for secret_name in \
+            SSH_PRIVATE_KEY \
+            SSH_HOST \
+            SSH_USER \
+            SSH_KNOWN_HOSTS
+          do
+            if [[ -z "${!secret_name:-}" ]]; then
+              echo "::error::${secret_name} is empty or unavailable to this job"
+              exit 1
+            fi
+          done
+
           install -m 700 -d ~/.ssh
 
           printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          host_key="$(
+            printf '%s\n' "$SSH_KNOWN_HOSTS" |
+              awk '
+                $1 == "ssh-ed25519" { print $1 " " $2; exit }
+                $2 == "ssh-ed25519" { print $2 " " $3; exit }
+              '
+          )"
+
+          if [[ -z "$host_key" ]]; then
+            echo "::error::SSH_KNOWN_HOSTS does not contain an ED25519 host key"
+            exit 1
+          fi
+
+          printf '%s %s\n' "$SSH_HOST" "$host_key" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
+
+          if ! ssh-keygen -F "$SSH_HOST" -f ~/.ssh/known_hosts >/dev/null; then
+            echo "::error::Could not create a known-host entry for SSH_HOST"
+            exit 1
+          fi
 
           cat > ~/.ssh/config <<EOF
           Host target
