@@ -1,0 +1,44 @@
+<section aria-labelledby="asyncio-health-checks">
+  <h2 id="asyncio-health-checks">Run independent health checks concurrently</h2>
+  <p>Suppose a deployment needs three checks before it can report which dependencies are ready. One check can be slow without making the other results useless. Give each check its own deadline and keep the service name alongside its result.</p>
+  <p>Save this example as <code>health_checks.py</code> and run <code>python health_checks.py</code> with Python 3.11 or later. The delays simulate independent network calls, so the script works offline and needs only the standard library.</p>
+  <pre><code class="language-python">import asyncio
+from time import perf_counter
+
+
+async def simulated_probe(delay):
+    await asyncio.sleep(delay)
+
+
+async def check(name, delay):
+    try:
+        async with asyncio.timeout(0.8):
+            await simulated_probe(delay)
+    except TimeoutError:
+        return name, "timed out"
+    return name, "ready"
+
+
+async def main():
+    services = [("web", 0.3), ("database", 0.5), ("worker", 1.2)]
+    start = perf_counter()
+
+    async with asyncio.TaskGroup() as group:
+        checks = [
+            group.create_task(check(name, delay))
+            for name, delay in services
+        ]
+
+    for task in checks:
+        name, result = task.result()
+        print(f"{name}: {result}")
+
+    print(f"Elapsed: {perf_counter() - start:.2f}s")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())</code></pre>
+  <p>Expect <code>web: ready</code>, <code>database: ready</code>, and <code>worker: timed out</code> after roughly 0.8 seconds. To compare, replace the task group and the following loop with <code>for name, delay in services:</code> followed by <code>print(await check(name, delay))</code> in the loop body. That runs the checks in sequence and takes roughly 1.6 seconds.</p>
+  <p>Each timeout becomes a result inside its own task, so a slow worker leaves the other results available. An unexpected exception still escapes the task, and the group cancels any remaining checks. When adapting the example, use an async client for real network requests. A blocking call inside the coroutine occupies the event loop and can delay the other checks and their deadlines.</p>
+  <p><a href="https://docs.python.org/3.14/library/asyncio-task.html">Python documentation for task groups and timeouts</a></p>
+</section>

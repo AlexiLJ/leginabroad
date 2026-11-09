@@ -1,0 +1,16 @@
+{
+  "featured_tool": "prague_budget",
+  "tools": {
+    "prague_budget": {
+      "route": "prague_cost_of_living",
+      "title": "Prague budget planner",
+      "description": "Compare rent, bills, and take-home pay for one person or a couple."
+    }
+  },
+  "topic_tools": {
+    "living-in-czechia": "prague_budget"
+  },
+  "article_supplements": {
+    "start-with-asyncio": "en_legin_abroad/asyncio_health_checks.html"
+  }
+}

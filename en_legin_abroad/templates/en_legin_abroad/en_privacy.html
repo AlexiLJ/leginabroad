@@ -1,0 +1,38 @@
+{% extends "en_legin_abroad/en_base.html" %}
+
+{% block title %}Privacy and analytics settings — Legin' Abroad{% endblock %}
+{% block meta_description %}How Legin' Abroad handles site visits, optional analytics, and the Prague budget planner.{% endblock %}
+{% block layout_class %}site-layout--wide{% endblock %}
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+  <article class="article-detail">
+    <header class="article-detail__header">
+      <h1>Privacy and analytics settings</h1>
+    </header>
+    <div class="article-detail__body article">
+      <h2>Visiting Legin' Abroad</h2>
+      <p>When your browser requests a page or file, the servers delivering it receive request details such as your IP address, the URL and your browser type. This information helps deliver the site, diagnose errors and protect it from abuse. The site may also use essential cookies for sessions and security.</p>
+      <p>Pages request fonts from Google Fonts. Some articles embed content such as YouTube videos. The providers receive requests from your browser when those resources load and may use cookies or similar technologies. Their privacy policies govern their handling of that information.</p>
+
+      {% if analytics_measurement_id %}
+      <h2>Optional Google Analytics</h2>
+      <p>If you enable analytics, Google Analytics uses cookies and identifiers to help measure page visits and interactions. Google can receive information such as the pages you visit, your browser and device, and your IP address as part of the request. This helps Alex understand which guides readers use. The site stores your choice in this browser. You can turn analytics off here at any time or clear site data in your browser to reset your choice.</p>
+      <div id="analytics-preference" hidden>
+        <div class="button-row">
+          <button class="button button--primary" type="button" data-analytics-choice="enabled">Enable analytics</button>
+          <button class="button button--secondary button--on-light" type="button" data-analytics-choice="disabled">Turn off analytics</button>
+        </div>
+      </div>
+      <p id="analytics-status" role="status"></p>
+      {% endif %}
+
+      <h2>Google AdSense</h2>
+      <p>{% if adsense_publisher_id %}Legin' Abroad uses a verification tag to confirm ownership to Google AdSense. {% endif %}The site currently serves no AdSense ads. If advertising is enabled in the future, Google and other ad providers may place or read browser cookies or use web beacons, IP addresses and other identifiers to serve and measure ads.</p>
+      <p><a href="https://policies.google.com/technologies/partner-sites">How Google uses data from sites that use its services</a>.</p>
+
+      <h2>Prague budget planner</h2>
+      <p>The planner calculates results in your browser. The site does not submit or store the amounts you enter. Google Analytics is disabled on the planner, internal search pages and this privacy page.</p>
+    </div>
+  </article>
+{% endblock %}

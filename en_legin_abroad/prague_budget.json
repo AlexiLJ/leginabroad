@@ -1,0 +1,42 @@
+{
+  "default_scenario": "single",
+  "scenarios": {
+    "single": {
+      "label": "Just me",
+      "description": "One adult · own apartment",
+      "table_label": "One adult",
+      "people": 1,
+      "income": 50000,
+      "rent": 22000,
+      "utilities": 4500,
+      "groceries": 6000,
+      "transport": 550,
+      "connectivity": 1000,
+      "leisure": 3500,
+      "other": 2000
+    },
+    "couple": {
+      "label": "Two of us",
+      "description": "Two adults · shared apartment",
+      "table_label": "Couple",
+      "people": 2,
+      "income": 80000,
+      "rent": 28000,
+      "utilities": 5500,
+      "groceries": 10000,
+      "transport": 1100,
+      "connectivity": 1500,
+      "leisure": 6000,
+      "other": 3000
+    }
+  },
+  "expense_fields": [
+    {"key": "rent", "label": "Rent", "description": "Apartment only, before bills"},
+    {"key": "utilities", "label": "Utilities & service charges", "description": "Energy, water, heating, building fees"},
+    {"key": "groceries", "label": "Groceries", "description": "Food and household essentials"},
+    {"key": "transport", "label": "Public transport", "description": "Monthly adult passes, Prague only"},
+    {"key": "connectivity", "label": "Internet & mobile", "description": "Home connection and phone plans"},
+    {"key": "leisure", "label": "Eating out & leisure", "description": "Cafés, restaurants, gym, activities"},
+    {"key": "other", "label": "Other & buffer", "description": "Clothes, health costs, subscriptions"}
+  ]
+}
