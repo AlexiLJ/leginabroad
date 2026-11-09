@@ -36,6 +36,12 @@
 
     <div class="article-detail__body article">
       {{ article.body|safe }}
+      {% if article_supplement %}
+        {% include article_supplement %}
+      {% endif %}
+      {% if topic_tool %}
+        <p>Related tool <a href="{{ topic_tool.url }}">{{ topic_tool.title }}</a></p>
+      {% endif %}
     </div>
 
     {% if article.tags.all %}

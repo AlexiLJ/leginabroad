@@ -20,19 +20,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-# from django.contrib.sitemaps.views import sitemap
-# from legin_abroad.sitemaps import ArticleSitemap, StaticViewSitemap, SectionSitemap  #, TagSitemap
-
-# sitemaps = {
-#     'static': StaticViewSitemap,
-#     'article': ArticleSitemap,
-#     'section': SectionSitemap,
-# }
-
 urlpatterns = [
     path("admin_LA/", admin.site.urls),
     path("", include("en_legin_abroad.urls")),
-    # path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path("ckeditor/", include("ckeditor_uploader.urls")),
 ]
 

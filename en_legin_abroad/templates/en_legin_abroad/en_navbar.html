@@ -4,7 +4,7 @@
       <span class="site-brand__mark" aria-hidden="true">LA</span>
       <span class="site-brand__copy">
         <strong>Legin' Abroad</strong>
-        <small>Python · Django · Testing</small>
+        <small>Guides & field notes</small>
       </span>
     </a>
 
@@ -32,9 +32,6 @@
         </li>
         <li class="nav-item">
           <a class="nav-link {% if request.resolver_match.url_name == 'en_about' %}is-active{% endif %}" href="{% url 'en_legin_abroad:en_about' %}">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.resolver_match.url_name == 'prague_cost_of_living' %}is-active{% endif %}" href="{% url 'en_legin_abroad:prague_cost_of_living' %}">Prague budget</a>
         </li>
       </ul>
 

@@ -544,7 +544,12 @@ input:focus-visible {
     gap: 24px;
 }
 
-.focus-grid__items,
+.focus-grid__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 18px;
+}
+
 .principles-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -561,7 +566,10 @@ input:focus-visible {
     box-shadow: 0 10px 30px rgba(22, 38, 31, 0.04);
 }
 
-.focus-card__number,
+.focus-card {
+    min-height: 0;
+}
+
 .principles-grid article > span {
     display: block;
     margin-bottom: 58px;

@@ -1,7 +1,7 @@
 {% extends "en_legin_abroad/en_base.html" %}
 
 {% block title %}About Alex — Legin' Abroad{% endblock %}
-{% block meta_description %}Meet Alex, the Python developer and software tester who turns lessons from building, testing, and operating real applications into practical guides.{% endblock %}
+{% block meta_description %}Meet Alex, the writer behind Legin' Abroad, and learn how the site's guides, field notes, and tools are made.{% endblock %}
 {% block body_class %}about-page{% endblock %}
 {% block layout_class %}site-layout--wide{% endblock %}
 {% block sidebar %}{% endblock %}
@@ -17,11 +17,11 @@
   <section class="about-hero" aria-labelledby="about-title">
     <div class="about-hero__intro">
       <p class="eyebrow">About Legin' Abroad</p>
-      <h1 id="about-title">I turn real development problems into practical guides.</h1>
+      <h1 id="about-title">Meet Alex, the writer behind Legin’ Abroad</h1>
     </div>
     <div class="about-hero__summary">
       <p>
-        I'm Alex, a Python developer and software tester with a background in physics. I write about the work behind reliable applications: implementation, automated testing, deployment, and the lessons that only appear after software meets the real world.
+        I’m a Python developer and software tester with a background in physics. I started Legin’ Abroad to share what I learn from building projects and making a life outside my home country.
       </p>
       <div class="button-row">
         <a class="button button--primary" href="{% url 'en_legin_abroad:en_index' %}">Explore the articles</a>
@@ -40,7 +40,7 @@
         I started in physics, where asking precise questions and testing assumptions is part of the job. That way of thinking followed me into software development and quality engineering. Today, I use Python to build applications, automate repetitive work, and make systems easier to trust.
       </p>
       <p>
-        The name <strong>Legin' Abroad</strong> comes from years of living outside my home country. Adapting to unfamiliar places taught me to observe carefully, question assumptions, and document the details that make complicated systems easier to understand. That perspective now shapes this focused technical notebook about the problems I solve and the tools I use.
+        The name <strong>Legin' Abroad</strong> comes from years of living outside my home country. Adapting to unfamiliar places taught me to observe carefully, question assumptions, and document the details that make complicated systems easier to understand. That perspective shapes the way I write about software, life abroad, and other subjects I explore through hands-on work or research.
       </p>
       <p>
         My goal is simple: publish the explanation I wish I had when I first faced the problem.
@@ -56,8 +56,8 @@
     <div class="principles-grid">
       <article>
         <span aria-hidden="true">01</span>
-        <h3>Reproducible examples</h3>
-        <p>Code should be runnable, prerequisites should be clear, and the expected result should not be a mystery.</p>
+        <h3>Examples you can use</h3>
+        <p>Examples show what you need, what to do, and how to check the result.</p>
       </article>
       <article>
         <span aria-hidden="true">02</span>
@@ -72,18 +72,6 @@
     </div>
   </section>
 
-  <section class="about-topics" aria-labelledby="topics-title">
-    <div>
-      <p class="eyebrow">Core topics</p>
-      <h2 id="topics-title">The work behind dependable Python software.</h2>
-    </div>
-    <ul>
-      <li><strong>Python & Django</strong><span>Application architecture, tooling, and maintainable implementation.</span></li>
-      <li><strong>Testing & quality</strong><span>Pytest, Playwright, API testing, and useful automation strategy.</span></li>
-      <li><strong>Deployment</strong><span>Linux, CI/CD, PostgreSQL, backups, and operating applications.</span></li>
-    </ul>
-  </section>
-
   <section class="about-cta">
     <div>
       <p class="eyebrow">Start exploring</p>
@@ -93,6 +81,6 @@
   </section>
 
   <p class="editorial-note">
-    Articles reflect my personal experience and understanding at the time of publication. Technical decisions depend on context, so verify critical changes in your own environment before using them in production.
+    Articles reflect my personal experience and understanding at the time of publication. When a guide uses estimates or depends on local conditions, I explain the assumptions so you can check them against your situation.
   </p>
 {% endblock content %}

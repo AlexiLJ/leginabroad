@@ -1,11 +1,12 @@
 (function () {
   'use strict';
 
-  const scenarios = {
-    single: { people: 1, income: 50000, rent: 22000, utilities: 4500, groceries: 6000, transport: 550, connectivity: 1000, leisure: 3500, other: 2000 },
-    couple: { people: 2, income: 80000, rent: 28000, utilities: 5500, groceries: 10000, transport: 1100, connectivity: 1500, leisure: 6000, other: 3000 }
-  };
-  const expenseKeys = ['rent', 'utilities', 'groceries', 'transport', 'connectivity', 'leisure', 'other'];
+  const isNode = typeof module !== 'undefined' && module.exports;
+  const data = isNode
+    ? require('../../prague_budget.json')
+    : JSON.parse(document.getElementById('budget-data').textContent);
+  const scenarios = data.scenarios;
+  const expenseKeys = data.expense_fields.map(field => field.key);
 
   function calculateBudget(values, people) {
     const total = expenseKeys.reduce((sum, key) => sum + values[key], 0);
@@ -15,7 +16,7 @@
   }
 
   // Keep the arithmetic usable by the small Node regression suite as well.
-  if (typeof module !== 'undefined' && module.exports) {
+  if (isNode) {
     module.exports = { calculateBudget, scenarios };
   }
   if (typeof document === 'undefined') return;

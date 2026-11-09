@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from urllib.parse import urlsplit
+
+from django.core.exceptions import ImproperlyConfigured
 
 from .env_handler import var_getter
 
@@ -56,6 +59,21 @@ CSRF_TRUSTED_ORIGINS = env_list(
     "https://leginabroad.com,https://www.leginabroad.com",
 )
 
+SITE_ORIGIN = os.getenv("SITE_ORIGIN", "https://leginabroad.com").strip().rstrip("/")
+site_url = urlsplit(SITE_ORIGIN)
+if (
+    site_url.scheme not in {"http", "https"}
+    or not site_url.hostname
+    or site_url.username is not None
+    or site_url.path
+    or site_url.query
+    or site_url.fragment
+):
+    raise ImproperlyConfigured("SITE_ORIGIN must be an HTTP(S) origin without a path, query or fragment.")
+
+ADSENSE_PUBLISHER_ID = os.getenv("ADSENSE_PUBLISHER_ID", "").strip()
+GOOGLE_ANALYTICS_MEASUREMENT_ID = os.getenv("GOOGLE_ANALYTICS_MEASUREMENT_ID", "").strip()
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -65,6 +83,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
     "bootstrap4",
     "imagekit",
     "storages",  # aws
@@ -171,6 +190,7 @@ TEMPLATES = [
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
+                "en_legin_abroad.publishing.public_site_settings",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],

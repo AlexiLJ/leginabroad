@@ -5,16 +5,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{% block meta_description %}Practical Python, Django, testing, and deployment guides based on real projects.{% endblock %}">
+    <meta name="description" content="{% block meta_description %}Independent guides, field notes, and tools from Legin' Abroad.{% endblock %}">
     <meta name="theme-color" content="#111a17">
 
-    <link rel="canonical" href="https://leginabroad.com{{ request.path }}">
+    <link rel="canonical" href="{{ site_origin }}{{ request.path }}{% if articles.number > 1 %}?page={{ articles.number }}{% endif %}">
+    {% block robots %}{% endblock %}
+    {% block site_verification %}{% endblock %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5630827130172417"
-            crossorigin="anonymous"></script>
 
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -25,17 +24,12 @@
     <link rel="stylesheet" href="{% static 'css/side_bar_style.css' %}">
     <link rel="stylesheet" href="{% static 'css/site.css' %}">
 
-    <title>{% block title %}Legin' Abroad — Practical Python, Django & Testing{% endblock %}</title>
+    <title>{% block title %}Legin' Abroad — Guides, field notes & tools{% endblock %}</title>
     {% block static %}{% endblock %}
 
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5Q4RD0BWDX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-5Q4RD0BWDX');
-    </script>
+    {% block analytics %}{% if analytics_measurement_id %}
+      <script src="{% static 'js/analytics-preference.js' %}" data-measurement-id="{{ analytics_measurement_id }}" defer></script>
+    {% endif %}{% endblock %}
   </head>
 
   <body class="{% block body_class %}{% endblock %}">
@@ -66,12 +60,13 @@
       <div class="site-footer__inner">
         <div>
           <a class="site-footer__brand" href="{% url 'en_legin_abroad:en_index' %}">Legin' Abroad</a>
-          <p>Practical notes on Python, Django, testing, and shipping reliable software.</p>
+          <p>Independent guides, field notes, and tools.</p>
         </div>
         <nav class="site-footer__links" aria-label="Footer navigation">
           <a href="{% url 'en_legin_abroad:en_index' %}">Articles</a>
           <a href="{% url 'en_legin_abroad:en_sections' %}">Topics</a>
           <a href="{% url 'en_legin_abroad:en_about' %}">About</a>
+          <a href="{% url 'en_legin_abroad:en_privacy' %}">Privacy</a>
         </nav>
         <p class="site-footer__copyright">&copy; {% now "Y" %} Leginabroad.com</p>
       </div>

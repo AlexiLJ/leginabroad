@@ -1,5 +1,6 @@
 {% extends "en_legin_abroad/en_base.html" %}
 
+{% block robots %}{% if not articles %}<meta name="robots" content="noindex">{% endif %}{% endblock %}
 {% block title %}{{ section }} articles — Legin' Abroad{% endblock %}
 {% block meta_description %}Practical {{ section }} guides and field notes from Legin' Abroad.{% endblock %}
 {% block body_class %}topic-page{% endblock %}
@@ -20,6 +21,9 @@
       <p>{{ section.description|striptags|truncatewords:38 }}</p>
     {% else %}
       <p>Practical guides, lessons, and field notes collected around {{ section }}.</p>
+    {% endif %}
+    {% if topic_tool %}
+      <p>Related tool <a href="{{ topic_tool.url }}">{{ topic_tool.title }}</a></p>
     {% endif %}
   </header>
 

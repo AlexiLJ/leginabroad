@@ -1,7 +1,9 @@
 {% extends "en_legin_abroad/en_base.html" %}
 
+{% block robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block analytics %}{% endblock %}
 {% block title %}{% if query %}Search results for “{{ query }}”{% else %}Search articles{% endif %} — Legin' Abroad{% endblock %}
-{% block meta_description %}Search practical Legin' Abroad guides about Python, Django, testing, deployment, and software development.{% endblock %}
+{% block meta_description %}Search the articles, guides, and field notes on Legin' Abroad.{% endblock %}
 {% block body_class %}search-page{% endblock %}
 
 {% block content %}
@@ -23,7 +25,7 @@
         {% endif %}
       </h1>
       <p>
-        Search tutorials and field notes about Python, Django, testing, deployment, and the work behind reliable software.
+        Search the archive or start with a topic below.
       </p>
     </div>
 
@@ -35,7 +37,7 @@
           name="query"
           type="search"
           value="{{ request.GET.query|default:'' }}"
-          placeholder="Try “Django deployment”"
+          placeholder="Enter a keyword or phrase"
           autocomplete="off"
           required
         >
@@ -101,24 +103,19 @@
     <section class="search-suggestions" aria-labelledby="search-suggestions-title">
       <div class="section-heading">
         <p class="eyebrow">A good place to start</p>
-        <h2 id="search-suggestions-title">Popular paths through the archive.</h2>
+        <h2 id="search-suggestions-title">Browse by topic</h2>
       </div>
       <div class="search-suggestions__links">
-        <a href="{% url 'en_legin_abroad:en_search' %}?query=Django">
-          <span>01</span>
-          <strong>Django</strong>
-          <small>Applications, patterns, and production lessons</small>
-        </a>
-        <a href="{% url 'en_legin_abroad:en_search' %}?query=Testing">
-          <span>02</span>
-          <strong>Testing</strong>
-          <small>Automation, quality, and safer releases</small>
-        </a>
-        <a href="{% url 'en_legin_abroad:en_search' %}?query=Deployment">
-          <span>03</span>
-          <strong>Deployment</strong>
-          <small>Linux, CI/CD, and reliable operations</small>
-        </a>
+        {% for section in sections %}
+          <a href="{{ section.get_absolute_url }}">
+            <strong>{{ section.name }}</strong>
+            {% if section.description %}
+              <small>{{ section.description|striptags|truncatewords:16 }}</small>
+            {% endif %}
+          </a>
+        {% empty %}
+          <a href="{% url 'en_legin_abroad:en_sections' %}"><strong>All topics</strong></a>
+        {% endfor %}
       </div>
     </section>
   {% endif %}
